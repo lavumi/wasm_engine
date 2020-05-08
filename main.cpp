@@ -33,14 +33,14 @@ void loop(){
     while (lag > max_fps)
     {
         lag -= max_fps;
-        updateTriangle();
+        renderer->Update();
     }
     renderer->Render();
 
 }
 
 
-int main()
+void WinMain()
 {
     renderer = new Renderer();
     renderer->Init();
@@ -64,5 +64,9 @@ int main()
 #endif
 
     delete renderer;
-    return 0;
+    return;
 }
+
+
+
+//g++ main.cpp Framework/InputHandler.cpp Framework/Render.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o app.exe
