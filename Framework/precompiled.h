@@ -3,14 +3,19 @@
 #include <emscripten/emscripten.h>
 #endif
 
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <SDL2/SDL.h>
 
+#include <functional>
 #include <iostream>
 #include <cmath>
 #include <string>
 #include <math.h>
+
+
+
+#define GLEW_STATIC
+#include <GL/glew.h>
+#include <SDL2/SDL.h>
+
 
 #include "InputHandler.h"
 #include "Renderer.h"

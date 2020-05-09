@@ -2,21 +2,6 @@
 
 #define PI 3.14159265
 
-
-
-
-#if __EMSCRIPTEN__
-extern "C" {
-#else
-#define EMSCRIPTEN_KEEPALIVE 
-#endif
-    EMSCRIPTEN_KEEPALIVE void _clickLeft(){ InputHandler::myfxClickLeft(); }
-#if __EMSCRIPTEN__
-}
-#endif
-
-
-
 Renderer* renderer;
 
 static GLuint previous_ticks = 0;
@@ -57,7 +42,7 @@ void WinMain()
             if (e.type == SDL_QUIT)
                 break;
 
-            if(e.type == SDL_MOUSEBUTTONDOWN) _clickLeft();
+            InputHandler::getInstance()->HandleEvent(e);
         }
         loop();
     }

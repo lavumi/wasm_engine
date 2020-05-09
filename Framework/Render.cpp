@@ -133,9 +133,11 @@ void Renderer::Init()
     version = glGetString(GL_VERSION);
     std::cout << "version: " << version << std::endl;
 
-    // InputHandler::myfxClickLeft = [&]{
-    //     background_is_black = !background_is_black;
-    // };
+    InputHandler::getInstance()->myfxClickLeft = [&]{
+        background_is_black = !background_is_black;
+        std::cout << "clickTest" << std::endl;
+    };
+
     makeShader();
 }
 
