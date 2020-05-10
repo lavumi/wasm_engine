@@ -88,28 +88,25 @@ void Shader::makeShader(){
 }
 
 
+
 void Shader::setShader(){
     glUseProgram(shader_program);
 
     //bind shader data
-
-
-
     GLuint MatrixID = glGetUniformLocation(shader_program, "MVP");
-    float MVP[4][4] = {
-        {1.0f,0,0,0},
-        {0,1.0f,0,0},
-        {0,0,1.0f,0},
-        {0,0,0,1.0f}
-    };
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
+	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+	// Camera matrix
+	glm::mat4 View       = glm::lookAt(
+								glm::vec3(4,3,-3), // Camera is at (4,3,-3), in World Space
+								glm::vec3(0,0,0), // and looks at the origin
+								glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+						   );
+	// Model matrix : an identity matrix (model will be at the origin)
+	glm::mat4 Model      = glm::mat4(1.0f);
+	// Our ModelViewProjection : multiplication of our 3 matrices
+	glm::mat4 MVP        = Projection * View * Model; // Remember, matrix multiplication is the other way around
 
-    // GLint pos_attrib = glGetAttribLocation(shader_program, "position");
-    // GLint color_attrib = glGetAttribLocation(shader_program, "color");
-    // glVertexAttribPointer(pos_attrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
-    // glEnableVertexAttribArray(pos_attrib);
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (GLfloat*)&MVP);
 
-    // glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (GLvoid *)(2 * sizeof(float)));
-    // glEnableVertexAttribArray(color_attrib);
 }

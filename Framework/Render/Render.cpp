@@ -82,6 +82,14 @@ void Renderer::Init()
     glewExperimental = GL_TRUE;
     glewInit();
 
+	// Enable depth test
+	glEnable(GL_DEPTH_TEST);
+	// Accept fragment if it closer to the camera than the former one
+	glDepthFunc(GL_LESS); 
+
+	// Cull triangles which normal is not towards the camera
+//	glEnable(GL_CULL_FACE);
+
     const GLubyte *version;
     version = glGetString(GL_VERSION);
     std::cout << "version: " << version << std::endl;
@@ -117,7 +125,7 @@ void Renderer::Render()
         glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
+    glDrawArrays(GL_TRIANGLES, 0, 10 * 3);
     SDL_GL_SwapWindow(window);
 }
 
