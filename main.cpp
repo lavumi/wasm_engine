@@ -41,7 +41,6 @@ void WinMain()
         {
             if (e.type == SDL_QUIT)
                 break;
-
             InputHandler::getInstance()->HandleEvent(e);
         }
         loop();
@@ -54,4 +53,4 @@ void WinMain()
 
 
 
-//g++ main.cpp Framework/InputHandler.cpp Framework/Render.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o app.exe
+// g++ main.cpp Framework/InputHandler.cpp Framework/Render/Render.cpp Framework/Render/Shader.cpp Framework/TestCube.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o build/win/app.exe

@@ -2,8 +2,6 @@
 #include "InputHandler.h"
 
 
-
-
 #if __EMSCRIPTEN__
 extern "C" {
 #else
@@ -13,6 +11,10 @@ extern "C" {
 #if __EMSCRIPTEN__
 }
 #endif
+
+
+
+
 
 
 
@@ -36,5 +38,6 @@ void InputHandler::HandleEvent(SDL_Event event){
 void InputHandler::Delete(){
     delete instance;
 }
+
 
 
