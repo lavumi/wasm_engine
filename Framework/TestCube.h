@@ -14,7 +14,7 @@ public:
     	GLuint vertexbuffer;
         	GLuint colorbuffer;
 
-    void setBuffer();
+    void setBuffer(GLuint shaderProgram);
 };
 
 

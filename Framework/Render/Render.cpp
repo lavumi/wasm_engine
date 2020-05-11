@@ -5,32 +5,8 @@
 #define SCREEN_HEIGHT 600
 
 
-static float attributes[] = {
-    0.0f,
-    0.5f,
-    1.0f,
-    0.0f,
-    0.0f,
-
-    0.5f,
-    -0.5f,
-    0.0f,
-    1.0f,
-    0.0f,
-
-    -0.5f,
-    -0.5f,
-    0.0f,
-    0.0f,
-    1.0f
-};
-
 Renderer::Renderer(/* args */)
 {
-
-
-    rotation_angle = -0.01;
-    length_of_attributes = sizeof(attributes) / sizeof(attributes[0]);
 
     shader = new Shader();
     testCube = new TestCube();
@@ -46,13 +22,14 @@ Renderer::~Renderer()
 
 void Renderer::makeShader()
 {
-        GLuint vao;
+    GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
+
     shader->makeShader();
     shader->setShader();
     testCube->makeBuffer();
-    testCube->setBuffer();
+    testCube->setBuffer( shader->shader_program);
 
 // //버퍼 세팅
 //     GLuint vao;
@@ -90,7 +67,7 @@ void Renderer::Init()
 	glDepthFunc(GL_LESS); 
 
 	// Cull triangles which normal is not towards the camera
-//	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
     const GLubyte *version;
     version = glGetString(GL_VERSION);
@@ -105,6 +82,7 @@ void Renderer::Init()
 
 void Renderer::Update()
 {
+    shader->Update();
     // for (GLuint i = 0; i < length_of_attributes; i = i + 5)
     // {
     //     float x = attributes[i];

@@ -15,6 +15,6 @@ fi
 if [ $input -eq 1 ]; then 
     rm -rf wasm
     mkdir wasm
-    emcc ../main.cpp ../Framework/Render.cpp ../Framework/InputHandler.cpp -std=c++17 -s WASM=1 -s USE_SDL=2 -O3 -o wasm/index.js
+    emcc ../main.cpp ../Framework/InputHandler.cpp ../Framework/Render/Render.cpp ../Framework/Render/Shader.cpp ../Framework/TestCube.cpp -std=c++17 -s WASM=1 -s USE_SDL=2 -O3 -v -o wasm/index.js
 fi
 

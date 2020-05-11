@@ -10,16 +10,19 @@ private:
     const char *fragmentSource ;
 
 
-    GLuint shader_program;
+
 
 public:
+    GLuint shader_program;
     Shader(/* args */);
     ~Shader();
 
     void makeShader();
     void setShader();
 
+    void Update();
 
+    glm::mat4 Model;
 };
 
 

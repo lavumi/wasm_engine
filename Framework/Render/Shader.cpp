@@ -1,24 +1,22 @@
-
 #include "Shader.h"
 
 Shader::Shader(/* args */)
 {
     vertexSource = R"glsl(
-#version 330 core
-
+        #version 100
 // Input vertex data, different for all executions of this shader.
-layout(location = 0) in vec3 vertexPosition_modelspace;
-layout(location = 1) in vec3 vertexColor;
+attribute vec3 vertexPosition_modelspace;
+attribute vec3 vertexColor;
 
 // Output data ; will be interpolated for each fragment.
-out vec3 fragmentColor;
+varying mediump vec3 fragmentColor;
 // Values that stay constant for the whole mesh.
-uniform mat4 MVP;
-
+uniform mat4 VP;
+uniform mat4 Model;
 void main(){	
 
 	// Output position of the vertex, in clip space : MVP * position
-	gl_Position =  MVP * vec4(vertexPosition_modelspace,1);
+	gl_Position =  VP * Model * vec4(vertexPosition_modelspace,1);
 
 	// The color of each vertex will be interpolated
 	// to produce the color of each fragment
@@ -27,19 +25,15 @@ void main(){
 )glsl";
 
     fragmentSource = R"glsl(
-#version 330 core
-
+                #version 100
 // Interpolated values from the vertex shaders
-in vec3 fragmentColor;
-
-// Ouput data
-out vec3 color;
+varying mediump vec3 fragmentColor;
 
 void main(){
 
 	// Output color = color specified in the vertex shader, 
 	// interpolated between all 3 surrounding vertices
-	color = fragmentColor;
+	gl_FragColor = vec4(fragmentColor,1);
 
 }
 )glsl";
@@ -59,9 +53,9 @@ void Shader::makeShader(){
     GLint vertex_shader_status;
     glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &vertex_shader_status);
 
-    // char vertexLogBuffer[512];
-    // glGetShaderInfoLog(vertex_shader, 512, NULL, vertexLogBuffer);
-    // std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
+    char vertexLogBuffer[512];
+    glGetShaderInfoLog(vertex_shader, 512, NULL, vertexLogBuffer);
+    std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
 
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment_shader, 1, &fragmentSource, NULL);
@@ -69,9 +63,9 @@ void Shader::makeShader(){
     GLint fragment_shader_status;
     glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &fragment_shader_status);
 
-    // char fragmentLogBuffer[512];
-    // glGetShaderInfoLog(fragment_shader, 512, NULL, fragmentLogBuffer);
-    // std::cout << "fragment_shader_status: " << fragment_shader_status << " " << fragmentLogBuffer << std::endl;
+    char fragmentLogBuffer[512];
+    glGetShaderInfoLog(fragment_shader, 512, NULL, fragmentLogBuffer);
+    std::cout << "fragment_shader_status: " << fragment_shader_status << " " << fragmentLogBuffer << std::endl;
 
     shader_program = glCreateProgram();
     glAttachShader(shader_program, vertex_shader);
@@ -93,7 +87,8 @@ void Shader::setShader(){
     glUseProgram(shader_program);
 
     //bind shader data
-    GLuint MatrixID = glGetUniformLocation(shader_program, "MVP");
+    GLuint MatrixID = glGetUniformLocation(shader_program, "VP");
+    GLuint ModelID = glGetUniformLocation(shader_program, "Model");
 
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
@@ -103,10 +98,21 @@ void Shader::setShader(){
 								glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
 						   );
 	// Model matrix : an identity matrix (model will be at the origin)
-	glm::mat4 Model      = glm::mat4(1.0f);
+	Model      = glm::mat4(1.0f);
 	// Our ModelViewProjection : multiplication of our 3 matrices
-	glm::mat4 MVP        = Projection * View * Model; // Remember, matrix multiplication is the other way around
+	glm::mat4 VP        = Projection * View ; // Remember, matrix multiplication is the other way around
 
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (GLfloat*)&MVP);
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (GLfloat*)&VP);
+    glUniformMatrix4fv(ModelID, 1, GL_FALSE, (GLfloat*)&Model);
+}
 
+
+void Shader::Update(){  
+    Model = glm::rotate(
+        Model,
+        glm::radians(0.7f),
+        glm::vec3(0.0f, 1.0f, 0.0f)
+    );
+    GLuint ModelID = glGetUniformLocation(shader_program, "Model");
+    glUniformMatrix4fv(ModelID, 1, GL_FALSE, (GLfloat*)&Model);
 }
