@@ -46,7 +46,9 @@ Renderer::~Renderer()
 
 void Renderer::makeShader()
 {
-    
+        GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
     shader->makeShader();
     shader->setShader();
     testCube->makeBuffer();
@@ -117,7 +119,6 @@ void Renderer::Update()
 
 void Renderer::Render()
 {
-
     // Clear the screen
     if (background_is_black)
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -125,7 +126,7 @@ void Renderer::Render()
         glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDrawArrays(GL_TRIANGLES, 0, 10 * 3);
+    glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
     SDL_GL_SwapWindow(window);
 }
 
