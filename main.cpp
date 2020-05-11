@@ -2,21 +2,6 @@
 
 #define PI 3.14159265
 
-
-
-
-#if __EMSCRIPTEN__
-extern "C" {
-#else
-#define EMSCRIPTEN_KEEPALIVE 
-#endif
-    EMSCRIPTEN_KEEPALIVE void _clickLeft(){ InputHandler::myfxClickLeft(); }
-#if __EMSCRIPTEN__
-}
-#endif
-
-
-
 Renderer* renderer;
 
 static GLuint previous_ticks = 0;
@@ -33,14 +18,14 @@ void loop(){
     while (lag > max_fps)
     {
         lag -= max_fps;
-        updateTriangle();
+        renderer->Update();
     }
     renderer->Render();
 
 }
 
 
-int main()
+void WinMain()
 {
     renderer = new Renderer();
     renderer->Init();
@@ -56,13 +41,16 @@ int main()
         {
             if (e.type == SDL_QUIT)
                 break;
-
-            if(e.type == SDL_MOUSEBUTTONDOWN) _clickLeft();
+            InputHandler::getInstance()->HandleEvent(e);
         }
         loop();
     }
 #endif
 
     delete renderer;
-    return 0;
+    return;
 }
+
+
+
+// g++ main.cpp Framework/InputHandler.cpp Framework/Render/Render.cpp Framework/Render/Shader.cpp Framework/TestCube.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o build/win/app.exe
