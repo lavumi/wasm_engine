@@ -119,7 +119,6 @@ void TestCube::makeBuffer(){
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
-
 	glGenBuffers(1, &colorbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
@@ -127,8 +126,13 @@ void TestCube::makeBuffer(){
 
 
 void TestCube::setBuffer(){
-        glEnableVertexAttribArray(0);
+
+
 		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+        glEnableVertexAttribArray(0);
+		checkGL_error("glEnableVertexAttribArray");
+
+		checkGL_error("glBindBuffer");
 		glVertexAttribPointer(
 			0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
 			3,                  // size
@@ -137,6 +141,7 @@ void TestCube::setBuffer(){
 			0,                  // stride
 			(void*)0            // array buffer offset
 		);
+		checkGL_error("glVertexAttribPointer");
 
 		// 2nd attribute buffer : colors
 		glEnableVertexAttribArray(1);
@@ -149,4 +154,5 @@ void TestCube::setBuffer(){
 			0,                                // stride
 			(void*)0                          // array buffer offset
 		);
+
 }

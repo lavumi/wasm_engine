@@ -25,7 +25,7 @@ void loop(){
 }
 
 
-void WinMain()
+int main()
 {
     renderer = new Renderer();
     renderer->Init();
@@ -48,7 +48,7 @@ void WinMain()
 #endif
 
     delete renderer;
-    return;
+    return 0;
 }
 
 
