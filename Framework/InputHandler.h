@@ -7,7 +7,6 @@ private:
   static InputHandler *instance;
   InputHandler();
   ~InputHandler();
-
 public:
   static InputHandler *getInstance()
   {
@@ -18,14 +17,15 @@ public:
   static void Delete();
 
 
-
+  void Update();
   void HandleEvent( SDL_Event event );
 
   std::function<void()> myfxClickLeft;
+  std::function<void()> mykeyboardInput[322];
 
 private :
 
-
+  bool KEYS[322]; 
 };
 
 

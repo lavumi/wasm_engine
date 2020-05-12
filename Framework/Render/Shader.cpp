@@ -41,7 +41,7 @@ void main(){
 )glsl";
   //  makeShader();
 
-  camera = new Camera();
+
 }
 
 Shader::~Shader()
@@ -91,7 +91,7 @@ void Shader::setShader(){
     glUseProgram(shader_program);
 
     //bind shader data
-    GLuint MatrixID = glGetUniformLocation(shader_program, "VP");
+  //  GLuint MatrixID = glGetUniformLocation(shader_program, "VP");
     GLuint ModelID = glGetUniformLocation(shader_program, "Model");
 
 	// glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
@@ -107,12 +107,16 @@ void Shader::setShader(){
 	// glm::mat4 VP        = Projection * View ; // Remember, matrix multiplication is the other way around
 
    //
-    glm::mat4 VP        =  camera->GetVP();
+    //glm::mat4 VP        =  camera->GetVP();
     Model      = glm::mat4(1.0f);
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (GLfloat*)&VP);
+  //  glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (GLfloat*)&VP);
     glUniformMatrix4fv(ModelID, 1, GL_FALSE, (GLfloat*)&Model);
 }
 
+void Shader::SetUniformMatrix4fv(GLchar* name, GLfloat* value ){
+    GLuint MatrixID = glGetUniformLocation(shader_program, name);
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE,value);
+}
 
 void Shader::Update(){  
     Model = glm::rotate(

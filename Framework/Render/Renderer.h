@@ -3,6 +3,7 @@
 
 class TestCube;
 class Shader;
+class Camera;
 class Renderer
 {
 private:
@@ -14,6 +15,7 @@ private:
     Shader *shader;
 
     TestCube *testCube;
+    Camera* camera;
 
 public:
     Renderer(/* args */);
@@ -22,6 +24,7 @@ public:
     void Init();
     void Update();
     void Render();
+    void SetCamera( Camera* camera );
 
     GLfloat rotation_angle;
     GLuint length_of_attributes;

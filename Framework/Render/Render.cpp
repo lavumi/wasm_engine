@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include "../TestCube.h"
+#include "Camera.h"
 #include "Renderer.h"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -28,6 +29,9 @@ void Renderer::makeShader()
 
     shader->makeShader();
     shader->setShader();
+    
+    glm::mat4 VP        =  camera->GetVP();
+    shader->SetUniformMatrix4fv("VP", (GLfloat*)&VP);
     testCube->makeBuffer();
     testCube->setBuffer( shader->shader_program);
 
@@ -93,6 +97,10 @@ void Renderer::Update()
     // }
 
     // glBufferData(GL_ARRAY_BUFFER, sizeof(attributes), attributes, GL_DYNAMIC_DRAW);
+}
+
+void Renderer::SetCamera( Camera* pCamera ){
+    this->camera = pCamera;
 }
 
 void Renderer::Render()

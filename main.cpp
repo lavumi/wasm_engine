@@ -2,15 +2,14 @@
 
 #define PI 3.14159265
 
-Renderer* renderer;
+Director *director;
 
 static GLuint previous_ticks = 0;
 static GLuint max_fps = 16;
 static GLfloat lag = 0;
 
-
-
-void loop(){
+void loop()
+{
     GLuint ticks = SDL_GetTicks();
     lag += ticks - previous_ticks;
     previous_ticks = ticks;
@@ -18,18 +17,14 @@ void loop(){
     while (lag > max_fps)
     {
         lag -= max_fps;
-        renderer->Update();
+        director->Update();
     }
-    renderer->Render();
-
+    director->Render();
 }
-
 
 int main()
 {
-    renderer = new Renderer();
-    renderer->Init();
-
+    director = new Director();
 
 #if __EMSCRIPTEN__
     emscripten_set_main_loop(loop, -1, 1);
@@ -47,10 +42,8 @@ int main()
     }
 #endif
 
-    delete renderer;
+    delete director;
     return 0;
 }
-
-
 
 // g++ main.cpp Framework/InputHandler.cpp Framework/Render/Render.cpp Framework/Render/Shader.cpp Framework/TestCube.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o build/win/app.exe

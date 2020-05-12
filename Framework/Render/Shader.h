@@ -11,9 +11,6 @@ private:
     const char *vertexSource ;
     const char *fragmentSource ;
 
-    Camera * camera;
-
-
 public:
     GLuint shader_program;
     Shader(/* args */);
@@ -24,6 +21,8 @@ public:
 
     void Update();
 
+
+    void SetUniformMatrix4fv(GLchar* name, GLfloat* value );
     glm::mat4 Model;
 };
 
