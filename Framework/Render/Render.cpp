@@ -84,9 +84,9 @@ void Renderer::Init()
     makeShader();
 }
 
-void Renderer::Update()
+void Renderer::Update(float deltaTime)
 {
-    shader->Update();
+    shader->Update(deltaTime);
     // for (GLuint i = 0; i < length_of_attributes; i = i + 5)
     // {
     //     float x = attributes[i];

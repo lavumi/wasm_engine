@@ -22,7 +22,7 @@ public:
     ~Renderer();
 
     void Init();
-    void Update();
+    void Update(float deltaTime);
     void Render();
     void SetCamera( Camera* camera );
 

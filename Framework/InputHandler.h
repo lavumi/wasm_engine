@@ -17,11 +17,12 @@ public:
   static void Delete();
 
 
-  void Update();
+  void Update(float deltaTime);
   void HandleEvent( SDL_Event event );
 
   std::function<void()> myfxClickLeft;
-  std::function<void()> mykeyboardInput[322];
+  std::function<void()> mykeyboardDown[322];
+  std::function<void()> mykeyboardUp[322];
 
 private :
 

@@ -14,13 +14,17 @@ Director::Director(/* args */)
     renderer->Init();
 
     //left
-    InputHandler::getInstance()->mykeyboardInput[97] = [&]{
+    InputHandler::getInstance()->mykeyboardDown[97] = [&]{
         camera->SetMoveLeft( true );
-                    std::cout << "CameraMovememt"<<  std::endl; 
     };//L
-    InputHandler::getInstance()->mykeyboardInput[100]= [&]{
+    InputHandler::getInstance()->mykeyboardDown[100]= [&]{
+        camera->SetMoveRight( true );
+    };//R
+        InputHandler::getInstance()->mykeyboardUp[97] = [&]{
         camera->SetMoveLeft( false );
-                            std::cout << "CameraMovememt"<<  std::endl; 
+    };//L
+    InputHandler::getInstance()->mykeyboardUp[100]= [&]{
+        camera->SetMoveRight( false );
     };//R
     //InputHandler::getInstance()->mykeyboardInput[119];//U
     //InputHandler::getInstance()->mykeyboardInput[115];//D
@@ -32,9 +36,9 @@ Director::~Director()
 }
 
 
-void Director::Update(){
-    renderer->Update();
-    camera->Update();
+void Director::Update(float deltaTime){
+    renderer->Update(deltaTime);
+    camera->Update(deltaTime);
 }
 
 

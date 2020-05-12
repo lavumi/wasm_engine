@@ -66,13 +66,14 @@ void Camera::SetMoveLeft(bool active)
     moveLeft = active;
 }
 
-void Camera::Update()
+void Camera::Update(float deltaTime)
 {
-    glm::mat4 trans = glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    glm::vec4 pos(position.x, position.y, position.z, 0.0f);
-    glm::vec4 transformedVector = trans * pos;
-    position = glm::vec3(transformedVector.x, transformedVector.y, transformedVector.z);
+    float speed = 3.0f;
+    position.x += moveRight * speed * deltaTime;
+    position.x -= moveLeft  * speed * deltaTime;
+    position.z += moveBack  * speed * deltaTime;
+    position.z -= moveFront * speed * deltaTime;
     setView();
 
-    std::cout << position.x << std::endl;
+  //  std::cout << position.x << std::endl;
 }

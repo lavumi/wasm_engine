@@ -19,7 +19,7 @@ public:
     void makeShader();
     void setShader();
 
-    void Update();
+    void Update(float deltaTime);
 
 
     void SetUniformMatrix4fv(GLchar* name, GLfloat* value );

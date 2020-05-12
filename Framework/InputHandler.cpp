@@ -12,11 +12,11 @@ extern "C"
         InputHandler::getInstance()->myfxClickLeft();
     }
     EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key) { 
-        InputHandler::getInstance()->mykeyboardInput[key]();
+        InputHandler::getInstance()->mykeyboardDown[key]();
     }
     EMSCRIPTEN_KEEPALIVE void _keyboardUp(int key) {  
-            std::cout << SDL_GetKeyName((SDL_Keycode)key) << " up , SDL KEYCODE : " <<  std::endl; 
-     }
+          InputHandler::getInstance()->mykeyboardUp[key]();
+    }
 #if __EMSCRIPTEN__
 }
 #endif
@@ -28,8 +28,11 @@ InputHandler::InputHandler()
     for (int i = 0; i < 322; i++)
     {
         KEYS[i] = false;
-        mykeyboardInput[i] = [i]{
+        mykeyboardDown[i] = [i]{
             std::cout << SDL_GetKeyName((SDL_Keycode)i) << " down , SDL KEYCODE : " << i<<  std::endl; 
+        };
+        mykeyboardUp[i] = [i]{
+            std::cout << SDL_GetKeyName((SDL_Keycode)i) << " up , SDL KEYCODE : " << i<<  std::endl; 
         };
     }
 
@@ -66,6 +69,6 @@ void InputHandler::Delete()
     delete instance;
 }
 
-void InputHandler::Update(){
+void InputHandler::Update(float deltaTime){
     //Pressed Event
 }

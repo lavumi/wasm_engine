@@ -10,7 +10,7 @@ public:
     Director(/* args */);
     ~Director();
 
-    void Update();
+    void Update(float deltaTime);
     void Render();
 
     Renderer* renderer;

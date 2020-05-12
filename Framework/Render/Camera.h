@@ -46,5 +46,5 @@ public:
     void SetMoveFront(bool active);
     void SetMoveBack(bool active);
 
-    void Update();
+    void Update(float deltaTime);
 };

@@ -118,7 +118,7 @@ void Shader::SetUniformMatrix4fv(GLchar* name, GLfloat* value ){
     glUniformMatrix4fv(MatrixID, 1, GL_FALSE,value);
 }
 
-void Shader::Update(){  
+void Shader::Update(float deltaTime){  
     Model = glm::rotate(
         Model,
         glm::radians(0.7f),

@@ -16,13 +16,14 @@ void loop()
 
     while (lag > max_fps)
     {
-        lag -= max_fps;
-        director->Update();
+        director->Update(lag / 1000);
+        lag = 0;
+
     }
     director->Render();
 }
 
-int main()
+int WinMain()
 {
     director = new Director();
 
@@ -46,4 +47,4 @@ int main()
     return 0;
 }
 
-// g++ main.cpp Framework/InputHandler.cpp Framework/Render/Render.cpp Framework/Render/Shader.cpp Framework/TestCube.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o build/win/app.exe
+// g++ main.cpp Framework/InputHandler.cpp Framework/Render/Camera.cpp Framework/Render/Render.cpp Framework/Render/Shader.cpp Framework/TestCube.cpp Framework/Director.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o build/win/app.exe
