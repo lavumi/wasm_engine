@@ -1,6 +1,8 @@
 #pragma once 
 #include "../precompiled.h"
 
+
+class Camera;
 class Shader
 {
 private:
@@ -9,7 +11,7 @@ private:
     const char *vertexSource ;
     const char *fragmentSource ;
 
-
+    Camera * camera;
 
 
 public:
