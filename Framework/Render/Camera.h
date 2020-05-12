@@ -20,10 +20,31 @@ private:
     void setPerspective();
     void setView();
 
+
+
 public:
     Camera(/* args */);
     ~Camera();
 
     glm::mat4 GetVP();
     void SetTransform( glm::mat4 transform );
+
+
+
+
+
+    //움직임
+
+    bool moveFront;
+    bool moveBack;
+    bool moveLeft;
+    bool moveRight;
+
+
+    void SetMoveLeft(bool active);
+    void SetMoveRight(bool active);
+    void SetMoveFront(bool active);
+    void SetMoveBack(bool active);
+
+    void Update();
 };

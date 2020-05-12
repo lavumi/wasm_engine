@@ -97,6 +97,9 @@ void Renderer::Update()
     // }
 
     // glBufferData(GL_ARRAY_BUFFER, sizeof(attributes), attributes, GL_DYNAMIC_DRAW);
+
+    glm::mat4 VP        =  camera->GetVP();
+    shader->SetUniformMatrix4fv("VP", (GLfloat*)&VP);
 }
 
 void Renderer::SetCamera( Camera* pCamera ){

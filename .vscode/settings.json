@@ -64,6 +64,7 @@
         "ios": "cpp",
         "locale": "cpp",
         "mutex": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "__functional_03": "cpp"
     }
 }

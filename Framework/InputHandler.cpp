@@ -29,7 +29,7 @@ InputHandler::InputHandler()
     {
         KEYS[i] = false;
         mykeyboardInput[i] = [i]{
-            std::cout << SDL_GetKeyName((SDL_Keycode)i) << " down , SDL KEYCODE : " <<  std::endl; 
+            std::cout << SDL_GetKeyName((SDL_Keycode)i) << " down , SDL KEYCODE : " << i<<  std::endl; 
         };
     }
 
