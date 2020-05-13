@@ -11,19 +11,22 @@ static GLfloat lag = 0;
 void loop()
 {
     GLuint ticks = SDL_GetTicks();
-    lag += ticks - previous_ticks;
+    lag = ticks - previous_ticks;
     previous_ticks = ticks;
 
-    while (lag > max_fps)
-    {
+  //  while (lag > max_fps)
+  // {
         director->Update(lag / 1000);
-        lag = 0;
+//        lag = 0;
 
-    }
+  //  }
     director->Render();
 }
-
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 int WinMain()
+#else
+int main()
+#endif
 {
     director = new Director();
 

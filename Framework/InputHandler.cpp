@@ -12,9 +12,17 @@ extern "C"
         InputHandler::getInstance()->myfxClickLeft();
     }
     EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key) { 
-        InputHandler::getInstance()->mykeyboardDown[key]();
+
+        if( key < 322){
+            std::cout << SDL_GetKeyName((SDL_Keycode)key) << " down , SDL KEYCODE : " << key<<  std::endl; 
+            InputHandler::getInstance()->mykeyboardDown[key]();
+        }
+        else {
+            std::cout << SDL_GetKeyName((SDL_Keycode)key) << " down false , SDL KEYCODE : " << key<<  std::endl; 
+        }
     }
     EMSCRIPTEN_KEEPALIVE void _keyboardUp(int key) {  
+        if( key < 322)
           InputHandler::getInstance()->mykeyboardUp[key]();
     }
 #if __EMSCRIPTEN__
@@ -35,6 +43,8 @@ InputHandler::InputHandler()
             std::cout << SDL_GetKeyName((SDL_Keycode)i) << " up , SDL KEYCODE : " << i<<  std::endl; 
         };
     }
+
+        std::cout << "Init InputHandler " << std::endl;
 
 }
 

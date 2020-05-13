@@ -69,10 +69,10 @@ void Camera::SetMoveLeft(bool active)
 void Camera::Update(float deltaTime)
 {
     float speed = 3.0f;
-    position.x += moveRight * speed * deltaTime;
-    position.x -= moveLeft  * speed * deltaTime;
-    position.z += moveBack  * speed * deltaTime;
-    position.z -= moveFront * speed * deltaTime;
+    position.x -= moveRight * speed * deltaTime;
+    position.x += moveLeft  * speed * deltaTime;
+    position.z -= moveBack  * speed * deltaTime;
+    position.z += moveFront * speed * deltaTime;
     setView();
 
   //  std::cout << position.x << std::endl;
