@@ -11,19 +11,13 @@ extern "C"
     {
         InputHandler::getInstance()->myfxClickLeft();
     }
-    EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key) { 
-
-        if( key < 322){
-            std::cout << SDL_GetKeyName((SDL_Keycode)key) << " down , SDL KEYCODE : " << key<<  std::endl; 
-            InputHandler::getInstance()->mykeyboardDown[key]();
-        }
-        else {
-            std::cout << SDL_GetKeyName((SDL_Keycode)key) << " down false , SDL KEYCODE : " << key<<  std::endl; 
-        }
+    EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key)
+    {
+        InputHandler::getInstance()->HandleEvent(key, true);
     }
-    EMSCRIPTEN_KEEPALIVE void _keyboardUp(int key) {  
-        if( key < 322)
-          InputHandler::getInstance()->mykeyboardUp[key]();
+    EMSCRIPTEN_KEEPALIVE void _keyboardUp(int key)
+    {
+        InputHandler::getInstance()->HandleEvent(key, false);
     }
 #if __EMSCRIPTEN__
 }
@@ -33,19 +27,18 @@ InputHandler *InputHandler::instance = nullptr;
 
 InputHandler::InputHandler()
 {
-    for (int i = 0; i < 322; i++)
+    for (int i = 0; i < 128; i++)
     {
         KEYS[i] = false;
-        mykeyboardDown[i] = [i]{
-            std::cout << SDL_GetKeyName((SDL_Keycode)i) << " down , SDL KEYCODE : " << i<<  std::endl; 
-        };
-        mykeyboardUp[i] = [i]{
-            std::cout << SDL_GetKeyName((SDL_Keycode)i) << " up , SDL KEYCODE : " << i<<  std::endl; 
-        };
+        // mykeyboardDown[i] = [i] {
+        // //    std::cout << SDL_GetKeyName((SDL_Keycode)i) << " down , SDL KEYCODE : " << i << std::endl;
+        // };
+        // mykeyboardUp[i] = [i] {
+        //  //   std::cout << SDL_GetKeyName((SDL_Keycode)i) << " up , SDL KEYCODE : " << i << std::endl;
+        // };
     }
 
-        std::cout << "Init InputHandler " << std::endl;
-
+    std::cout << "Init InputHandler " << std::endl;
 }
 
 InputHandler::~InputHandler()
@@ -57,14 +50,21 @@ void InputHandler::HandleEvent(SDL_Event event)
     switch (event.type)
     {
     case SDL_KEYDOWN:
-        //_keyboardDown(SDL_GetKeyName(event.key.keysym.sym));
-        _keyboardDown((int)event.key.keysym.sym);
-        KEYS[event.key.keysym.sym] = true;
+      //  std::cout << SDL_GetKeyName(event.key.keysym.sym) << " down , SDL KEYCODE : " << event.key.keysym.sym << std::endl;
+        if (event.key.keysym.sym < 128)
+        {
+            _keyboardDown((int)event.key.keysym.sym);
+            KEYS[event.key.keysym.sym] = true;
+        }
+
         break;
     case SDL_KEYUP:
-        //_keyboardUp(SDL_GetKeyName(event.key.keysym.sym));
-        _keyboardUp((int)event.key.keysym.sym);
-        KEYS[event.key.keysym.sym] = false;
+        if (event.key.keysym.sym < 128)
+        {
+            _keyboardUp((int)event.key.keysym.sym);
+            KEYS[event.key.keysym.sym] = false;
+        }
+
         break;
     case SDL_MOUSEBUTTONDOWN:
         _clickLeft();
@@ -74,11 +74,38 @@ void InputHandler::HandleEvent(SDL_Event event)
     }
 }
 
+void InputHandler::HandleEvent(int keycode, bool pressed)
+{   
+    if( pressed == true ){
+        auto iter = mykeyboardDown.find(keycode);
+        if( iter != mykeyboardDown.end()){
+            (iter->second)();
+        }
+    }
+    else {
+        auto iter = mykeyboardUp.find(keycode);
+        if( iter != mykeyboardUp.end()){
+            (iter->second)();
+        }
+    }
+}
+
 void InputHandler::Delete()
 {
     delete instance;
 }
 
-void InputHandler::Update(float deltaTime){
+void InputHandler::Update(float deltaTime)
+{
     //Pressed Event
+}
+
+bool InputHandler::SetKeyboardDownEvent(int id, std::function<void()> function ){
+      mykeyboardDown.insert(std::pair<int, std::function<void()>>( id, function));
+      return true;
+}
+
+bool InputHandler::SetKeyboardUpEvent(int id, std::function<void()> function ){
+      mykeyboardUp.insert(std::pair<int, std::function<void()>>( id, function));
+      return true;
 }

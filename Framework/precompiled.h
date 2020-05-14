@@ -3,7 +3,7 @@
 #include <emscripten/emscripten.h>
 #endif
 
-
+#include <map>
 #include <functional>
 #include <iostream>
 #include <cmath>

@@ -65,6 +65,8 @@
         "locale": "cpp",
         "mutex": "cpp",
         "ratio": "cpp",
-        "__functional_03": "cpp"
+        "__functional_03": "cpp",
+        "__tree": "cpp",
+        "map": "cpp"
     }
 }

@@ -13,37 +13,35 @@ Director::Director(/* args */)
     renderer->SetCamera(camera);
     renderer->Init();
 
+
     //left
-    InputHandler::getInstance()->mykeyboardDown[97] = [&]{
+    InputHandler::getInstance()->SetKeyboardDownEvent(97, [&]{
         camera->SetMoveLeft( true );
-    };//L
-    InputHandler::getInstance()->mykeyboardDown[100]= [&]{
+    });
+        InputHandler::getInstance()->SetKeyboardDownEvent(100, [&]{
         camera->SetMoveRight( true );
-    };//R
-        InputHandler::getInstance()->mykeyboardUp[97] = [&]{
+    });
+        InputHandler::getInstance()->SetKeyboardUpEvent(97, [&]{
         camera->SetMoveLeft( false );
-    };//L
-    InputHandler::getInstance()->mykeyboardUp[100]= [&]{
+    });
+        InputHandler::getInstance()->SetKeyboardUpEvent(100, [&]{
         camera->SetMoveRight( false );
-    };//R
+    });
+
 
         //left
-    InputHandler::getInstance()->mykeyboardDown[119] = [&]{
+    InputHandler::getInstance()->SetKeyboardDownEvent(119 , [&]{
         camera->SetMoveFront( true );
-    };//L
-    InputHandler::getInstance()->mykeyboardDown[115]= [&]{
+    });//L
+    InputHandler::getInstance()->SetKeyboardDownEvent(115, [&]{
         camera->SetMoveBack( true );
-    };//R
-        InputHandler::getInstance()->mykeyboardUp[119] = [&]{
+    });//R
+        InputHandler::getInstance()->SetKeyboardUpEvent(119 , [&]{
         camera->SetMoveFront( false );
-    };//L
-    InputHandler::getInstance()->mykeyboardUp[115]= [&]{
+    });//L
+    InputHandler::getInstance()->SetKeyboardUpEvent(115, [&]{
         camera->SetMoveBack( false );
-    };//R
-
-    std::cout << "Init Director " << std::endl;
-    //InputHandler::getInstance()->mykeyboardInput[119];//U
-    //InputHandler::getInstance()->mykeyboardInput[115];//D
+    });//R
 }
 
 Director::~Director()
