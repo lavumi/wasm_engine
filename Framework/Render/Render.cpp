@@ -2,8 +2,7 @@
 #include "../TestCube.h"
 #include "Camera.h"
 #include "Renderer.h"
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+
 
 
 Renderer::Renderer(/* args */)

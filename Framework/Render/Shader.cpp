@@ -113,8 +113,8 @@ void Shader::setShader(){
     glUniformMatrix4fv(ModelID, 1, GL_FALSE, (GLfloat*)&Model);
 }
 
-void Shader::SetUniformMatrix4fv(GLchar* name, GLfloat* value ){
-    GLuint MatrixID = glGetUniformLocation(shader_program, name);
+void Shader::SetUniformMatrix4fv(std::string name, GLfloat* value ){
+    GLuint MatrixID = glGetUniformLocation(shader_program, name.c_str());
     glUniformMatrix4fv(MatrixID, 1, GL_FALSE,value);
 }
 
@@ -124,6 +124,11 @@ void Shader::Update(float deltaTime){
         glm::radians(0.7f),
         glm::vec3(0.0f, 1.0f, 0.0f)
     );
+
+    // Model = glm::translate(
+    //     Model,
+    //     glm::vec3(0.0f, 1.0f * deltaTime, 0.0f)
+    // );
     GLuint ModelID = glGetUniformLocation(shader_program, "Model");
     glUniformMatrix4fv(ModelID, 1, GL_FALSE, (GLfloat*)&Model);
 }

@@ -46,5 +46,8 @@ public:
     void SetMoveFront(bool active);
     void SetMoveBack(bool active);
 
+    void SetRotate( float amount,  glm::vec3 axis);
+    void SetTranslate(glm::vec3& direction);
+
     void Update(float deltaTime);
 };

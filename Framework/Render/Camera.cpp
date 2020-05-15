@@ -66,14 +66,29 @@ void Camera::SetMoveLeft(bool active)
     moveLeft = active;
 }
 
+
+
+// speed is usually 0.1f or something small like that
+void Camera::SetRotate(float amount, glm::vec3 axis)
+{
+    glm::mat4 iden(1.0f);
+    iden = glm::rotate(iden, amount * 0.03f, axis);
+    forward = iden * glm::vec4(forward,0);
+    //forward = glm::rotate(forward, amount * 3.0f, axis);
+}
+
+void Camera::SetTranslate(glm::vec3& direction)
+{
+    position -= direction;
+}
+
 void Camera::Update(float deltaTime)
 {
     float speed = 3.0f;
-    position.x -= moveRight * speed * deltaTime;
-    position.x += moveLeft  * speed * deltaTime;
-    position.z -= moveBack  * speed * deltaTime;
-    position.z += moveFront * speed * deltaTime;
+    glm::vec3 movement = glm::vec3(
+            -moveLeft  * speed * deltaTime + moveRight * speed * deltaTime, 
+            0 , 
+            -moveFront * speed * deltaTime +  moveBack  * speed * deltaTime);
+    SetTranslate( movement );
     setView();
-
-  //  std::cout << position.x << std::endl;
 }

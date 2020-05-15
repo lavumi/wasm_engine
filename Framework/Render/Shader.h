@@ -22,7 +22,7 @@ public:
     void Update(float deltaTime);
 
 
-    void SetUniformMatrix4fv(GLchar* name, GLfloat* value );
+    void SetUniformMatrix4fv(std::string name, GLfloat* value );
     glm::mat4 Model;
 };
 
