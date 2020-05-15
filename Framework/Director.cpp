@@ -32,8 +32,6 @@ Director::Director(/* args */)
         //left
     InputHandler::getInstance()->SetKeyboardDownEvent(119 , [&]{
         camera->SetMoveFront( true );
-       //     std::cout << " input called 119"  << std::endl;
-     // camera->SetRotate(0.1f, glm::vec3(0,1,0));
     });//L
     InputHandler::getInstance()->SetKeyboardDownEvent(115, [&]{
         camera->SetMoveBack( true );
@@ -44,6 +42,13 @@ Director::Director(/* args */)
     InputHandler::getInstance()->SetKeyboardUpEvent(115, [&]{
         camera->SetMoveBack( false );
     });//R
+
+
+    InputHandler::getInstance()->SetKeyboardUpEvent(102 , [&]{
+        renderer->toggleFullscreen();
+    });//L
+
+
 
 
     InputHandler::getInstance()->mouseMoveEvent = [&](int inputX, int inputY){

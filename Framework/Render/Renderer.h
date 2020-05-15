@@ -17,6 +17,8 @@ private:
     TestCube *testCube;
     Camera* camera;
 
+
+
 public:
     Renderer(/* args */);
     ~Renderer();
@@ -35,6 +37,7 @@ public:
     const char *fragmentSource;
 
     bool background_is_black = true;
+    void toggleFullscreen();
 };
 
 static void checkGL_error(std::string text)

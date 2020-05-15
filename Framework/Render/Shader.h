@@ -19,9 +19,6 @@ public:
     void makeShader();
     void setShader();
 
-    void Update(float deltaTime);
-
-
     void SetUniformMatrix4fv(std::string name, GLfloat* value );
     glm::mat4 Model;
 };

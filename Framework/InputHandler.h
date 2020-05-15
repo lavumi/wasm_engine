@@ -37,7 +37,7 @@ private:
 
 
 
-  int prevMousePosX, prevMousePosY;
+
 
 
 

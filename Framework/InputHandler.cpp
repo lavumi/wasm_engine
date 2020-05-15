@@ -31,8 +31,6 @@ InputHandler *InputHandler::instance = nullptr;
 
 InputHandler::InputHandler()
 {
-    prevMousePosX =SCREEN_WIDTH / 2;
-    prevMousePosY = SCREEN_HEIGHT / 2;
     setkeycode();
 }
 

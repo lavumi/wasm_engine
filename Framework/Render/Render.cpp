@@ -1,3 +1,4 @@
+#include "../precompiled.h"
 #include "Shader.h"
 #include "../TestCube.h"
 #include "Camera.h"
@@ -31,17 +32,10 @@ void Renderer::makeShader()
     
     glm::mat4 VP        =  camera->GetVP();
     shader->SetUniformMatrix4fv("VP", (GLfloat*)&VP);
+
     testCube->makeBuffer();
     testCube->setBuffer( shader->shader_program);
 
-// //버퍼 세팅
-//     GLuint vao;
-//     glGenVertexArrays(1, &vao);
-//     glBindVertexArray(vao);
-
-//     glGenBuffers(1, &vbo);
-//     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-//     glBufferData(GL_ARRAY_BUFFER, sizeof(attributes), attributes, GL_DYNAMIC_DRAW);
 }
 
 void Renderer::Init()
@@ -57,6 +51,15 @@ void Renderer::Init()
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
     #endif
+
+
+
+    SDL_DisplayMode DM;
+    SDL_GetCurrentDisplayMode(0, &DM);
+    auto Width = DM.w;
+    auto Height = DM.h;
+
+    std::cout << "Native WindowSize " << Width << ", " << Height << std::endl;
 
     window = SDL_CreateWindow("Lavumi", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
     context = SDL_GL_CreateContext(window);
@@ -85,18 +88,8 @@ void Renderer::Init()
 
 void Renderer::Update(float deltaTime)
 {
-    shader->Update(deltaTime);
-    // for (GLuint i = 0; i < length_of_attributes; i = i + 5)
-    // {
-    //     float x = attributes[i];
-    //     float y = attributes[i + 1];
-
-    //     attributes[i] = x * cos(rotation_angle) - y * sin(rotation_angle);
-    //     attributes[i + 1] = y * cos(rotation_angle) + x * sin(rotation_angle);
-    // }
-
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(attributes), attributes, GL_DYNAMIC_DRAW);
-
+    //shader->Update(deltaTime);
+    testCube->Update(deltaTime);
     glm::mat4 VP        =  camera->GetVP();
     shader->SetUniformMatrix4fv("VP", (GLfloat*)&VP);
 }
@@ -114,7 +107,17 @@ void Renderer::Render()
         glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
+
+{
+    testCube->Render();
+}
+
     SDL_GL_SwapWindow(window);
 }
 
+void Renderer::toggleFullscreen(){
+    Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
+    bool IsFullscreen = SDL_GetWindowFlags(window) & FullscreenFlag;
+    SDL_SetWindowFullscreen(window, IsFullscreen ? 0 : FullscreenFlag);
+    SDL_ShowCursor(IsFullscreen);
+}

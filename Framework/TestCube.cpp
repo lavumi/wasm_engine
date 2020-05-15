@@ -1,3 +1,4 @@
+#include "./Render/Shader.h"
 #include "TestCube.h"
 
 static const GLfloat g_vertex_buffer_data[] = {
@@ -241,6 +242,7 @@ static const GLfloat g_color_buffer_data[] = {
 
 TestCube::TestCube(/* args */)
 {
+	worldMatrix = glm::mat4(1.0f);
 }
 
 TestCube::~TestCube()
@@ -261,7 +263,7 @@ void TestCube::makeBuffer()
 
 void TestCube::setBuffer(GLuint shaderProgram)
 {
-
+	this->shader = shaderProgram;
 	GLuint vertexPosition_modelspace = glGetAttribLocation(shaderProgram, "vertexPosition_modelspace");
 	checkGL_error("vertexPosition_modelspace");
 	GLuint vertexColor = glGetAttribLocation(shaderProgram, "vertexColor");
@@ -293,4 +295,19 @@ void TestCube::setBuffer(GLuint shaderProgram)
 		0,			 // stride
 		(void *)0	 // array buffer offset
 	);
+}
+
+void TestCube::Update(float deltaTime){
+	worldMatrix = glm::rotate(
+        worldMatrix,
+        glm::radians(0.7f),
+        glm::vec3(0.0f, 1.0f, 0.0f)
+    );
+
+}
+
+void TestCube::Render(){
+	GLuint ModelID = glGetUniformLocation(shader, "Model");
+    glUniformMatrix4fv(ModelID, 1, GL_FALSE, (GLfloat*)&worldMatrix);
+	glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
 }
