@@ -23,17 +23,7 @@ Renderer::~Renderer()
 
 void Renderer::makeShader()
 {
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
     shader->makeShader();
-    shader->setShader();
-    
-    glm::mat4 VP        =  camera->GetVP();
-    shader->SetUniformMatrix4fv("VP", (GLfloat*)&VP);
-
-    testCube->makeBuffer();
     testCube->setBuffer( shader->shader_program);
 
 }
@@ -89,9 +79,12 @@ void Renderer::Init()
 void Renderer::Update(float deltaTime)
 {
     //shader->Update(deltaTime);
-    testCube->Update(deltaTime);
+
+
     glm::mat4 VP        =  camera->GetVP();
     shader->SetUniformMatrix4fv("VP", (GLfloat*)&VP);
+
+    testCube->Update(deltaTime);
 }
 
 void Renderer::SetCamera( Camera* pCamera ){

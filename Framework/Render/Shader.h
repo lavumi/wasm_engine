@@ -17,10 +17,10 @@ public:
     ~Shader();
 
     void makeShader();
-    void setShader();
+    //void setShader();
 
     void SetUniformMatrix4fv(std::string name, GLfloat* value );
-    glm::mat4 Model;
+   // glm::mat4 Model;
 };
 
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "precompiled.h"
 class Shader;
-class TestCube
+class Texture;
+class TestCube : public Node
 {
 private:
     /* data */
@@ -10,18 +10,26 @@ private:
     glm::mat4 worldMatrix;
 
     GLuint shader;
+    GLuint _vao;
+        GLuint vertexbuffer;
+    GLuint colorbuffer;
+    GLuint texcoordbuffer;
+
+    Texture* texture;
+
 public:
     TestCube(/* args */);
     ~TestCube();
 
-    void makeBuffer();
-    	GLuint vertexbuffer;
-        	GLuint colorbuffer;
+
+    void Init();
+        void Update(float deltaTime);
+
+
 
     void setBuffer(GLuint shaderProgram);
+    void makeBuffer();
 
-    void Update(float deltaTime);
     void Render();
 };
-
-
+ 
