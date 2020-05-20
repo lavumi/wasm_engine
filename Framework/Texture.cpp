@@ -27,7 +27,8 @@ void Texture::LoadTexture(std::string path ){
 
 
     int width, height, nrChannels;
-    unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0); 
+    unsigned char *data = stbi_load((SDL_GetBasePath() + path).c_str(), &width, &height, &nrChannels, 4); 
+
 
     if ( data ){
         glTexImage2D(
@@ -37,7 +38,7 @@ void Texture::LoadTexture(std::string path ){
             width, //넓이, 높이
             height, 
             0, //무조건 0 ?
-            GL_RGB,     //원본 이미지 포멧
+            GL_RGBA,     //원본 이미지 포멧
             GL_UNSIGNED_BYTE, //원본 이미지 데이터 타입
             data    //실제 데이터
             );
@@ -45,6 +46,8 @@ void Texture::LoadTexture(std::string path ){
     }
     else {
         std::cout << "Image Load Fail " << path << std::endl;
+        if( stbi_failure_reason() )
+            std::cout << stbi_failure_reason() << std::endl;
     }
     stbi_image_free(data);
 
