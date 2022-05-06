@@ -2,7 +2,7 @@
 
 class Shader;
 class Texture;
-class TestCube : public Node
+class ThreeCube : public Node
 {
 private:
     /* data */
@@ -11,15 +11,16 @@ private:
 
     GLuint shader;
     GLuint _vao;
-        GLuint vertexbuffer;
-    GLuint colorbuffer;
-    GLuint texcoordbuffer;
+        GLuint vertexBuffer;
+    GLuint colorBuffer;
+
+    GLuint texCoordBuffer;
 
     Texture* texture;
 
 public:
-    TestCube(/* args */);
-    ~TestCube();
+    ThreeCube(/* args */);
+    ~ThreeCube();
 
 
     void Init();

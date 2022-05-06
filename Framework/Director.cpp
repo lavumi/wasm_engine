@@ -53,8 +53,8 @@ Director::Director(/* args */)
 
     InputHandler::getInstance()->mouseMoveEvent = [&](int inputX, int inputY){
       //  std::cout << "rotation " << inputX << "     " << inputY << std::endl;
-        camera->SetRotate((float)inputX * 0.05f, glm::vec3(0,-1,0));
-        camera->SetRotate((float)inputY * 0.05f, glm::vec3(1,0,0));
+//        camera->SetRotate((float)inputX * 0.05f, glm::vec3(0,-1,0));
+//        camera->SetRotate((float)inputY * 0.05f, glm::vec3(1,0,0));
     };
 }
 

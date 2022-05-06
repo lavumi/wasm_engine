@@ -8,7 +8,7 @@ Camera::Camera(/* args */)
     near = 0.1f;
     far = 100.0f;
 
-    position = glm::vec3(2, 3, -13);
+    position = glm::vec3(0, 0, -13);
     forward = glm::vec3(0, 0, 1);
     up = glm::vec3(0, 1, 0);
 

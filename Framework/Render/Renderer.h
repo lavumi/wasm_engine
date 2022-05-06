@@ -1,6 +1,7 @@
 #pragma once
 #include "../precompiled.h"
 
+class ThreeCube;
 class TestCube;
 class Shader;
 class Camera;
@@ -14,7 +15,7 @@ private:
 
     Shader *shader;
 
-    TestCube *testCube;
+    ThreeCube *testCube;
     Camera* camera;
 
 

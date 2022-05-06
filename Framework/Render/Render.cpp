@@ -1,5 +1,6 @@
 #include "../precompiled.h"
 #include "Shader.h"
+#include "../ThreeCube.h"
 #include "../TestCube.h"
 #include "Camera.h"
 #include "Renderer.h"
@@ -10,7 +11,8 @@ Renderer::Renderer(/* args */)
 {
 
     shader = new Shader();
-    testCube = new TestCube();
+    testCube = new ThreeCube();
+    // testCube = new TestCube();
 }
 
 Renderer::~Renderer()

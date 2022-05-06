@@ -29,8 +29,7 @@ emcc : $(TARGET_EMCC)
 	$(CPP_EMCC) -Wall -Wextra -o $(TARGET_EMCC) $(notdir $(OBJS)) $(LDFLAGS_EMCC)
 
 $(TARGET_EMCC) :
-	$(CPP_EMCC) -std=c++17 -c  $(SRCS)
-
+	$(CPP_EMCC) $(LDFLAGS_EMCC) -std=c++17 -c $(SRCS)
 
 clean : 
 	rm -f *.o
