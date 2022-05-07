@@ -1,6 +1,7 @@
 #pragma once
 
 class Renderer;
+class ThreeCube;
 class Camera;
 class Director
 {
@@ -15,5 +16,6 @@ public:
 
     Renderer* renderer;
     Camera* camera;
+    ThreeCube *testCube;
 };
 

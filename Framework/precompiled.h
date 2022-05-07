@@ -18,6 +18,8 @@
 #include <SDL2/SDL.h>
 
 #include <glm/glm.hpp>
+#include <glm/common.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 

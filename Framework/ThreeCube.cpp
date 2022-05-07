@@ -121,7 +121,16 @@ static const GLfloat g_color_buffer_data[] = {
 
 ThreeCube::ThreeCube(/* args */)
 {
-	worldMatrix = glm::mat4(1.0f);
+
+    for( int x = 0 ; x < 3 ; x ++ ){
+        for( int y = 0 ; y < 3 ; y ++ ){
+            for( int z = 0 ; z < 3 ; z ++ ){
+               worldMatrix[x*9 + y * 3 + z] = glm::translate(glm::mat4(1.0f), glm::vec3( (x-1) * 2.05f , (y-1.0f) * 2.05f , (z-1.0f)*2.05f ));
+            }
+        }
+    }
+
+	// worldMatrix[0] = glm::mat4(1.0f);
 	texture = new Texture();
 }
 
@@ -201,10 +210,24 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 
 void ThreeCube::Update(float deltaTime)
 {
-	worldMatrix = glm::rotate(
-		worldMatrix,
-		glm::radians(0.7f),
-		glm::vec3(0.0f, 1.0f, 0.0f));
+	// worldMatrix = glm::rotate(
+	// 	worldMatrix,
+	// 	glm::radians(0.7f),
+	// 	glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+
+void ThreeCube::ToggleRotate(bool isRotate){
+    canRotate = isRotate;
+}
+
+void ThreeCube::SetRotate(float amount, glm::vec3 axis)
+{
+    if ( canRotate == false ) return;
+    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), amount * 0.03f, axis);
+    for( int i = 0 ; i < 27 ; i ++ ){
+        worldMatrix[i] = rotMatrix * worldMatrix[i];
+    }
 }
 
 void ThreeCube::Render()
@@ -214,11 +237,19 @@ void ThreeCube::Render()
 	glBindVertexArray(_vao);
 
 	GLuint modelID = glGetUniformLocation(shader, "Model");
-	glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *)&worldMatrix);
 
 
-	texture->BindTexture();
-    glDrawArrays(GL_TRIANGLES, 0, 12*3);
+
+    //todo drawcall 27짜리 쓰레기 코드
+    for( int i = 0 ; i < 27 ; i ++ ){
+        glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *)&worldMatrix[i]);
+
+        // texture->BindTexture();
+        glDrawArrays(GL_TRIANGLES, 0, 12*3 );
+    }
+
+
+
 
     glBindVertexArray(0);
 }

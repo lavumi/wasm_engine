@@ -7,9 +7,13 @@ extern "C"
 #else
 #define EMSCRIPTEN_KEEPALIVE
 #endif
-    EMSCRIPTEN_KEEPALIVE void _clickLeft()
+    EMSCRIPTEN_KEEPALIVE void _mouseLeftDown()
     {
-        InputHandler::getInstance()->myfxClickLeft();
+        InputHandler::getInstance()->myfxMouseLeftDown();
+    }
+    EMSCRIPTEN_KEEPALIVE void _mouseLeftUp()
+    {
+        InputHandler::getInstance()->myfxMouseLeftUp();
     }
     EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key)
     {
@@ -142,7 +146,11 @@ void InputHandler::HandleEvent(SDL_Event event)
         _keyboardUp(event.key.keysym.sym);
         break;
     case SDL_MOUSEBUTTONDOWN:
-        _clickLeft();
+        _mouseLeftDown();
+        break;
+
+    case SDL_MOUSEBUTTONUP:
+        _mouseLeftUp();
         break;
 
     case SDL_MOUSEMOTION:

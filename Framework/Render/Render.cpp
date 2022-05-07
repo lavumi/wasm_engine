@@ -11,7 +11,7 @@ Renderer::Renderer(/* args */)
 {
 
     shader = new Shader();
-    testCube = new ThreeCube();
+
     // testCube = new TestCube();
 }
 
@@ -30,8 +30,10 @@ void Renderer::makeShader()
 
 }
 
-void Renderer::Init()
+void Renderer::Init(ThreeCube* cube )
 {
+
+    testCube = cube;
     SDL_Init(SDL_INIT_EVERYTHING);
 
     #if __EMSCRIPTEN__
@@ -70,10 +72,6 @@ void Renderer::Init()
     const GLubyte *version;
     version = glGetString(GL_VERSION);
     std::cout << "version: " << version << std::endl;
-
-    InputHandler::getInstance()->myfxClickLeft = [&]{
-        background_is_black = !background_is_black;
-    };
 
     makeShader();
 }

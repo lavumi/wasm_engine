@@ -23,7 +23,8 @@ public:
   void HandleMouseInput( SDL_MouseMotionEvent mouseMotion );
   void HandleMouseInput( int deltaX, int deltaY );
 
-  std::function<void()> myfxClickLeft;
+  std::function<void()> myfxMouseLeftDown;
+  std::function<void()> myfxMouseLeftUp;
   bool SetKeyboardDownEvent(int, std::function<void()>);
   bool SetKeyboardUpEvent(int, std::function<void()>);
 

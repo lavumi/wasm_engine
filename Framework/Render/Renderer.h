@@ -15,7 +15,6 @@ private:
 
     Shader *shader;
 
-    ThreeCube *testCube;
     Camera* camera;
 
 
@@ -24,7 +23,7 @@ public:
     Renderer(/* args */);
     ~Renderer();
 
-    void Init();
+    void Init( ThreeCube* cube);
     void Update(float deltaTime);
     void Render();
     void SetCamera( Camera* camera );
@@ -37,6 +36,9 @@ public:
 
     const char *fragmentSource;
 
+
+
+    ThreeCube *testCube;
     bool background_is_black = true;
     void toggleFullscreen();
 };

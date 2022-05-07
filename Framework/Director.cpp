@@ -1,6 +1,8 @@
 #include "precompiled.h"
 #include "Render/Camera.h" 
 #include "Director.h"
+#include "ThreeCube.h"
+
 
 
 Director::Director(/* args */)
@@ -10,8 +12,11 @@ Director::Director(/* args */)
     InputHandler::getInstance();
     renderer = new Renderer();
     camera = new Camera();
+
+    testCube = new ThreeCube();
     renderer->SetCamera(camera);
-    renderer->Init();
+    renderer->Init(testCube);
+    
 
 
     //left
@@ -44,17 +49,31 @@ Director::Director(/* args */)
     });//R
 
 
+
+    // InputHandler::getInstance()->SetKeyboardDownEvent(122 , [&]{
+    //     testCube->ToggleRotate();
+    // });//L
+    InputHandler::getInstance()->SetKeyboardUpEvent(122, [&]{
+
+    });//R
+
     InputHandler::getInstance()->SetKeyboardUpEvent(102 , [&]{
         renderer->toggleFullscreen();
     });//L
 
 
+    InputHandler::getInstance()->myfxMouseLeftUp = [&]{
+        testCube->ToggleRotate(false);
+    };
 
+    InputHandler::getInstance()->myfxMouseLeftDown = [&]{
+        testCube->ToggleRotate(true);
+    };
 
     InputHandler::getInstance()->mouseMoveEvent = [&](int inputX, int inputY){
       //  std::cout << "rotation " << inputX << "     " << inputY << std::endl;
-//        camera->SetRotate((float)inputX * 0.05f, glm::vec3(0,-1,0));
-//        camera->SetRotate((float)inputY * 0.05f, glm::vec3(1,0,0));
+       testCube->SetRotate((float)inputX * 0.05f, glm::vec3(0,5,0));
+       testCube->SetRotate((float)inputY * 0.05f, glm::vec3(-5,0,0));
     };
 }
 
