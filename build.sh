@@ -1,5 +1,4 @@
 echo 
-echo 
 echo ------ select build type ------
 echo 1. MAC
 echo 2. WASM
@@ -17,7 +16,7 @@ if [ $input -eq 2 ]; then
     mkdir wasm
     make clean
     make emcc
-    scp -r wasm lavumi:Works/WebPage/public
+    scp -r build/wasm lavumi:Works/WebPage/public
 fi
 
 

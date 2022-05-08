@@ -49,5 +49,3 @@ int main()
     delete director;
     return 0;
 }
-
-// g++ main.cpp Framework/InputHandler.cpp Framework/Render/Camera.cpp Framework/Render/Render.cpp Framework/Render/Shader.cpp Framework/TestCube.cpp Framework/Director.cpp -std=c++17 -Wall -lopengl32 -lSDL2 -lglew32 -g -o build/win/app.exe

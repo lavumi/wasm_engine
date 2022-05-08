@@ -4,9 +4,6 @@ brew install glm
 
 
 
-
-
-
 2. WASM BUILD
 
 # Get the emsdk repo
@@ -26,3 +23,12 @@ git pull
 
 # Activate PATH and other environment variables in the current terminal
 source ./emsdk_env.sh
+
+
+
+
+3. TODO works
+- 화면 전환시에 ( dt 가 큰 값이 오면) 큐브 틀어짐
+- emcc 빌드할 때 REMOTE_PACKAGE_PATH 변경 필요
+- 변경한 것만 빌드하는 cmake
+- emcc 빌드 매번 등록 안해도 되게...

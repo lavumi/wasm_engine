@@ -1,7 +1,8 @@
 CPP = g++
 CPP_EMCC = emcc
 
-WORKSPACE = ../.
+WORKSPACE = .
+BUILDFOLDER = ./build
 
 SRCDIR1 = $(WORKSPACE)/Framework
 SRCDIR2 = $(WORKSPACE)/Framework/Render
@@ -14,8 +15,8 @@ LDFLAGS_EMCC = -s USE_SDL=2 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s 
 SRCS = $(foreach dir, $(WORKSPACE) $(SRCDIR1) $(SRCDIR2), $(wildcard $(dir)/*.cpp))
 OBJS = $(SRCS:.cpp=.o)
 
-TARGET = mac/main
-TARGET_EMCC = wasm/index.js
+TARGET = build/mac/main
+TARGET_EMCC = build/wasm/index.js
 
 all : $(TARGET)
 	$(CPP) -Wall -Wextra -o $(TARGET) $(notdir $(OBJS)) $(LDFLAGS)
