@@ -40,11 +40,11 @@ static const GLfloat g_vertex_buffer_data[] = {
 
         //back
         -1.0f, 1.0f, 1.0f,
-        -1.0f,-1.0f, 1.0f,
         1.0f,-1.0f, 1.0f,
-
         1.0f, 1.0f, 1.0f,
+
         -1.0f, 1.0f, 1.0f,
+        -1.0f,-1.0f, 1.0f,
         1.0f,-1.0f, 1.0f,
 
 
@@ -54,9 +54,9 @@ static const GLfloat g_vertex_buffer_data[] = {
         1.0f,-1.0f,-1.0f,
         1.0f, 1.0f,-1.0f,
 
-        1.0f,-1.0f,-1.0f,
         1.0f, 1.0f, 1.0f,
         1.0f,-1.0f, 1.0f,
+        1.0f,-1.0f,-1.0f,
 
 
 
@@ -119,20 +119,104 @@ static const GLfloat g_color_buffer_data[] = {
 };
 
 
+static const GLfloat g_texCoord_buffer_data[] = {
+        0.0f,  0.0f,
+        0.0f,  1.0f,
+        1.0f,  1.0f,
+        0.0f,  0.0f,
+        1.0f,  1.0f,
+        1.0f,  0.0f,
+        
+
+
+
+        0.0f, 0.0f, //좌상
+        1.0f, 1.0f, //우하
+        1.0f, 0.0f, //우상
+        0.0f, 0.0f, //좌상
+        0.0f, 1.0f, //좌하
+        1.0f, 1.0f, //우하
+       
+
+        0.0f, 0.0f, //좌상
+        1.0f, 1.0f, //우하
+        1.0f, 0.0f, //우상
+        0.0f, 0.0f, //좌상
+        0.0f, 1.0f, //좌하
+        1.0f, 1.0f, //우하
+        
+
+        0.0f, 0.0f, //좌상
+        1.0f, 1.0f, //우하
+        1.0f, 0.0f, //우상
+        0.0f, 0.0f, //좌상
+        0.0f, 1.0f, //좌하
+        1.0f, 1.0f, //우하
+
+
+        0.0f, 0.0f, //좌상
+        1.0f, 1.0f, //우하
+        1.0f, 0.0f, //우상
+        0.0f, 0.0f, //좌상
+        0.0f, 1.0f, //좌하
+        1.0f, 1.0f, //우하
+        
+        0.0f,  0.0f,
+        0.0f,  1.0f,
+        1.0f,  1.0f,
+        0.0f,  0.0f,
+        1.0f,  1.0f,
+        1.0f,  0.0f,
+};
+
+static uint pitch[3][9] = {
+    {0, 1, 2, 9, 10, 11, 18, 19, 20},
+    {3, 4, 5, 12, 13, 14, 21, 22, 23},
+    {6, 7, 8, 15, 16, 17, 24, 25, 26}
+};
+
+
+static uint roll[3][9] = {
+    {0,1,2,3,4,5,6,7,8},
+    {9,10,11,12,13,14,15,16,17},
+    {18,19,20,21,22,23,24,25,26}
+};
+
+static uint yaw[3][9] = {
+    {0,3, 6, 9, 12, 15, 18, 21, 24},
+    {1,4, 7, 10, 13, 16, 19, 22, 25},
+    {2,5, 8, 11, 14, 17, 20, 23, 26}
+};
+
+
+
+/**
+ * @brief inits
+ * 
+ * 
+ *  24  15  6    25  16  7      26  17  8
+ *  21  12  3    22  13  4      23  14  5
+ *  18  9   0    19  10  1      20  11  2
+ */
 ThreeCube::ThreeCube(/* args */)
 {
 
     for( int x = 0 ; x < 3 ; x ++ ){
         for( int y = 0 ; y < 3 ; y ++ ){
             for( int z = 0 ; z < 3 ; z ++ ){
-               worldMatrix[x*9 + y * 3 + z] = glm::translate(glm::mat4(1.0f), glm::vec3( (x-1) * 2.05f , (y-1.0f) * 2.05f , (z-1.0f)*2.05f ));
+               modelMatrix[x*9 + y * 3 + z] = glm::translate(glm::mat4(1.0f), glm::vec3( (x-1) * 2.05f , (y-1.0f) * 2.05f , (z-1.0f)*2.05f ));
+               rpyMatrix[x*9 + y * 3 + z] = glm::mat4(1.0f);
             }
         }
     }
 
-	// worldMatrix[0] = glm::mat4(1.0f);
+    worldMatrix = glm::mat4(1.0f);
 	texture = new Texture();
+
 }
+
+
+
 
 ThreeCube::~ThreeCube()
 {
@@ -142,6 +226,7 @@ ThreeCube::~ThreeCube()
 
 void ThreeCube::Init()
 {
+
 }
 
 void ThreeCube::makeBuffer()
@@ -164,6 +249,10 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
+
+    glGenBuffers(1, &texCoordBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_texCoord_buffer_data), g_texCoord_buffer_data, GL_STATIC_DRAW);
 
 	GLuint vertexPosition = glGetAttribLocation(shader, "vertexPosition");
 	GLuint vertexColor = glGetAttribLocation(shader, "vertexColor");
@@ -191,29 +280,158 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 		(void *)0);
 	glEnableVertexAttribArray(vertexColor);
 
-//	glBindBuffer(GL_ARRAY_BUFFER, texcoordbuffer);
-//	glVertexAttribPointer(
-//		texCoord,
-//		2,
-//		GL_FLOAT,
-//		GL_FALSE,
-//		0,
-//		(void *)0);
-//	glEnableVertexAttribArray(texCoord);
-//
-//	texture->LoadTexture("cubetexture.png");
+	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
+	glVertexAttribPointer(
+		texCoord,
+		2,
+		GL_FLOAT,
+		GL_FALSE,
+		0,
+		(void *)0);
+	glEnableVertexAttribArray(texCoord);
+
+    texture->LoadTexture("icons/1.jpg");
+
 
 	// glActiveTexture(GL_TEXTURE0); // activate the texture unit first before binding texture
 	// glBindTexture(GL_TEXTURE_2D, *texture);
     glBindVertexArray(0);
 }
 
-void ThreeCube::Update(float deltaTime)
-{
-	// worldMatrix = glm::rotate(
-	// 	worldMatrix,
-	// 	glm::radians(0.7f),
-	// 	glm::vec3(0.0f, 1.0f, 0.0f));
+
+
+
+
+
+void ThreeCube::_finishRpy( int rpyIndex ){
+    for( int i = 0 ; i < 27 ; i ++ ){
+        modelMatrix[i] = rpyMatrix[i] * modelMatrix[i];
+        rpyMatrix[i] = glm::mat4(1.0f);
+
+
+
+
+    }
+
+    uint* targetArr = nullptr;
+    if ( rpyIndex > 5 ){
+        targetArr = roll[rpyIndex%3];
+    }
+    else if ( rpyIndex > 2){
+        targetArr = pitch[rpyIndex%3];
+    }
+    else {
+        targetArr = yaw[rpyIndex%3];
+    }
+
+
+
+    // 0->6
+    // 2->0
+    // 6->8
+    // 8->2
+
+
+    // 1->3
+    // 3->7
+    // 5->1
+    // 7->5
+
+
+
+    /**
+     * @brief 
+     * 
+     *  8   5   2
+     *  7   4   1
+     *  6   3   0
+     *  
+     * 
+     *  6   7   8
+     *  3   4   5   
+     *  0   1   2
+     */
+
+
+    glm::mat4 temp = modelMatrix[targetArr[0]];
+    modelMatrix[targetArr[0]] = modelMatrix[targetArr[2]];
+    modelMatrix[targetArr[2]] = modelMatrix[targetArr[8]];
+    modelMatrix[targetArr[8]] = modelMatrix[targetArr[6]];
+    modelMatrix[targetArr[6]] = temp;
+    
+    temp = modelMatrix[targetArr[1]];
+    modelMatrix[targetArr[1]] = modelMatrix[targetArr[5]];
+    modelMatrix[targetArr[5]] = modelMatrix[targetArr[7]];
+    modelMatrix[targetArr[7]] = modelMatrix[targetArr[3]];
+    modelMatrix[targetArr[3]] = temp;
+
+}
+
+void ThreeCube::RunCube(int index, float angle){
+
+    float radian = glm::radians(angle*90.0f);
+    float w = glm::cos(radian / 2);
+    float v = glm::sin(radian / 2);
+
+    uint* targetArr = nullptr;
+    glm::vec3 axis;
+
+
+    if ( index > 5){
+        axis = glm::vec3(1,0,0);
+        targetArr = roll[index%3];
+    }
+    else if ( index > 2 ){
+        axis = glm::vec3(0,-1,0);
+        targetArr = pitch[index%3];
+    }
+    else {
+        axis = glm::vec3(0,0,1);
+        targetArr = yaw[index%3];
+    }
+
+    glm::vec3 qv = axis * v;
+    glm::quat quaternion(w, qv);
+    glm::mat4 quatTransform = glm::mat4_cast(quaternion);
+
+    for( int i = 0 ; i < 9 ; i ++ ){
+        int targetIndex = targetArr[i];
+        rpyMatrix[targetIndex] = quatTransform;
+    }
+}
+
+int testSequence[3] = {3, 6, 7};
+int testCounter = 0;
+
+void ThreeCube::Update(float deltaTime){
+
+    return;
+    timeSpend += deltaTime;
+
+    if ( testCounter > 3)
+    return;
+
+    if ( timeSpend > 1.0f ){
+        // rpyRnd = testSequence[Counter++];
+        rpyRnd = rand() % 9; 
+        timeSpend = 0.0f;
+        return;
+    }
+
+
+    if ( rpyRnd == -1 )
+        return;
+
+
+    RunCube(rpyRnd, timeSpend / 0.7f );
+
+    if ( timeSpend >= 0.7f ){
+        RunCube(rpyRnd, 1.0f );
+        _finishRpy(rpyRnd);
+        rpyRnd = -1;
+    }
+
+
 }
 
 
@@ -225,9 +443,7 @@ void ThreeCube::SetRotate(float amount, glm::vec3 axis)
 {
     if ( canRotate == false ) return;
     glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), amount * 0.03f, axis);
-    for( int i = 0 ; i < 27 ; i ++ ){
-        worldMatrix[i] = rotMatrix * worldMatrix[i];
-    }
+    worldMatrix = rotMatrix * worldMatrix;
 }
 
 void ThreeCube::Render()
@@ -239,12 +455,15 @@ void ThreeCube::Render()
 	GLuint modelID = glGetUniformLocation(shader, "Model");
 
 
-
+        texture->BindTexture();
     //todo drawcall 27짜리 쓰레기 코드
-    for( int i = 0 ; i < 27 ; i ++ ){
-        glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *)&worldMatrix[i]);
+    for( int i = 0 ; i < 27 ; i ++ )
+    {
 
-        // texture->BindTexture();
+        glm::mat4 finalMat = worldMatrix * rpyMatrix[i] * modelMatrix[i];
+        glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *)&finalMat);
+
+
         glDrawArrays(GL_TRIANGLES, 0, 12*3 );
     }
 

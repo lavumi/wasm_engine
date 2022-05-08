@@ -2,52 +2,102 @@
 #include "Camera.h"
 #include "Shader.h"
 
+
+
+
+
+
 Shader::Shader(/* args */)
 {
+//     vertexSource = R"glsl(
+//         #version 100
+// // Input vertex data, different for all executions of this shader.
+// attribute vec3 vertexPosition;
+// attribute vec3 vertexColor;
+// attribute vec2 aTexCoord;
+
+// // Output data ; will be interpolated for each fragment.
+// varying mediump vec3 fragmentColor;
+
+
+// // Values that stay constant for the whole mesh.
+// uniform mat4 VP;
+// uniform mat4 Model;
+// void main(){	
+
+// 	// Output position of the vertex, in clip space : MVP * position
+// 	gl_Position =  VP * Model * vec4(vertexPosition,1);
+
+// 	// The color of each vertex will be interpolated
+// 	// to produce the color of each fragment
+// 	fragmentColor = vertexColor;
+
+
+//     // texCoord = aTexCoord;
+// }
+// )glsl";
+
+//     fragmentSource = R"glsl(
+//                 #version 100
+// // Interpolated values from the vertex shaders
+// varying mediump vec3 fragmentColor;
+// varying mediump vec2 texCoord;
+// uniform sampler2D myTexture;
+
+// void main(){
+
+// 	// Output color = color specified in the vertex shader, 
+// 	// interpolated between all 3 surrounding vertices
+// 	gl_FragColor = vec4(fragmentColor,1);
+
+//     // mediump vec4 sampled = texture2D(myTexture, texCoord);
+//     // gl_FragColor =  sampled;//vec4(texCoord, 1,1);
+
+// }
+// )glsl";
+
+
+
     vertexSource = R"glsl(
         #version 100
-// Input vertex data, different for all executions of this shader.
-attribute vec3 vertexPosition;
-attribute vec3 vertexColor;
+        // Input vertex data, different for all executions of this shader.
+        attribute vec3 vertexPosition;
+        attribute vec2 aTexCoord;
 
-// Output data ; will be interpolated for each fragment.
-varying mediump vec3 fragmentColor;
+        // Output data ; will be interpolated for each fragment.
+        varying mediump vec2 texCoord;
+
+        // Values that stay constant for the whole mesh.
+        uniform mat4 VP;
+        uniform mat4 Model;
 
 
-// Values that stay constant for the whole mesh.
-uniform mat4 VP;
-uniform mat4 Model;
-void main(){	
+        void main(){	
 
-	// Output position of the vertex, in clip space : MVP * position
-	gl_Position =  VP * Model * vec4(vertexPosition,1);
+            // Output position of the vertex, in clip space : MVP * position
+            gl_Position =  VP * Model * vec4(vertexPosition,1);
 
-	// The color of each vertex will be interpolated
-	// to produce the color of each fragment
-	fragmentColor = vertexColor;
-//    texCoord = aTexCoord;
-}
-)glsl";
+            texCoord = aTexCoord;
+        }
+        )glsl";
 
-    fragmentSource = R"glsl(
-                #version 100
-// Interpolated values from the vertex shaders
-varying mediump vec3 fragmentColor;
-varying mediump vec2 texCoord;
-uniform sampler2D myTexture;
+            fragmentSource = R"glsl(
+        #version 100
+        // Interpolated values from the vertex shaders
+        varying mediump vec2 texCoord;
+        uniform sampler2D myTexture;
 
-void main(){
+        void main(){
 
-	// Output color = color specified in the vertex shader, 
-	// interpolated between all 3 surrounding vertices
-	gl_FragColor = vec4(fragmentColor,1);
-    //mediump vec4 sampled = texture2D(myTexture, texCoord);
-    //gl_FragColor =  sampled;//vec4(texCoord, 1,1);
+            // Output color = color specified in the vertex shader, 
+            // interpolated between all 3 surrounding vertices
+            // gl_FragColor = vec4(fragmentColor,1);
 
-}
-)glsl";
-  //  makeShader();
+            mediump vec4 sampled = texture2D(myTexture, texCoord);
+            gl_FragColor =  sampled;//vec4(texCoord, 1,1);
 
+        }
+        )glsl";
 
 }
 

@@ -36,16 +36,21 @@ Director::Director(/* args */)
 
         //left
     InputHandler::getInstance()->SetKeyboardDownEvent(119 , [&]{
-        camera->SetMoveFront( true );
+        // camera->SetMoveFront( true );
+        // testCube->Roll(1,1);
     });//L
+
+    InputHandler::getInstance()->SetKeyboardUpEvent(119 , [&]{
+        // camera->SetMoveFront( false );
+    });//L
+
+
     InputHandler::getInstance()->SetKeyboardDownEvent(115, [&]{
-        camera->SetMoveBack( true );
+        // camera->SetMoveBack( true );
+        // testCube->Roll(2,1);
     });//R
-        InputHandler::getInstance()->SetKeyboardUpEvent(119 , [&]{
-        camera->SetMoveFront( false );
-    });//L
     InputHandler::getInstance()->SetKeyboardUpEvent(115, [&]{
-        camera->SetMoveBack( false );
+        // camera->SetMoveBack( false );
     });//R
 
 

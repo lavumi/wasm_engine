@@ -7,7 +7,12 @@ class ThreeCube : public Node
 private:
     /* data */
 
-    glm::mat4 worldMatrix[27];
+
+    glm::mat4 rpyMatrix[27];
+    glm::mat4 worldMatrix;
+    glm::mat4 modelMatrix[27];
+
+
 
     GLuint shader;
     GLuint _vao;
@@ -19,7 +24,14 @@ private:
     Texture* texture;
 
 
+
+    float timeSpend = 0.0f;
+    int rpyRnd = -1;
     bool canRotate = false;
+
+
+    void _finishRpy(int rpyIndex);
+
 public:
     ThreeCube(/* args */);
     ~ThreeCube();
@@ -28,8 +40,8 @@ public:
     void Init();
     void Update(float deltaTime);
 
-
-
+    void RunCube(int index, float angle);
+    
     void setBuffer(GLuint shaderProgram);
     void makeBuffer();
 

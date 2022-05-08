@@ -11,6 +11,10 @@ private:
     const char *vertexSource ;
     const char *fragmentSource ;
 
+
+    const char *textureVertexSource ;
+    const char *textureFragmentSource ;
+
 public:
     GLuint shader_program;
     Shader(/* args */);

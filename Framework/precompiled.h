@@ -3,13 +3,15 @@
 #include <emscripten/emscripten.h>
 #endif
 
+
+#include <stdlib.h>
 #include <map>
 #include <functional>
 #include <vector>
 #include <iostream>
 #include <cmath>
 #include <string>
-#include <math.h>
+
 
 
 
