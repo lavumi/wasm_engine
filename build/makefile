@@ -7,11 +7,9 @@ SRCDIR1 = $(WORKSPACE)/Framework
 SRCDIR2 = $(WORKSPACE)/Framework/Render
 
 LDFLAGS = -lglew -lsdl2 -framework OpenGL
-LDFLAGS_EMCC = -s WASM=1 -s USE_SDL=2 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -O3
+LDFLAGS_EMCC = -s USE_SDL=2 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s USE_GLFW=3 -O3 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s SDL2_IMAGE_FORMATS="['png']" --preload-file data
 
 
-
-# SRCS = $(foreach dir, . ..  $(SRCDIR1) $(SRCDIR2) $(SRCDIR3) $(SRCDIR4) $(SRCDIR5) $(SRCDIR6) $(SRCDIR7) $(SRCDIR8), $(wildcard $(dir)/*.cpp))
 
 SRCS = $(foreach dir, $(WORKSPACE) $(SRCDIR1) $(SRCDIR2), $(wildcard $(dir)/*.cpp))
 OBJS = $(SRCS:.cpp=.o)
@@ -29,7 +27,7 @@ emcc : $(TARGET_EMCC)
 	$(CPP_EMCC) -Wall -Wextra -o $(TARGET_EMCC) $(notdir $(OBJS)) $(LDFLAGS_EMCC)
 
 $(TARGET_EMCC) :
-	$(CPP_EMCC) $(LDFLAGS_EMCC) -std=c++17 -c $(SRCS)
+	$(CPP_EMCC) -std=c++17 -c $(SRCS)
 
 clean : 
 	rm -f *.o

@@ -298,7 +298,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 	glEnableVertexAttribArray(texCoord);
 
 
-    texture->LoadTexture("atlas.jpg");
+    texture->LoadTexture("data/atlas.png");
     texture->BindTexture();
 	// glActiveTexture(GL_TEXTURE0); // activate the texture unit first before binding texture
 	// glBindTexture(GL_TEXTURE_2D, *texture);
@@ -452,6 +452,13 @@ void ThreeCube::SetRotate(float amount, glm::vec3 axis)
     worldMatrix = rotMatrix * worldMatrix;
 }
 
+
+//Compile command : "D:\exarion\vendor\emscripten\SDK\emscripten\1.35.0\emcc" Source.cpp -s USE_SDL=2 -s FULL_ES2=1 -o test.html -O3 
+// -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s SDL2_IMAGE_FORMATS="['jpg']" -Werror -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SIMD=1 -s NO_EXIT_RUNTIME=1 -s AGGRESSIVE_VARIABLE_ELIMINATION=1 -s SEPARATE_ASM=1
+//  -s EXPORTED_FUNCTIONS="['_main', '_mainLoop']" 
+// -std=c++11 -Werror -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SIMD=1 -s NO_EXIT_RUNTIME=1 -s AGGRESSIVE_VARIABLE_ELIMINATION=1 -s SEPARATE_ASM=1 -I"D:\exarion\vendor\glm"
+	
+
 void ThreeCube::Render()
 {
 	glUseProgram(shader);
@@ -459,8 +466,7 @@ void ThreeCube::Render()
 	glBindVertexArray(_vao);
 
 	GLuint modelID = glGetUniformLocation(shader, "Model");
-
-
+	
 
     //todo drawcall 27짜리 쓰레기 코드
     for( int i = 0 ; i < 27 ; i ++ )

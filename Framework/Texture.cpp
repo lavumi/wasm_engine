@@ -25,7 +25,6 @@ void Texture::LoadTexture(std::string path ){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-
     int width, height, nrChannels;
     unsigned char *data = stbi_load((SDL_GetBasePath() + path).c_str(), &width, &height, &nrChannels, 4); 
 
@@ -34,7 +33,7 @@ void Texture::LoadTexture(std::string path ){
         glTexImage2D(
             GL_TEXTURE_2D, //위에 GL_TEXTURE_2D에 바인딩된 곳을 타겟
             0, //mipmap 레벨
-            GL_RGB, //텍스쳐 포멧
+            GL_RGBA, //텍스쳐 포멧
             width, //넓이, 높이
             height, 
             0, //무조건 0 ?

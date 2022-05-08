@@ -17,6 +17,7 @@ if [ $input -eq 2 ]; then
     mkdir wasm
     make clean
     make emcc
+    scp -r wasm lavumi:Works/WebPage/public
 fi
 
 

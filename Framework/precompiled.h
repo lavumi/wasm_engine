@@ -15,15 +15,16 @@
 
 
 
+
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
-#include <glm/glm.hpp>
-#include <glm/common.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
+#include "../libs/glm/glm.hpp"
+#include "../libs/glm/common.hpp"
+#include "../libs/glm/gtc/quaternion.hpp"
+#include "../libs/glm/gtc/matrix_transform.hpp"
 
 
 
