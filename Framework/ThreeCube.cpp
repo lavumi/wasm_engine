@@ -120,53 +120,60 @@ static const GLfloat g_color_buffer_data[] = {
 
 
 static const GLfloat g_texCoord_buffer_data[] = {
-        0.0f,  0.0f,
-        0.0f,  1.0f,
-        1.0f,  1.0f,
-        0.0f,  0.0f,
-        1.0f,  1.0f,
-        1.0f,  0.0f,
+
+        //0, 0 to 0.33333,0.5
+        0.0f,       0.0f,
+        0.0f,       0.5f,
+        0.33333f,   0.5f,
+        0.0f,       0.0f,
+        0.33333f,   0.5f,
+        0.33333f,   0.0f,
         
 
 
-
-        0.0f, 0.0f, //좌상
-        1.0f, 1.0f, //우하
-        1.0f, 0.0f, //우상
-        0.0f, 0.0f, //좌상
-        0.0f, 1.0f, //좌하
-        1.0f, 1.0f, //우하
+        //0.33333 , 0 to 0.66666,0.5
+        0.33333f,       0.0f, //좌상
+        0.66666f,   0.5f, //우하
+        0.66666f,   0.0f, //우상
+        0.33333f,       0.0f, //좌상
+        0.33333f,       0.5f, //좌하
+        0.66666f,   0.5f, //우하
        
 
-        0.0f, 0.0f, //좌상
-        1.0f, 1.0f, //우하
-        1.0f, 0.0f, //우상
-        0.0f, 0.0f, //좌상
-        0.0f, 1.0f, //좌하
-        1.0f, 1.0f, //우하
+         //0.66666 , 0 to 1.0,0.5
+        0.66666f,   0.0f, //좌상
+        1.0f,       0.5f, //우하
+        1.0f,       0.0f, //우상
+        0.66666f,   0.0f, //좌상
+        0.66666f,   0.5f, //좌하
+        1.0f,       0.5f, //우하
         
 
-        0.0f, 0.0f, //좌상
-        1.0f, 1.0f, //우하
-        1.0f, 0.0f, //우상
-        0.0f, 0.0f, //좌상
-        0.0f, 1.0f, //좌하
-        1.0f, 1.0f, //우하
+
+        //0,0.5 to 0.33333 ,1.0
+        0.0f,       0.5f, //좌상
+        0.33333f,   1.0f, //우하
+        0.33333f,   0.5f, //우상
+        0.0f,       0.5f, //좌상
+        0.0f,       1.0f, //좌하
+        0.33333f,   1.0f, //우하
 
 
-        0.0f, 0.0f, //좌상
-        1.0f, 1.0f, //우하
-        1.0f, 0.0f, //우상
-        0.0f, 0.0f, //좌상
-        0.0f, 1.0f, //좌하
-        1.0f, 1.0f, //우하
+        // 0.33333 , 0.5 to 0.66666 , 1.0
+        0.33333f,   0.5f, //좌상
+        0.66666f,   1.0f, //우하
+        0.66666f,   0.5f, //우상
+        0.33333f,   0.5f, //좌상
+        0.33333f,   1.0f, //좌하
+        0.66666f,   1.0f, //우하
         
-        0.0f,  0.0f,
-        0.0f,  1.0f,
-        1.0f,  1.0f,
-        0.0f,  0.0f,
-        1.0f,  1.0f,
-        1.0f,  0.0f,
+        // 0.66666 , 0.5 to 1.0 , 1.0
+        0.66666f,   0.5f,
+        0.66666f,   1.0f,
+        1.0f,       1.0f,
+        0.66666f,   0.5f,
+        1.0f,       1.0f,
+        1.0f,       0.5f,
 };
 
 static uint pitch[3][9] = {
@@ -290,9 +297,9 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 		(void *)0);
 	glEnableVertexAttribArray(texCoord);
 
-    texture->LoadTexture("icons/1.jpg");
 
-
+    texture->LoadTexture("atlas.jpg");
+    texture->BindTexture();
 	// glActiveTexture(GL_TEXTURE0); // activate the texture unit first before binding texture
 	// glBindTexture(GL_TEXTURE_2D, *texture);
     glBindVertexArray(0);
@@ -405,7 +412,6 @@ int testCounter = 0;
 
 void ThreeCube::Update(float deltaTime){
 
-    return;
     timeSpend += deltaTime;
 
     if ( testCounter > 3)
@@ -455,7 +461,7 @@ void ThreeCube::Render()
 	GLuint modelID = glGetUniformLocation(shader, "Model");
 
 
-        texture->BindTexture();
+
     //todo drawcall 27짜리 쓰레기 코드
     for( int i = 0 ; i < 27 ; i ++ )
     {
@@ -463,11 +469,8 @@ void ThreeCube::Render()
         glm::mat4 finalMat = worldMatrix * rpyMatrix[i] * modelMatrix[i];
         glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *)&finalMat);
 
-
         glDrawArrays(GL_TRIANGLES, 0, 12*3 );
     }
-
-
 
 
     glBindVertexArray(0);
