@@ -4,7 +4,7 @@
 #endif
 
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <map>
 #include <functional>
 #include <vector>

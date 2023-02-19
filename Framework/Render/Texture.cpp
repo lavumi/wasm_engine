@@ -1,6 +1,6 @@
-#include "precompiled.h"
+#include "../precompiled.h"
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "../stb_image.h"
 #include "Texture.h"
 
 
@@ -26,8 +26,7 @@ void Texture::LoadTexture(std::string path ){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
-    unsigned char *data = stbi_load((SDL_GetBasePath() + path).c_str(), &width, &height, &nrChannels, 4); 
-
+    unsigned char *data = stbi_load((SDL_GetBasePath() + path).c_str(), &width, &height, &nrChannels, 4);
 
     if ( data ){
         glTexImage2D(
@@ -44,7 +43,7 @@ void Texture::LoadTexture(std::string path ){
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else {
-        std::cout << "Image Load Fail " << path << std::endl;
+        std::cout << "Image Load Fail " << SDL_GetBasePath() + path << std::endl;
         if( stbi_failure_reason() )
             std::cout << stbi_failure_reason() << std::endl;
     }

@@ -1,6 +1,6 @@
 #include "precompiled.h"
 #include "./Render/Shader.h"
-#include "Texture.h"
+#include "Render/Texture.h"
 #include "TestCube.h"
 
 static const GLfloat g_vertex_buffer_data[] = {
