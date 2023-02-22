@@ -1,10 +1,9 @@
 #include "precompiled.h"
-#include "./Render/Shader.h"
-#include "Render/Texture.h"
+#include "./Render/Texture.h"
 #include "ThreeCube.h"
-
+using namespace VumiEngine;
+//region [ Model Data ]
 static const GLfloat g_vertex_buffer_data[] = {
-
     //left side
         -1.0f,-1.0f,-1.0f, // triangle 1 : begin
         -1.0f,-1.0f, 1.0f,
@@ -68,8 +67,6 @@ static const GLfloat g_vertex_buffer_data[] = {
         1.0f, 1.0f, 1.0f,
         -1.0f, 1.0f,-1.0f,
         -1.0f, 1.0f, 1.0f,
-
-
 };
 static const GLfloat g_color_buffer_data[] = {
         0.583f,  0.771f,  0.014f,
@@ -205,6 +202,9 @@ static uint yaw[3][9] = {
  *  21  12  3    22  13  4      23  14  5
  *  18  9   0    19  10  1      20  11  2
  */
+
+//endregion
+
 ThreeCube::ThreeCube(/* args */)
 {
 
@@ -221,8 +221,6 @@ ThreeCube::ThreeCube(/* args */)
 	texture = new Texture();
 
 }
-
-
 
 
 ThreeCube::~ThreeCube()
@@ -304,11 +302,6 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 	// glBindTexture(GL_TEXTURE_2D, *texture);
     glBindVertexArray(0);
 }
-
-
-
-
-
 
 void ThreeCube::_finishRpy( int rpyIndex ){
     for( int i = 0 ; i < 27 ; i ++ ){
@@ -471,13 +464,11 @@ void ThreeCube::Render()
     //todo drawcall 27짜리 쓰레기 코드
     for( int i = 0 ; i < 27 ; i ++ )
     {
-
         glm::mat4 finalMat = worldMatrix * rpyMatrix[i] * modelMatrix[i];
         glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *)&finalMat);
 
         glDrawArrays(GL_TRIANGLES, 0, 12*3 );
     }
-
 
     glBindVertexArray(0);
 }

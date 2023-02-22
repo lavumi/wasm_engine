@@ -1,12 +1,9 @@
 #include "../precompiled.h"
-#include "Shader.h"
+
 #include "../ThreeCube.h"
-#include "../TestCube.h"
-#include "Camera.h"
-#include "Renderer.h"
+//#include "../TestCube.h"
 
-
-
+using namespace VumiEngine;
 Renderer::Renderer(/* args */)
 {
 
@@ -25,15 +22,14 @@ Renderer::~Renderer()
 
 void Renderer::makeShader()
 {
-    shader->makeShader();
-    testCube->setBuffer( shader->shader_program);
+
 
 }
 
 void Renderer::Init(ThreeCube* cube )
 {
 
-    testCube = cube;
+//    testCube = cube;
     SDL_Init(SDL_INIT_EVERYTHING);
 
     #if __EMSCRIPTEN__
@@ -73,40 +69,22 @@ void Renderer::Init(ThreeCube* cube )
     version = glGetString(GL_VERSION);
     std::cout << "version: " << version << std::endl;
 
-    makeShader();
+
+
+    shader->makeShader();
+    cube->setBuffer( shader->shader_program);
 }
 
 void Renderer::Update(float deltaTime)
 {
-    //shader->Update(deltaTime);
-
-
     glm::mat4 VP        =  camera->GetVP();
     shader->SetUniformMatrix4fv("VP", (GLfloat*)&VP);
-
-    testCube->Update(deltaTime);
 }
 
 void Renderer::SetCamera( Camera* pCamera ){
     this->camera = pCamera;
 }
 
-void Renderer::Render()
-{
-    // Clear the screen
-    if (background_is_black)
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    else
-        glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-{
-    testCube->Render();
-}
-
-    SDL_GL_SwapWindow(window);
-}
 
 void Renderer::toggleFullscreen(){
     Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
@@ -114,3 +92,18 @@ void Renderer::toggleFullscreen(){
     SDL_SetWindowFullscreen(window, IsFullscreen ? 0 : FullscreenFlag);
     SDL_ShowCursor(IsFullscreen);
 }
+
+void Renderer::InitRender() const {
+    // Clear the screen
+    if (background_is_black)
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    else
+        glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer::FinishRender() {
+    SDL_GL_SwapWindow(window);
+}
+

@@ -1,6 +1,7 @@
 #include "./precompiled.h"
 #include "InputHandler.h"
 
+using namespace VumiEngine;
 #if __EMSCRIPTEN__
 extern "C"
 {

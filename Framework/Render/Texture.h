@@ -1,13 +1,17 @@
 #pragma once
 
-class Texture{
+namespace VumiEngine {
+    class Texture {
 
-private:
-    GLuint _texture; 
+    private:
+        GLuint _texture;
     public :
-    Texture();
-    ~Texture();
+        Texture();
 
-    void LoadTexture(std::string path);
-    void BindTexture();
-};
+        ~Texture();
+
+        void LoadTexture(std::string path);
+
+        void BindTexture();
+    };
+}

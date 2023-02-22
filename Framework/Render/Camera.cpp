@@ -1,6 +1,7 @@
 #include "../precompiled.h"
 #include "Camera.h"
 
+using namespace VumiEngine;
 Camera::Camera(/* args */)
 {
     fovy = 45.0f;

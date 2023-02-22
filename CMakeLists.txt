@@ -30,7 +30,7 @@ endif()
 
 
 ADD_SUBDIRECTORY(Framework libs/glm)
-ADD_EXECUTABLE( ${PROJECT_NAME} main.cpp )
+ADD_EXECUTABLE( ${PROJECT_NAME} main.cpp src/TestScene.cpp src/TestScene.h)
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC opengl_engine)
 
 

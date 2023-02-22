@@ -1,53 +1,61 @@
 #pragma once
-class Camera
-{
-private:
-    /* data */
+namespace VumiEngine {
+    class Camera {
+    private:
+        /* data */
 
-    glm::vec3 position;
-    glm::vec3 forward;
-    glm::vec3 up;
+        glm::vec3 position;
+        glm::vec3 forward;
+        glm::vec3 up;
 
-    GLfloat fovy;
-    GLfloat aspect;
-    GLfloat near;
-    GLfloat far;
-
-
-    glm::mat4 projection;
-    glm::mat4 view;
-
-    void setPerspective();
-    void setView();
+        GLfloat fovy;
+        GLfloat aspect;
+        GLfloat near;
+        GLfloat far;
 
 
+        glm::mat4 projection;
+        glm::mat4 view;
 
-public:
-    Camera(/* args */);
-    ~Camera();
+        void setPerspective();
 
-    glm::mat4 GetVP();
-    void SetTransform( glm::mat4 transform );
-
+        void setView();
 
 
+    public:
+        Camera(/* args */);
+
+        ~Camera();
+
+        glm::mat4 GetVP();
+
+        void SetTransform(glm::mat4 transform);
 
 
-    //움직임
-
-    bool moveFront;
-    bool moveBack;
-    bool moveLeft;
-    bool moveRight;
 
 
-    void SetMoveLeft(bool active);
-    void SetMoveRight(bool active);
-    void SetMoveFront(bool active);
-    void SetMoveBack(bool active);
 
-    void SetRotate( float amount,  glm::vec3 axis);
-    void SetTranslate(glm::vec3& direction);
+        //움직임
 
-    void Update(float deltaTime);
-};
+        bool moveFront;
+        bool moveBack;
+        bool moveLeft;
+        bool moveRight;
+
+
+        void SetMoveLeft(bool active);
+
+        void SetMoveRight(bool active);
+
+        void SetMoveFront(bool active);
+
+        void SetMoveBack(bool active);
+
+        void SetRotate(float amount, glm::vec3 axis);
+
+        void SetTranslate(glm::vec3 &direction);
+
+        void Update(float deltaTime);
+    };
+}
+

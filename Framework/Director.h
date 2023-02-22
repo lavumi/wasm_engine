@@ -1,21 +1,30 @@
 #pragma once
-
-class Renderer;
 class ThreeCube;
-class Camera;
-class Director
-{
-private:
-    /* data */
-public:
-    Director(/* args */);
-    ~Director();
 
-    void Update(float deltaTime);
-    void Render();
+namespace VumiEngine {
+    class Renderer;
+    class Scene;
+    class Camera;
+    class Director
+    {
+    private:
+        /* data */
+        Renderer* renderer;
+        Camera* camera;
 
-    Renderer* renderer;
-    Camera* camera;
-    ThreeCube *testCube;
-};
+        Scene *currentScene;
+    public:
+        Director(/* args */);
+        ~Director();
+
+        void Update(float deltaTime) const;
+        void Render() const;
+
+        void AddScene( Scene* scene );
+
+        ThreeCube *testCube;
+    };
+}
+
+
 

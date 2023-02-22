@@ -26,13 +26,16 @@
 #include "../libs/glm/gtc/quaternion.hpp"
 #include "../libs/glm/gtc/matrix_transform.hpp"
 
-
-
-
-#include "Node.h"
 #include "Director.h"
 #include "InputHandler.h"
+#include "Render/Shader.h"
+#include "Render/Camera.h"
 #include "Render/Renderer.h"
+#include "Render/Texture.h"
+#include "Node/Node.h"
+#include "Node/Scene.h"
+
+
 
 
 #define SCREEN_WIDTH 1600

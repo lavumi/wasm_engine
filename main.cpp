@@ -2,12 +2,12 @@
 
 #define PI 3.14159265
 
-Director *director;
+using namespace VumiEngine;
 
+Director *director;
 static GLuint previous_ticks = 0;
 static GLuint max_fps = 16;
 static GLfloat lag = 0;
-
 void loop()
 {
     GLuint ticks = SDL_GetTicks();

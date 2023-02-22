@@ -3,89 +3,79 @@
 
 class ThreeCube;
 class TestCube;
-class Shader;
-class Camera;
-class Renderer
-{
-private:
-    void makeShader();
+namespace VumiEngine {
+    class Shader;
+    class Camera;
+    class Renderer {
+    private:
+        void makeShader();
 
-    SDL_Window *window = NULL;
-    SDL_GLContext context;
+        SDL_Window *window = NULL;
+        SDL_GLContext context;
 
-    Shader *shader;
+        Shader *shader;
+        Camera *camera;
 
-    Camera* camera;
+    public:
+        Renderer(/* args */);
+        ~Renderer();
 
+        void Init(ThreeCube *cube);
 
+        void Update(float deltaTime);
 
-public:
-    Renderer(/* args */);
-    ~Renderer();
+        void InitRender() const;
+        void FinishRender();
 
-    void Init( ThreeCube* cube);
-    void Update(float deltaTime);
-    void Render();
-    void SetCamera( Camera* camera );
+        void SetCamera(Camera *camera);
 
-    GLfloat rotation_angle;
-    GLuint length_of_attributes;
-    GLuint vbo;
+        GLfloat rotation_angle;
+        GLuint length_of_attributes;
+        GLuint vbo;
 
-    const char *vertexSource;
+        const char *vertexSource;
+        const char *fragmentSource;
 
-    const char *fragmentSource;
+//        ThreeCube *testCube;
+        bool background_is_black = true;
 
+        void toggleFullscreen();
+    };
 
+    static void checkGL_error(std::string text) {
+        GLenum error;
 
-    ThreeCube *testCube;
-    bool background_is_black = true;
-    void toggleFullscreen();
-};
+        error = glGetError();
 
-static void checkGL_error(std::string text)
-{
-    GLenum error;
+        if (error != GL_NO_ERROR) {
+            std::cout << "--------" << text << " not working"
+                      << "--------" << std::endl;
 
-    error = glGetError();
+            if (error == GL_INVALID_OPERATION) {
+                std::cout << "INVALID OPERATION" << std::endl;
+            }
 
-    if (error != GL_NO_ERROR)
-    {
-        std::cout << "--------" << text << " not working"
-                  << "--------" << std::endl;
+            if (error == GL_INVALID_VALUE) {
+                std::cout << "NO VALUE" << std::endl;
+            }
 
-        if (error == GL_INVALID_OPERATION)
-        {
-            std::cout << "INVALID OPERATION" << std::endl;
+            if (error == GL_OUT_OF_MEMORY) {
+                std::cout << "NO MEMORY" << std::endl;
+            }
+
+            if (error == GL_STACK_OVERFLOW) {
+                std::cout << "NO OVERFLOW" << std::endl;
+            }
+
+            if (error == GL_INVALID_FRAMEBUFFER_OPERATION) {
+                std::cout << "invalid framebuffer <-" << std::endl;
+            }
+
+            if (error == GL_OUT_OF_MEMORY) {
+                std::cout << "Out of Memory" << std::endl;
+            }
+            std::cout << "--------------------------------------------" << std::endl;
+        } else {
         }
-
-        if (error == GL_INVALID_VALUE)
-        {
-            std::cout << "NO VALUE" << std::endl;
-        }
-
-        if (error == GL_OUT_OF_MEMORY)
-        {
-            std::cout << "NO MEMORY" << std::endl;
-        }
-
-        if (error == GL_STACK_OVERFLOW)
-        {
-            std::cout << "NO OVERFLOW" << std::endl;
-        }
-
-        if (error == GL_INVALID_FRAMEBUFFER_OPERATION)
-        {
-            std::cout << "invalid framebuffer <-" << std::endl;
-        }
-
-        if (error == GL_OUT_OF_MEMORY)
-        {
-            std::cout << "Out of Memory" << std::endl;
-        }
-        std::cout << "--------------------------------------------" << std::endl;
-    }
-    else
-    {
     }
 }

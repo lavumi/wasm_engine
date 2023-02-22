@@ -1,8 +1,6 @@
 #pragma once
 
-class Shader;
-class Texture;
-class ThreeCube : public Node
+class ThreeCube : public VumiEngine::Node
 {
 private:
     /* data */
@@ -21,7 +19,7 @@ private:
 
     GLuint texCoordBuffer;
 
-    Texture* texture;
+    VumiEngine::Texture* texture;
 
 
 

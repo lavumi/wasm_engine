@@ -6,7 +6,7 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
 add_library(opengl_engine STATIC
         precompiled.h
         ${SRC_FILES}
-        )
+        Node/Scene.cpp Node/Scene.h Node/Node.cpp Node/Node.h)
 
 target_link_libraries(opengl_engine GLEW)
 target_include_directories(opengl_engine PUBLIC ${CMAKE_SOURCE_DIR}/includes)
