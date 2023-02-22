@@ -298,7 +298,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 	glEnableVertexAttribArray(texCoord);
 
 
-    texture->LoadTexture("data/atlas.png");
+    texture->LoadTexture("Resources/atlas.png");
     texture->BindTexture();
 	// glActiveTexture(GL_TEXTURE0); // activate the texture unit first before binding texture
 	// glBindTexture(GL_TEXTURE_2D, *texture);

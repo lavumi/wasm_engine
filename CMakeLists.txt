@@ -37,7 +37,7 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC opengl_engine)
 if(EMSCRIPTEN)
     SET_TARGET_PROPERTIES(
             ${PROJECT_NAME} PROPERTIES
-            LINK_FLAGS "-s USE_SDL=2 -s \"EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']\" -s USE_GLFW=3 -O3 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s SDL2_IMAGE_FORMATS=\"['png']\" --preload-file ${CMAKE_CURRENT_LIST_DIR}/data@data/"
+            LINK_FLAGS "-s USE_SDL=2 -s \"EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']\" -s USE_GLFW=3 -O3 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s SDL2_IMAGE_FORMATS=\"['png']\" --preload-file ${CMAKE_CURRENT_LIST_DIR}/Resources@Resources/"
             RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR}
     )
 else()
