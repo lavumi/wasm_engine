@@ -217,6 +217,8 @@ ThreeCube::ThreeCube(/* args */)
 
     worldMatrix = glm::mat4(1.0f);
 	texture = new Texture();
+    //이거 너무 구린데...
+    setBuffer( Director::GetDirector().GetShaderProgram());
 }
 
 
@@ -226,11 +228,6 @@ ThreeCube::~ThreeCube()
 	glDeleteBuffers(sizeof(g_color_buffer_data), &colorBuffer);
 }
 
-void ThreeCube::Init()
-{
-    //이거 너무 구린데...
-    setBuffer( Director::GetDirector().GetShaderProgram());
-}
 
 void ThreeCube::setBuffer(GLuint shaderProgram)
 {

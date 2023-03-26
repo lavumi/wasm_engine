@@ -8,10 +8,6 @@ using namespace std;
 using namespace VumiEngine;
 
 
-void Node::Init(){
-
-
-}
 
 void Node::AddChild(Node* child, int tag = 0){
     this->_children.push_back(child);

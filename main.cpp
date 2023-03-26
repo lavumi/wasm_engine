@@ -41,7 +41,7 @@ int main()
         {
             if (e.type == SDL_QUIT)
                 break;
-            InputHandler::getInstance()->HandleEvent(e);
+            InputHandler::GetInputHandler().HandleEvent(e);
         }
         loop();
     }

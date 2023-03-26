@@ -10,29 +10,29 @@ extern "C"
 #endif
     EMSCRIPTEN_KEEPALIVE void _mouseLeftDown()
     {
-        InputHandler::getInstance()->myfxMouseLeftDown();
+        InputHandler::GetInputHandler().myfxMouseLeftDown();
     }
     EMSCRIPTEN_KEEPALIVE void _mouseLeftUp()
     {
-        InputHandler::getInstance()->myfxMouseLeftUp();
+        InputHandler::GetInputHandler().myfxMouseLeftUp();
     }
     EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key)
     {
-        InputHandler::getInstance()->HandleEvent(key, true);
+        InputHandler::GetInputHandler().HandleEvent(key, true);
     }
     EMSCRIPTEN_KEEPALIVE void _keyboardUp(int key)
     {
-        InputHandler::getInstance()->HandleEvent(key, false);
+        InputHandler::GetInputHandler().HandleEvent(key, false);
     }
     EMSCRIPTEN_KEEPALIVE void _mouseMove(int deltaX, int deltaY)
     {
-        InputHandler::getInstance()->HandleMouseInput(deltaX, deltaY);
+        InputHandler::GetInputHandler().HandleMouseInput(deltaX, deltaY);
     }
 #if __EMSCRIPTEN__
 }
 #endif
 
-InputHandler *InputHandler::instance = nullptr;
+//InputHandler *InputHandler::instance = nullptr;
 
 InputHandler::InputHandler()
 {
@@ -199,10 +199,6 @@ void InputHandler::HandleMouseInput( int deltaX, int deltaY ) const{
     mouseMoveEvent( deltaX, deltaY);
 }
 
-void InputHandler::Delete()
-{
-    delete instance;
-}
 
 void InputHandler::Update(float deltaTime)
 {

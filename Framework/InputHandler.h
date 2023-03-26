@@ -4,20 +4,18 @@ namespace VumiEngine {
     class InputHandler {
 
     private:
-        static InputHandler *instance;
+
 
         InputHandler();
 
         ~InputHandler();
 
     public:
-        static InputHandler *getInstance() {
-            if (instance == nullptr)
-                instance = new InputHandler();
-            return instance;
-        }
 
-        static void Delete();
+        static InputHandler& GetInputHandler(){
+            static InputHandler handler;
+            return handler;
+        }
 
         void Update(float deltaTime);
 

@@ -29,7 +29,6 @@ public:
     ThreeCube(/* args */);
     ~ThreeCube();
 
-    void Init();
     void Update(float deltaTime);
     void RunCube(int index, float angle);
     
