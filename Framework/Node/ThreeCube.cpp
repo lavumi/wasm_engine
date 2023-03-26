@@ -226,7 +226,8 @@ ThreeCube::ThreeCube(/* args */) {
 
 ThreeCube::~ThreeCube() {
     glDeleteBuffers(sizeof(g_vertex_buffer_data), &vertexBuffer);
-    glDeleteBuffers(sizeof(g_color_buffer_data), &colorBuffer);
+//    glDeleteBuffers(sizeof(g_color_buffer_data), &colorBuffer);
+    glDeleteBuffers(sizeof(g_texCoord_buffer_data), &texCoordBuffer);
 }
 
 
@@ -246,9 +247,9 @@ void ThreeCube::setBuffer(GLuint shaderProgram) {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
-    glGenBuffers(1, &colorBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+//    glGenBuffers(1, &colorBuffer);
+//    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
 
     glGenBuffers(1, &texCoordBuffer);
@@ -268,15 +269,15 @@ void ThreeCube::setBuffer(GLuint shaderProgram) {
     glEnableVertexAttribArray(vertexPosition); //버텍스 버퍼를 활성화
     // 2nd attribute buffer : colors
 
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glVertexAttribPointer(
-            vertexColor,
-            3,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void *) nullptr);
-    glEnableVertexAttribArray(vertexColor);
+//    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+//    glVertexAttribPointer(
+//            vertexColor,
+//            3,
+//            GL_FLOAT,
+//            GL_FALSE,
+//            0,
+//            (void *) nullptr);
+//    glEnableVertexAttribArray(vertexColor);
 
     glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
     glVertexAttribPointer(
@@ -384,7 +385,7 @@ void ThreeCube::RunCube(int index, float angle) {
     }
 }
 
-int testSequence[3] = {3, 6, 7};
+
 int testCounter = 0;
 
 void ThreeCube::Update(float deltaTime) {

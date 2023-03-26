@@ -6,17 +6,19 @@ BUILDFOLDER = ./build
 
 SRCDIR1 = $(WORKSPACE)/Framework
 SRCDIR2 = $(WORKSPACE)/Framework/Render
+SRCDIR3 = $(WORKSPACE)/Framework/Node
+SRCDIR4 = $(WORKSPACE)/src
 
 LDFLAGS = -lglew -lsdl2 -framework OpenGL
-LDFLAGS_EMCC = -s USE_SDL=2 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s USE_GLFW=3 -O3 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s SDL2_IMAGE_FORMATS="['png']" --preload-file data
+LDFLAGS_EMCC = -s USE_SDL=2 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s USE_GLFW=3 -O3 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s SDL2_IMAGE_FORMATS="['png']" --preload-file Resources
 
 
 
-SRCS = $(foreach dir, $(WORKSPACE) $(SRCDIR1) $(SRCDIR2), $(wildcard $(dir)/*.cpp))
+SRCS = $(foreach dir, $(WORKSPACE) $(SRCDIR1) $(SRCDIR2) $(SRCDIR3) $(SRCDIR4), $(wildcard $(dir)/*.cpp))
 OBJS = $(SRCS:.cpp=.o)
 
 TARGET = build/mac/main
-TARGET_EMCC = build/wasm/index.js
+TARGET_EMCC = build/wasm/wasm.js
 
 all : $(TARGET)
 	$(CPP) -Wall -Wextra -o $(TARGET) $(notdir $(OBJS)) $(LDFLAGS)

@@ -5,16 +5,16 @@ private:
     /* data */
 
 
-    glm::mat4 rpyMatrix[27];
-    glm::mat4 worldMatrix;
-    glm::mat4 modelMatrix[27];
+    glm::mat4 rpyMatrix[27]{};
+    glm::mat4 worldMatrix{};
+    glm::mat4 modelMatrix[27]{};
 
-    GLuint shader;
-    GLuint _vao;
-    GLuint vertexBuffer;
-    GLuint colorBuffer;
+    GLuint shader{};
+    GLuint _vao{};
+    GLuint vertexBuffer{};
+//    GLuint colorBuffer{};
 
-    GLuint texCoordBuffer;
+    GLuint texCoordBuffer{};
 
     VumiEngine::Texture *texture;
 

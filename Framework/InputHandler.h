@@ -50,6 +50,6 @@ namespace VumiEngine {
 
         void setKeyCode();
 
-        static int sanitizeInput(int keycode);
+        int sanitizeInput(int keycode);
     };
 }

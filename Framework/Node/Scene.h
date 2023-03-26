@@ -7,8 +7,6 @@
 
 namespace VumiEngine {
     class Scene : public Node {
-    public:
-
     };
 }
 

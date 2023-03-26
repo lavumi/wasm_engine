@@ -27,13 +27,19 @@
 
 #include "Director.h"
 #include "InputHandler.h"
+
+
 #include "Render/Shader.h"
 #include "Render/Camera.h"
 #include "Render/Renderer.h"
 #include "Render/Texture.h"
+
+
+
 #include "Node/Node.h"
 #include "Node/Scene.h"
 #include "Node/ThreeCube.h"
+#include "Node/Sprite.h"
 
 
 #define SCREEN_WIDTH 800

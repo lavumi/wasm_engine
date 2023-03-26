@@ -62,19 +62,19 @@ Director::Director(/* args */) {
     });//L
 
 
-//    InputHandler::GetInputHandler().myfxMouseLeftUp = [&]{
+    InputHandler::GetInputHandler().myfxMouseLeftUp = [&]{
 //        testCube->ToggleRotate(false);
-//    };
-//
-//    InputHandler::GetInputHandler().myfxMouseLeftDown = [&]{
-//        testCube->ToggleRotate(true);
-//    };
+    };
 
-//    InputHandler::GetInputHandler().mouseMoveEvent = [&](int inputX, int inputY){
-//      //  std::cout << "rotation " << inputX << "     " << inputY << std::endl;
-////       testCube->SetRotate((float)inputX * 0.05f, glm::vec3(0,5,0));
-////       testCube->SetRotate((float)inputY * 0.05f, glm::vec3(-5,0,0));
-//    };
+    InputHandler::GetInputHandler().myfxMouseLeftDown = [&]{
+//        testCube->ToggleRotate(true);
+    };
+
+    InputHandler::GetInputHandler().mouseMoveEvent = [&](int inputX, int inputY){
+      //  std::cout << "rotation " << inputX << "     " << inputY << std::endl;
+//       testCube->SetRotate((float)inputX * 0.05f, glm::vec3(0,5,0));
+//       testCube->SetRotate((float)inputY * 0.05f, glm::vec3(-5,0,0));
+    };
 
 
 }

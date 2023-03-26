@@ -15,6 +15,7 @@ public:
 
 private:
     ThreeCube* cube;
+    Sprite* sprite;
 };
 
 #endif //WASM_TESTSCENE_H

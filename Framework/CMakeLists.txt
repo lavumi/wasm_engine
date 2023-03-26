@@ -8,7 +8,7 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
 add_library(opengl_engine STATIC
         precompiled.h
         ${SRC_FILES}
-        )
+        Node/Sprite.cpp Node/Sprite.h)
 
 target_link_libraries(opengl_engine GLEW)
 target_include_directories(opengl_engine PUBLIC ${CMAKE_SOURCE_DIR}/includes)
