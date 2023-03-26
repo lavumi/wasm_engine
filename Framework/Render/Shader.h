@@ -1,26 +1,30 @@
-#pragma once 
+#pragma once
+
 #include "../precompiled.h"
 
-namespace VumiEngine{
+namespace VumiEngine {
     class Camera;
-    class Shader
-    {
+
+    class Shader {
     private:
         /* data */
 
-        const char *vertexSource ;
-        const char *fragmentSource ;
+        const char *vertexSource;
+        const char *fragmentSource;
 
-        const char *textureVertexSource ;
-        const char *textureFragmentSource ;
+        const char *textureVertexSource;
+        const char *textureFragmentSource;
 
     public:
         GLuint shader_program;
+
         Shader(/* args */);
+
         ~Shader();
 
         void MakeShader();
-        void SetUniformMatrix4fv(const std::string& name, GLfloat* value ) const;
+
+        void SetUniformMatrix4fv(const std::string &name, GLfloat *value) const;
     };
 }
 

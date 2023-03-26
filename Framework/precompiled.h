@@ -13,10 +13,8 @@
 #include <string>
 
 
-
-
-
 #define GLEW_STATIC
+
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
@@ -25,7 +23,6 @@
 #include "../libs/glm/common.hpp"
 #include "../libs/glm/gtc/quaternion.hpp"
 #include "../libs/glm/gtc/matrix_transform.hpp"
-
 
 
 #include "Director.h"

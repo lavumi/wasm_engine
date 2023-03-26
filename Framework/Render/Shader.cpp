@@ -1,9 +1,9 @@
 #include "../precompiled.h"
 #include "Shader.h"
+
 using namespace VumiEngine;
 
-Shader::Shader()
-{
+Shader::Shader() {
 //     vertexSource = R"glsl(
 //         #version 100
 // // Input vertex data, different for all executions of this shader.
@@ -93,13 +93,12 @@ Shader::Shader()
 
 }
 
-Shader::~Shader()
-{
+Shader::~Shader() {
     glDeleteShader(shader_program);
 }
 
 
-void Shader::MakeShader(){
+void Shader::MakeShader() {
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex_shader, 1, &vertexSource, nullptr);
     glCompileShader(vertex_shader);
@@ -131,7 +130,7 @@ void Shader::MakeShader(){
 
 }
 
-void Shader::SetUniformMatrix4fv(const std::string& name, GLfloat* value ) const{
+void Shader::SetUniformMatrix4fv(const std::string &name, GLfloat *value) const {
     GLint MatrixID = glGetUniformLocation(shader_program, name.c_str());
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE,value);
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, value);
 }

@@ -8,46 +8,43 @@ extern "C"
 #else
 #define EMSCRIPTEN_KEEPALIVE
 #endif
-    EMSCRIPTEN_KEEPALIVE void _mouseLeftDown()
-    {
-        InputHandler::GetInputHandler().myfxMouseLeftDown();
-    }
-    EMSCRIPTEN_KEEPALIVE void _mouseLeftUp()
-    {
-        InputHandler::GetInputHandler().myfxMouseLeftUp();
-    }
-    EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key)
-    {
-        InputHandler::GetInputHandler().HandleEvent(key, true);
-    }
-    EMSCRIPTEN_KEEPALIVE void _keyboardUp(int key)
-    {
-        InputHandler::GetInputHandler().HandleEvent(key, false);
-    }
-    EMSCRIPTEN_KEEPALIVE void _mouseMove(int deltaX, int deltaY)
-    {
-        InputHandler::GetInputHandler().HandleMouseInput(deltaX, deltaY);
-    }
+EMSCRIPTEN_KEEPALIVE void _mouseLeftDown() {
+    InputHandler::GetInputHandler().myfxMouseLeftDown();
+}
+
+EMSCRIPTEN_KEEPALIVE void _mouseLeftUp() {
+    InputHandler::GetInputHandler().myfxMouseLeftUp();
+}
+
+EMSCRIPTEN_KEEPALIVE void _keyboardDown(int key) {
+    InputHandler::GetInputHandler().HandleEvent(key, true);
+}
+
+EMSCRIPTEN_KEEPALIVE void _keyboardUp(int key) {
+    InputHandler::GetInputHandler().HandleEvent(key, false);
+}
+
+EMSCRIPTEN_KEEPALIVE void _mouseMove(int deltaX, int deltaY) {
+    InputHandler::GetInputHandler().HandleMouseInput(deltaX, deltaY);
+}
+
 #if __EMSCRIPTEN__
 }
 #endif
 
 //InputHandler *InputHandler::instance = nullptr;
 
-InputHandler::InputHandler()
-{
+InputHandler::InputHandler() {
     setKeyCode();
 }
 
-InputHandler::~InputHandler()
-{
-    mouseMoveEvent = [](int inputX, int inputY){
+InputHandler::~InputHandler() {
+    mouseMoveEvent = [](int inputX, int inputY) {
         std::cout << inputX << "     " << inputY << std::endl;
     };
 }
 
-void InputHandler::setKeyCode()
-{
+void InputHandler::setKeyCode() {
     keycode[8] = SDLK_BACKSPACE; //backspace
     keycode[9] = SDLK_TAB;       //tab
     keycode[13] = SDLK_RETURN;   //enter
@@ -135,90 +132,76 @@ void InputHandler::setKeyCode()
     keycode[123] = SDLK_F12;         //f12
 }
 
-void InputHandler::HandleEvent(SDL_Event event)
-{
+void InputHandler::HandleEvent(SDL_Event event) {
 
-    switch (event.type)
-    {
-    case SDL_KEYDOWN:
-        _keyboardDown(event.key.keysym.sym);
-        break;
-    case SDL_KEYUP:
-        _keyboardUp(event.key.keysym.sym);
-        break;
-    case SDL_MOUSEBUTTONDOWN:
-        _mouseLeftDown();
-        break;
+    switch (event.type) {
+        case SDL_KEYDOWN:
+            _keyboardDown(event.key.keysym.sym);
+            break;
+        case SDL_KEYUP:
+            _keyboardUp(event.key.keysym.sym);
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            _mouseLeftDown();
+            break;
 
-    case SDL_MOUSEBUTTONUP:
-        _mouseLeftUp();
-        break;
+        case SDL_MOUSEBUTTONUP:
+            _mouseLeftUp();
+            break;
 
-    case SDL_MOUSEMOTION:
-      //  std::cout << event.motion.x << "     " << event.motion.y << std::endl;
-        HandleMouseInput(event.motion);
-        break;
-    default:
-        break;
+        case SDL_MOUSEMOTION:
+            //  std::cout << event.motion.x << "     " << event.motion.y << std::endl;
+            HandleMouseInput(event.motion);
+            break;
+        default:
+            break;
     }
 }
 
-void InputHandler::HandleEvent(int pKeyCode, bool pressed)
-{
+void InputHandler::HandleEvent(int pKeyCode, bool pressed) {
     int input = sanitizeInput(pKeyCode);
-    if (pressed == true)
-    {
+    if (pressed == true) {
         auto iter = mykeyboardDown.find(input);
-        if (iter != mykeyboardDown.end())
-        {
+        if (iter != mykeyboardDown.end()) {
             (iter->second)();
-        }
-        else{
+        } else {
             std::cout << "not bind :  " << input << std::endl;
         }
-    }
-    else
-    {
+    } else {
         auto iter = mykeyboardUp.find(input);
-        if (iter != mykeyboardUp.end())
-        {
+        if (iter != mykeyboardUp.end()) {
             (iter->second)();
-        }
-        else{
+        } else {
             std::cout << "not bind :  " << input << std::endl;
         }
     }
 }
 
-void InputHandler::HandleMouseInput( SDL_MouseMotionEvent mouseMotion ) const{
-    mouseMoveEvent( mouseMotion.xrel, mouseMotion.yrel);
+void InputHandler::HandleMouseInput(SDL_MouseMotionEvent mouseMotion) const {
+    mouseMoveEvent(mouseMotion.xrel, mouseMotion.yrel);
 }
 
-void InputHandler::HandleMouseInput( int deltaX, int deltaY ) const{
+void InputHandler::HandleMouseInput(int deltaX, int deltaY) const {
 
-    mouseMoveEvent( deltaX, deltaY);
+    mouseMoveEvent(deltaX, deltaY);
 }
 
 
-void InputHandler::Update(float deltaTime)
-{
+void InputHandler::Update(float deltaTime) {
     //Pressed Event
 }
 
-bool InputHandler::SetKeyboardDownEvent(int id, const std::function<void()>& function)
-{
+bool InputHandler::SetKeyboardDownEvent(int id, const std::function<void()> &function) {
     mykeyboardDown.insert(std::pair<int, std::function<void()>>(id, function));
     return true;
 }
 
-bool InputHandler::SetKeyboardUpEvent(int id, const std::function<void()> function)
-{
+bool InputHandler::SetKeyboardUpEvent(int id, const std::function<void()> function) {
     mykeyboardUp.insert(std::pair<int, std::function<void()>>(id, function));
     return true;
 }
 
-int InputHandler::sanitizeInput(int input)
-{
+int InputHandler::sanitizeInput(int input) {
 #if __EMSCRIPTEN__
     return keycode[input];
 #else

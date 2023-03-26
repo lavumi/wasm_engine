@@ -1,7 +1,6 @@
 #pragma once
 
-class ThreeCube : public VumiEngine::Node
-{
+class ThreeCube : public VumiEngine::Node {
 private:
     /* data */
 
@@ -17,7 +16,7 @@ private:
 
     GLuint texCoordBuffer;
 
-    VumiEngine::Texture* texture;
+    VumiEngine::Texture *texture;
 
     float timeSpend = 0.0f;
     int rpyRnd = -1;
@@ -27,15 +26,19 @@ private:
 
 public:
     ThreeCube(/* args */);
+
     ~ThreeCube();
 
     void Update(float deltaTime);
+
     void RunCube(int index, float angle);
-    
+
     void setBuffer(GLuint shaderProgram);
 
-    void ToggleRotate( bool isRotate);
+    void ToggleRotate(bool isRotate);
+
     void SetRotate(float amount, glm::vec3 axis);
+
     void Render();
 };
  

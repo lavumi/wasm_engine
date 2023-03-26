@@ -1,11 +1,12 @@
 #pragma once
+
 #include "../precompiled.h"
 
-class ThreeCube;
-class TestCube;
 namespace VumiEngine {
     class Shader;
+
     class Camera;
+
     class Renderer {
     private:
         void makeShader();
@@ -18,6 +19,7 @@ namespace VumiEngine {
 
     public:
         Renderer(/* args */);
+
         ~Renderer();
 
         void Init();
@@ -25,6 +27,7 @@ namespace VumiEngine {
         void Update(float deltaTime);
 
         void InitRender() const;
+
         void FinishRender();
 
         void SetCamera(Camera *camera);

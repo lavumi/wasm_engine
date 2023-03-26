@@ -12,7 +12,7 @@ namespace VumiEngine {
 
     public:
 
-        static InputHandler& GetInputHandler(){
+        static InputHandler &GetInputHandler() {
             static InputHandler handler;
             return handler;
         }
@@ -30,7 +30,7 @@ namespace VumiEngine {
         std::function<void()> myfxMouseLeftDown;
         std::function<void()> myfxMouseLeftUp;
 
-        bool SetKeyboardDownEvent(int, const std::function<void()>&);
+        bool SetKeyboardDownEvent(int, const std::function<void()> &);
 
         bool SetKeyboardUpEvent(int, std::function<void()>);
 

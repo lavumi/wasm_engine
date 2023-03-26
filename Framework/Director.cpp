@@ -1,11 +1,11 @@
 #include "precompiled.h"
-#include "Render/Camera.h" 
+#include "Render/Camera.h"
 #include "Director.h"
 #include "Node/ThreeCube.h"
 
 using namespace VumiEngine;
-Director::Director(/* args */)
-{
+
+Director::Director(/* args */) {
     InputHandler::GetInputHandler();
     renderer = new Renderer();
     camera = new Camera();
@@ -15,36 +15,36 @@ Director::Director(/* args */)
     renderer->Init();
 
     //left
-    InputHandler::GetInputHandler().SetKeyboardDownEvent(97, [&]{
-        camera->SetMoveLeft( true );
+    InputHandler::GetInputHandler().SetKeyboardDownEvent(97, [&] {
+        camera->SetMoveLeft(true);
     });
-        InputHandler::GetInputHandler().SetKeyboardDownEvent(100, [&]{
-        camera->SetMoveRight( true );
+    InputHandler::GetInputHandler().SetKeyboardDownEvent(100, [&] {
+        camera->SetMoveRight(true);
     });
-        InputHandler::GetInputHandler().SetKeyboardUpEvent(97, [&]{
-        camera->SetMoveLeft( false );
+    InputHandler::GetInputHandler().SetKeyboardUpEvent(97, [&] {
+        camera->SetMoveLeft(false);
     });
-        InputHandler::GetInputHandler().SetKeyboardUpEvent(100, [&]{
-        camera->SetMoveRight( false );
+    InputHandler::GetInputHandler().SetKeyboardUpEvent(100, [&] {
+        camera->SetMoveRight(false);
     });
 
 
-        //left
-    InputHandler::GetInputHandler().SetKeyboardDownEvent(119 , [&]{
+    //left
+    InputHandler::GetInputHandler().SetKeyboardDownEvent(119, [&] {
         // camera->SetMoveFront( true );
         // testCube->Roll(1,1);
     });//L
 
-    InputHandler::GetInputHandler().SetKeyboardUpEvent(119 , [&]{
+    InputHandler::GetInputHandler().SetKeyboardUpEvent(119, [&] {
         // camera->SetMoveFront( false );
     });//L
 
 
-    InputHandler::GetInputHandler().SetKeyboardDownEvent(115, [&]{
+    InputHandler::GetInputHandler().SetKeyboardDownEvent(115, [&] {
         // camera->SetMoveBack( true );
         // testCube->Roll(2,1);
     });//R
-    InputHandler::GetInputHandler().SetKeyboardUpEvent(115, [&]{
+    InputHandler::GetInputHandler().SetKeyboardUpEvent(115, [&] {
         // camera->SetMoveBack( false );
     });//R
 
@@ -53,11 +53,11 @@ Director::Director(/* args */)
     // InputHandler::getInstance()->SetKeyboardDownEvent(122 , [&]{
     //     testCube->ToggleRotate();
     // });//L
-    InputHandler::GetInputHandler().SetKeyboardUpEvent(122, [&]{
+    InputHandler::GetInputHandler().SetKeyboardUpEvent(122, [&] {
 
     });//R
 
-    InputHandler::GetInputHandler().SetKeyboardUpEvent(102 , [&]{
+    InputHandler::GetInputHandler().SetKeyboardUpEvent(102, [&] {
         renderer->toggleFullscreen();
     });//L
 
@@ -79,29 +79,28 @@ Director::Director(/* args */)
 
 }
 
-Director::~Director()
-{
+Director::~Director() {
     delete renderer;
 }
 
-void Director::Update(float deltaTime) const{
+void Director::Update(float deltaTime) const {
     renderer->Update(deltaTime);
-    if ( currentScene != nullptr)
-        currentScene->Update( deltaTime );
+    if (currentScene != nullptr)
+        currentScene->Update(deltaTime);
 
 //    testCube->Update(deltaTime);
     camera->Update(deltaTime);
 }
 
-void Director::Render() const{
+void Director::Render() const {
     renderer->InitRender();
-    if ( currentScene != nullptr)
+    if (currentScene != nullptr)
         currentScene->Render();
 
     renderer->FinishRender();
 }
 
-void Director::AddScene(Scene* scene) {
+void Director::AddScene(Scene *scene) {
     this->currentScene = scene;
 }
 
