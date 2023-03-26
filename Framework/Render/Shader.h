@@ -19,11 +19,8 @@ namespace VumiEngine{
         Shader(/* args */);
         ~Shader();
 
-        void makeShader();
-        //void setShader();
-
-        void SetUniformMatrix4fv(std::string name, GLfloat* value );
-        // glm::mat4 Model;
+        void MakeShader();
+        void SetUniformMatrix4fv(const std::string& name, GLfloat* value ) const;
     };
 }
 

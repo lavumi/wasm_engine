@@ -36,7 +36,6 @@ namespace VumiEngine {
         const char *vertexSource;
         const char *fragmentSource;
 
-//        ThreeCube *testCube;
         bool background_is_black = true;
 
         void toggleFullscreen();

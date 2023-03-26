@@ -1,13 +1,8 @@
 #include "../precompiled.h"
-#include "Camera.h"
 #include "Shader.h"
 using namespace VumiEngine;
 
-
-
-
-
-Shader::Shader(/* args */)
+Shader::Shader()
 {
 //     vertexSource = R"glsl(
 //         #version 100
@@ -56,8 +51,6 @@ Shader::Shader(/* args */)
 // }
 // )glsl";
 
-
-
     vertexSource = R"glsl(
         #version 100
         // Input vertex data, different for all executions of this shader.
@@ -80,8 +73,7 @@ Shader::Shader(/* args */)
             texCoord = aTexCoord;
         }
         )glsl";
-
-            fragmentSource = R"glsl(
+    fragmentSource = R"glsl(
         #version 100
         // Interpolated values from the vertex shaders
         varying mediump vec2 texCoord;
@@ -107,46 +99,39 @@ Shader::~Shader()
 }
 
 
-void Shader::makeShader(){
+void Shader::MakeShader(){
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertexSource, NULL);
+    glShaderSource(vertex_shader, 1, &vertexSource, nullptr);
     glCompileShader(vertex_shader);
     GLint vertex_shader_status;
     glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &vertex_shader_status);
 
     char vertexLogBuffer[512];
-    glGetShaderInfoLog(vertex_shader, 512, NULL, vertexLogBuffer);
+    glGetShaderInfoLog(vertex_shader, 512, nullptr, vertexLogBuffer);
     std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
 
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragmentSource, NULL);
+    glShaderSource(fragment_shader, 1, &fragmentSource, nullptr);
     glCompileShader(fragment_shader);
     GLint fragment_shader_status;
     glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &fragment_shader_status);
 
     char fragmentLogBuffer[512];
-    glGetShaderInfoLog(fragment_shader, 512, NULL, fragmentLogBuffer);
+    glGetShaderInfoLog(fragment_shader, 512, nullptr, fragmentLogBuffer);
     std::cout << "fragment_shader_status: " << fragment_shader_status << " " << fragmentLogBuffer << std::endl;
 
     shader_program = glCreateProgram();
     glAttachShader(shader_program, vertex_shader);
     glAttachShader(shader_program, fragment_shader);
 
-
-
     glLinkProgram(shader_program);
-
 
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
 
-
-
-
 }
 
-
-void Shader::SetUniformMatrix4fv(std::string name, GLfloat* value ){
-    GLuint MatrixID = glGetUniformLocation(shader_program, name.c_str());
+void Shader::SetUniformMatrix4fv(const std::string& name, GLfloat* value ) const{
+    GLint MatrixID = glGetUniformLocation(shader_program, name.c_str());
     glUniformMatrix4fv(MatrixID, 1, GL_FALSE,value);
 }

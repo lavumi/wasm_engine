@@ -23,16 +23,16 @@ namespace VumiEngine {
 
         void HandleEvent(SDL_Event event);
 
-        void HandleEvent(int keycode, bool pressed);
+        void HandleEvent(int pKeyCode, bool pressed);
 
-        void HandleMouseInput(SDL_MouseMotionEvent mouseMotion);
+        void HandleMouseInput(SDL_MouseMotionEvent mouseMotion) const;
 
-        void HandleMouseInput(int deltaX, int deltaY);
+        void HandleMouseInput(int deltaX, int deltaY) const;
 
         std::function<void()> myfxMouseLeftDown;
         std::function<void()> myfxMouseLeftUp;
 
-        bool SetKeyboardDownEvent(int, std::function<void()>);
+        bool SetKeyboardDownEvent(int, const std::function<void()>&);
 
         bool SetKeyboardUpEvent(int, std::function<void()>);
 
@@ -50,8 +50,8 @@ namespace VumiEngine {
          *************************************/
         int keycode[128] = {0};
 
-        void setkeycode();
+        void setKeyCode();
 
-        int senitizeInput(int keycode);
+        static int sanitizeInput(int keycode);
     };
 }

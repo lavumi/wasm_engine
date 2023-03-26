@@ -29,7 +29,6 @@ void Renderer::makeShader()
 void Renderer::Init(ThreeCube* cube )
 {
 
-//    testCube = cube;
     SDL_Init(SDL_INIT_EVERYTHING);
 
     #if __EMSCRIPTEN__
@@ -69,9 +68,8 @@ void Renderer::Init(ThreeCube* cube )
     version = glGetString(GL_VERSION);
     std::cout << "version: " << version << std::endl;
 
+    shader->MakeShader();
 
-
-    shader->makeShader();
     cube->setBuffer( shader->shader_program);
 }
 

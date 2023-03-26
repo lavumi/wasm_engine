@@ -36,7 +36,7 @@ InputHandler *InputHandler::instance = nullptr;
 
 InputHandler::InputHandler()
 {
-    setkeycode();
+    setKeyCode();
 }
 
 InputHandler::~InputHandler()
@@ -46,7 +46,7 @@ InputHandler::~InputHandler()
     };
 }
 
-void InputHandler::setkeycode()
+void InputHandler::setKeyCode()
 {
     keycode[8] = SDLK_BACKSPACE; //backspace
     keycode[9] = SDLK_TAB;       //tab
@@ -163,9 +163,9 @@ void InputHandler::HandleEvent(SDL_Event event)
     }
 }
 
-void InputHandler::HandleEvent(int keycode, bool pressed)
+void InputHandler::HandleEvent(int pKeyCode, bool pressed)
 {
-    int input = senitizeInput(keycode);
+    int input = sanitizeInput(pKeyCode);
     if (pressed == true)
     {
         auto iter = mykeyboardDown.find(input);
@@ -190,11 +190,11 @@ void InputHandler::HandleEvent(int keycode, bool pressed)
     }
 }
 
-void InputHandler::HandleMouseInput( SDL_MouseMotionEvent mouseMotion ){
+void InputHandler::HandleMouseInput( SDL_MouseMotionEvent mouseMotion ) const{
     mouseMoveEvent( mouseMotion.xrel, mouseMotion.yrel);
 }
 
-void InputHandler::HandleMouseInput( int deltaX, int deltaY ){
+void InputHandler::HandleMouseInput( int deltaX, int deltaY ) const{
 
     mouseMoveEvent( deltaX, deltaY);
 }
@@ -209,19 +209,19 @@ void InputHandler::Update(float deltaTime)
     //Pressed Event
 }
 
-bool InputHandler::SetKeyboardDownEvent(int id, std::function<void()> function)
+bool InputHandler::SetKeyboardDownEvent(int id, const std::function<void()>& function)
 {
     mykeyboardDown.insert(std::pair<int, std::function<void()>>(id, function));
     return true;
 }
 
-bool InputHandler::SetKeyboardUpEvent(int id, std::function<void()> function)
+bool InputHandler::SetKeyboardUpEvent(int id, const std::function<void()> function)
 {
     mykeyboardUp.insert(std::pair<int, std::function<void()>>(id, function));
     return true;
 }
 
-int InputHandler::senitizeInput(int input)
+int InputHandler::sanitizeInput(int input)
 {
 #if __EMSCRIPTEN__
     return keycode[input];

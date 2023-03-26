@@ -1,5 +1,4 @@
 #include "precompiled.h"
-#include "./Render/Texture.h"
 #include "ThreeCube.h"
 using namespace VumiEngine;
 //region [ Model Data ]
@@ -207,7 +206,6 @@ static uint yaw[3][9] = {
 
 ThreeCube::ThreeCube(/* args */)
 {
-
     for( int x = 0 ; x < 3 ; x ++ ){
         for( int y = 0 ; y < 3 ; y ++ ){
             for( int z = 0 ; z < 3 ; z ++ ){
@@ -219,7 +217,6 @@ ThreeCube::ThreeCube(/* args */)
 
     worldMatrix = glm::mat4(1.0f);
 	texture = new Texture();
-
 }
 
 
@@ -234,14 +231,16 @@ void ThreeCube::Init()
 
 }
 
-void ThreeCube::makeBuffer()
-{
-}
-
 void ThreeCube::setBuffer(GLuint shaderProgram)
 {
 
-	this->shader = shaderProgram;
+	shader = shaderProgram;
+
+    GLuint vertexPosition = glGetAttribLocation(shader, "vertexPosition");
+    GLuint vertexColor = glGetAttribLocation(shader, "vertexColor");
+    GLuint texCoord = glGetAttribLocation(shader, "aTexCoord");
+
+
 
 	glGenVertexArrays(1, &_vao);
 	glBindVertexArray(_vao);
@@ -259,9 +258,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
     glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_texCoord_buffer_data), g_texCoord_buffer_data, GL_STATIC_DRAW);
 
-	GLuint vertexPosition = glGetAttribLocation(shader, "vertexPosition");
-	GLuint vertexColor = glGetAttribLocation(shader, "vertexColor");
-	GLuint texCoord = glGetAttribLocation(shader, "aTexCoord");
+
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer); //버퍼를 GL_ARRAY_BUFFER 에 바인드
 	glVertexAttribPointer(
@@ -270,7 +267,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 		GL_FLOAT,				   // 데이터 타입
 		GL_FALSE,				   // 정규화
 		0,						   // stride 속성 세트 사이의 공백
-		(void *)0				   // 시작 위치
+		(void *)nullptr				   // 시작 위치
 	);
 	glEnableVertexAttribArray(vertexPosition); //버텍스 버퍼를 활성화
 	// 2nd attribute buffer : colors
@@ -282,7 +279,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 		GL_FLOAT,
 		GL_FALSE,
 		0,
-		(void *)0);
+		(void *)nullptr);
 	glEnableVertexAttribArray(vertexColor);
 
 	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
@@ -292,7 +289,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram)
 		GL_FLOAT,
 		GL_FALSE,
 		0,
-		(void *)0);
+		(void *)nullptr);
 	glEnableVertexAttribArray(texCoord);
 
 
@@ -307,13 +304,9 @@ void ThreeCube::_finishRpy( int rpyIndex ){
     for( int i = 0 ; i < 27 ; i ++ ){
         modelMatrix[i] = rpyMatrix[i] * modelMatrix[i];
         rpyMatrix[i] = glm::mat4(1.0f);
-
-
-
-
     }
 
-    uint* targetArr = nullptr;
+    uint* targetArr;
     if ( rpyIndex > 5 ){
         targetArr = roll[rpyIndex%3];
     }
@@ -373,9 +366,8 @@ void ThreeCube::RunCube(int index, float angle){
     float w = glm::cos(radian / 2);
     float v = glm::sin(radian / 2);
 
-    uint* targetArr = nullptr;
+    uint* targetArr;
     glm::vec3 axis;
-
 
     if ( index > 5){
         axis = glm::vec3(1,0,0);
@@ -395,7 +387,7 @@ void ThreeCube::RunCube(int index, float angle){
     glm::mat4 quatTransform = glm::mat4_cast(quaternion);
 
     for( int i = 0 ; i < 9 ; i ++ ){
-        int targetIndex = targetArr[i];
+        int targetIndex = (int)targetArr[i];
         rpyMatrix[targetIndex] = quatTransform;
     }
 }
@@ -404,15 +396,12 @@ int testSequence[3] = {3, 6, 7};
 int testCounter = 0;
 
 void ThreeCube::Update(float deltaTime){
+    if ( testCounter > 3) return;
 
     timeSpend += deltaTime;
-
-    if ( testCounter > 3)
-    return;
-
     if ( timeSpend > 1.0f ){
         // rpyRnd = testSequence[Counter++];
-        rpyRnd = rand() % 9; 
+        rpyRnd = rand() % 9;
         timeSpend = 0.0f;
         return;
     }
@@ -455,18 +444,14 @@ void ThreeCube::SetRotate(float amount, glm::vec3 axis)
 void ThreeCube::Render()
 {
 	glUseProgram(shader);
-
 	glBindVertexArray(_vao);
-
-	GLuint modelID = glGetUniformLocation(shader, "Model");
-	
+	GLint modelID = glGetUniformLocation(shader, "Model");
 
     //todo drawcall 27짜리 쓰레기 코드
     for( int i = 0 ; i < 27 ; i ++ )
     {
         glm::mat4 finalMat = worldMatrix * rpyMatrix[i] * modelMatrix[i];
         glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *)&finalMat);
-
         glDrawArrays(GL_TRIANGLES, 0, 12*3 );
     }
 
