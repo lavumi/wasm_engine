@@ -7,22 +7,34 @@ namespace VumiEngine {
     class Camera;
     class Director
     {
+
+    public:
+        static Director& GetDirector(){
+            static Director director;
+            return director;
+        }
     private:
         /* data */
-        Renderer* renderer;
-        Camera* camera;
+        Renderer* renderer{};
+        Camera* camera{};
 
-        Scene *currentScene;
-    public:
-        Director(/* args */);
+        Scene *currentScene{};
+
+        Director();
         ~Director();
+    public:
 
         void Update(float deltaTime) const;
         void Render() const;
 
         void AddScene( Scene* scene );
 
-        ThreeCube *testCube;
+//        ThreeCube *testCube;
+
+
+
+
+        GLuint GetShaderProgram();
     };
 }
 

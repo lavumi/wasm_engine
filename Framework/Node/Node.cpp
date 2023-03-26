@@ -10,6 +10,7 @@ using namespace VumiEngine;
 
 void Node::Init(){
 
+
 }
 
 void Node::AddChild(Node* child, int tag = 0){
@@ -32,9 +33,6 @@ void Node::Render() {
         _children[i]->Render();
     }
 
-//    for_each(this->_children.begin(), this->_children.end(), [](Node& node){
-//        node.Render();
-//    });
 }
 
 void Node::RemoveChild(Node *child) {

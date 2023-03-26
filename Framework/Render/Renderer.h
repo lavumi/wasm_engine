@@ -20,7 +20,7 @@ namespace VumiEngine {
         Renderer(/* args */);
         ~Renderer();
 
-        void Init(ThreeCube *cube);
+        void Init();
 
         void Update(float deltaTime);
 
@@ -28,6 +28,8 @@ namespace VumiEngine {
         void FinishRender();
 
         void SetCamera(Camera *camera);
+
+        GLuint GetShader();
 
         GLfloat rotation_angle;
         GLuint length_of_attributes;

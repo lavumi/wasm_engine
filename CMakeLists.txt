@@ -29,9 +29,11 @@ endif()
 
 
 
-ADD_SUBDIRECTORY(Framework libs/glm)
-ADD_EXECUTABLE( ${PROJECT_NAME} main.cpp src/TestScene.cpp src/TestScene.h)
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC opengl_engine)
+ADD_SUBDIRECTORY(libs/glm)
+ADD_SUBDIRECTORY(Framework)
+ADD_SUBDIRECTORY(src)
+ADD_EXECUTABLE( ${PROJECT_NAME} main.cpp )
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC opengl_engine game_src)
 
 
 if(EMSCRIPTEN)

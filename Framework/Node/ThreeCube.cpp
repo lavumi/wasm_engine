@@ -1,4 +1,4 @@
-#include "precompiled.h"
+#include "../precompiled.h"
 #include "ThreeCube.h"
 using namespace VumiEngine;
 //region [ Model Data ]
@@ -228,7 +228,8 @@ ThreeCube::~ThreeCube()
 
 void ThreeCube::Init()
 {
-
+    //이거 너무 구린데...
+    setBuffer( Director::GetDirector().GetShaderProgram());
 }
 
 void ThreeCube::setBuffer(GLuint shaderProgram)
@@ -419,7 +420,7 @@ void ThreeCube::Update(float deltaTime){
         rpyRnd = -1;
     }
 
-
+//    std::cout << "update called"<< std::endl;
 }
 
 
@@ -443,6 +444,7 @@ void ThreeCube::SetRotate(float amount, glm::vec3 axis)
 
 void ThreeCube::Render()
 {
+    Node::Render();
 	glUseProgram(shader);
 	glBindVertexArray(_vao);
 	GLint modelID = glGetUniformLocation(shader, "Model");

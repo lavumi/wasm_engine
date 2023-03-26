@@ -8,6 +8,9 @@
 
 class TestScene : public VumiEngine::Scene{
 public:
+    void Init();
+    void Render();
+    void Update(float deltaTime);
 };
 
 #endif //WASM_TESTSCENE_H

@@ -1,6 +1,8 @@
 #include "../precompiled.h"
 
-#include "../ThreeCube.h"
+#include "../Node/ThreeCube.h"
+#include "Renderer.h"
+
 //#include "../TestCube.h"
 
 using namespace VumiEngine;
@@ -26,7 +28,7 @@ void Renderer::makeShader()
 
 }
 
-void Renderer::Init(ThreeCube* cube )
+void Renderer::Init()
 {
 
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -70,7 +72,6 @@ void Renderer::Init(ThreeCube* cube )
 
     shader->MakeShader();
 
-    cube->setBuffer( shader->shader_program);
 }
 
 void Renderer::Update(float deltaTime)
@@ -103,5 +104,9 @@ void Renderer::InitRender() const {
 
 void Renderer::FinishRender() {
     SDL_GL_SwapWindow(window);
+}
+
+GLuint Renderer::GetShader() {
+    return shader->shader_program;
 }
 

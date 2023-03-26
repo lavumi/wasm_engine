@@ -1,10 +1,10 @@
 #include "./Framework/precompiled.h"
-
+#include "./src/TestScene.h"
 #define PI 3.14159265
 
 using namespace VumiEngine;
 
-Director *director;
+//Director *director;
 static GLuint previous_ticks = 0;
 static GLuint max_fps = 16;
 static GLfloat lag = 0;
@@ -16,11 +16,11 @@ void loop()
 
   //  while (lag > max_fps)
   // {
-        director->Update(lag / 1000);
+    Director::GetDirector().Update(lag / 1000);
 //        lag = 0;
 
   //  }
-    director->Render();
+    Director::GetDirector().Render();
 }
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 int WinMain()
@@ -28,8 +28,9 @@ int WinMain()
 int main()
 #endif
 {
-    director = new Director();
-
+    TestScene * testScene = new TestScene();
+    testScene->Init();
+    Director::GetDirector().AddScene(testScene);
 #if __EMSCRIPTEN__
     emscripten_set_main_loop(loop, -1, 1);
 #else
@@ -45,7 +46,5 @@ int main()
         loop();
     }
 #endif
-
-    delete director;
     return 0;
 }
