@@ -28,8 +28,8 @@
 #include "Director.h"
 #include "InputHandler.h"
 
-
-#include "Render/Shader.h"
+#include "Render/Shader/AnimationShader.h"
+#include "Render/Shader/Shader.h"
 #include "Render/Camera.h"
 #include "Render/Renderer.h"
 #include "Render/Texture.h"
@@ -40,6 +40,7 @@
 #include "Node/Scene.h"
 #include "Node/ThreeCube.h"
 #include "Node/Sprite.h"
+#include "Node/SpriteAnimation.h"
 
 
 #define SCREEN_WIDTH 800

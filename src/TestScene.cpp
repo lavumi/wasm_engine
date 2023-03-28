@@ -26,8 +26,9 @@ void TestScene::Init() {
 //        cube->SetRotate((float)inputY * 0.05f, glm::vec3(-5,0,0));
 //    };
 
-    sprite = new Sprite("Resources/atlas.png");
-    this->AddChild(sprite , 0 );
+    spriteAni = new VumiEngine::SpriteAnimation("Resources/helltaker_atlas.png" , 12 , 0.08333f);
+//    sprite = new VumiEngine::Sprite("Resources/helltaker_atlas.png");
+    this->AddChild(spriteAni , 0 );
 }
 
 void TestScene::Render() {

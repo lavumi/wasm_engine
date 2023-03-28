@@ -1,4 +1,4 @@
-#include "../precompiled.h"
+#include "../../precompiled.h"
 #include "Shader.h"
 
 using namespace VumiEngine;
@@ -6,7 +6,7 @@ using namespace VumiEngine;
 Shader::Shader() {
 //     vertexSource = R"glsl(
 //         #version 100
-// // Input vertex data, different for all executions of this shader.
+// // Input vertex data, different for all executions of this shaderProgram.
 // attribute vec3 vertexPosition;
 // attribute vec3 vertexColor;
 // attribute vec2 aTexCoord;
@@ -41,7 +41,7 @@ Shader::Shader() {
 
 // void main(){
 
-// 	// Output color = color specified in the vertex shader, 
+// 	// Output color = color specified in the vertex shaderProgram,
 // 	// interpolated between all 3 surrounding vertices
 // 	gl_FragColor = vec4(fragmentColor,1);
 
@@ -53,7 +53,7 @@ Shader::Shader() {
 
     vertexSource = R"glsl(
         #version 100
-        // Input vertex data, different for all executions of this shader.
+        // Input vertex data, different for all executions of this shaderProgram.
         attribute vec3 vertexPosition;
         attribute vec2 aTexCoord;
 
@@ -81,7 +81,7 @@ Shader::Shader() {
 
         void main(){
 
-            // Output color = color specified in the vertex shader, 
+            // Output color = color specified in the vertex shaderProgram,
             // interpolated between all 3 surrounding vertices
             // gl_FragColor = vec4(fragmentColor,1);
 
@@ -99,6 +99,7 @@ Shader::~Shader() {
 
 
 void Shader::MakeShader() {
+    std::cout << "Make Shader Called" << std::endl;
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex_shader, 1, &vertexSource, nullptr);
     glCompileShader(vertex_shader);

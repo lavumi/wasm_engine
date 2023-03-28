@@ -5,7 +5,7 @@
 #ifndef WASM_TESTSCENE_H
 #define WASM_TESTSCENE_H
 
-class ThreeCube;
+
 class TestScene : public VumiEngine::Scene{
 public:
     void Init();
@@ -14,8 +14,9 @@ public:
 
 
 private:
-    ThreeCube* cube;
-    Sprite* sprite;
+    VumiEngine::ThreeCube* cube;
+    VumiEngine::Sprite* sprite;
+    VumiEngine::SpriteAnimation* spriteAni;
 };
 
 #endif //WASM_TESTSCENE_H

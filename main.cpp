@@ -28,6 +28,10 @@ int WinMain()
 int main()
 #endif
 {
+    Director::GetDirector();
+
+
+
     TestScene * testScene = new TestScene();
     testScene->Init();
     Director::GetDirector().AddScene(testScene);

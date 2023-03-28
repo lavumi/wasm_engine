@@ -48,7 +48,6 @@ void Sprite::setBuffer(GLuint shaderProgram) {
     shader = shaderProgram;
 
     GLuint vertexPosition = glGetAttribLocation(shader, "vertexPosition");
-    GLuint vertexColor = glGetAttribLocation(shader, "vertexColor");
     GLuint texCoord = glGetAttribLocation(shader, "aTexCoord");
 
 
@@ -58,10 +57,6 @@ void Sprite::setBuffer(GLuint shaderProgram) {
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-//    glGenBuffers(1, &colorBuffer);
-//    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
 
     glGenBuffers(1, &texCoordBuffer);
@@ -79,17 +74,6 @@ void Sprite::setBuffer(GLuint shaderProgram) {
             (void *) nullptr                   // 시작 위치
     );
     glEnableVertexAttribArray(vertexPosition); //버텍스 버퍼를 활성화
-    // 2nd attribute buffer : colors
-
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glVertexAttribPointer(
-            vertexColor,
-            3,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void *) nullptr);
-    glEnableVertexAttribArray(vertexColor);
 
     glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
     glVertexAttribPointer(

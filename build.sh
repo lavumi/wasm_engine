@@ -3,15 +3,15 @@ echo ------ select build type ------
 echo 1. MAC
 echo 2. WASM
 echo 
-read input
+read -r input
 
-if [ $input -eq 1 ]; then 
+if [ "$input" -eq 1 ]; then
     # clang++ *.cpp -std=c++11 -Wall -Wextra -lglew -lsdl2 -framework OpenGL -g -v -o mac/app
     make clean
     make
 fi
 
-if [ $input -eq 2 ]; then 
+if [ "$input" -eq 2 ]; then
     rm -rf wasm
     mkdir wasm
     make clean

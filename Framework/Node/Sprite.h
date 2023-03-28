@@ -5,30 +5,32 @@
 #ifndef WASM_SPRITE_H
 #define WASM_SPRITE_H
 
+namespace VumiEngine{
+    class Sprite : public VumiEngine::Node{
 
-class Sprite : public VumiEngine::Node{
+        glm::mat4 worldMatrix{};
+        glm::mat4 modelMatrix{};
 
-    glm::mat4 worldMatrix{};
-    glm::mat4 modelMatrix{};
+        GLuint shader{};
+        GLuint _vao{};
+        GLuint vertexBuffer{};
+        GLuint colorBuffer{};
 
-    GLuint shader{};
-    GLuint _vao{};
-    GLuint vertexBuffer{};
-    GLuint colorBuffer{};
+        GLuint texCoordBuffer{};
 
-    GLuint texCoordBuffer{};
-
-    VumiEngine::Texture *texture{};
+        VumiEngine::Texture *texture{};
 
 
-public:
-    Sprite(std::string path);
-    ~Sprite();
+    public:
+        Sprite(std::string path);
+        ~Sprite();
 
-    void Update(float deltaTime);
-    void setBuffer(GLuint shaderProgram);
-    void Render();
-};
+        void Update(float deltaTime);
+        void setBuffer(GLuint shaderProgram);
+        void Render();
+    };
+}
+
 
 
 #endif //WASM_SPRITE_H

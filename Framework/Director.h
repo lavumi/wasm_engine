@@ -1,10 +1,10 @@
 #pragma once
 
-class ThreeCube;
+
 
 namespace VumiEngine {
     class Renderer;
-
+    class ThreeCube;
     class Scene;
 
     class Camera;

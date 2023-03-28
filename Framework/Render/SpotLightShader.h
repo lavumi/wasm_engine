@@ -1,32 +1,31 @@
-#pragma once
+//
+// Created by Lavumi on 2023/03/28.
+//
 
-#include "../precompiled.h"
+#ifndef WASM_SPOTLIGHTSHADER_H
+#define WASM_SPOTLIGHTSHADER_H
 
 namespace VumiEngine {
-    class Camera;
 
-    class Shader {
+    class SpotLightShader {
     private:
         /* data */
 
         const char *vertexSource;
         const char *fragmentSource;
 
-        const char *textureVertexSource;
-        const char *textureFragmentSource;
-
     public:
         GLuint shader_program;
 
-        Shader(/* args */);
+        SpotLightShader(/* args */);
 
-        ~Shader();
+        ~SpotLightShader();
 
         void MakeShader();
 
         void SetUniformMatrix4fv(const std::string &name, GLfloat *value) const;
     };
-}
 
+} // VumiEngine
 
-
+#endif //WASM_SPOTLIGHTSHADER_H
