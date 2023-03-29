@@ -9,8 +9,8 @@ using namespace VumiEngine;
 static glm::vec3 point[] = {
        glm::vec3(-3,-8,0),
        glm::vec3(3,-8,0),
-       glm::vec3(3,8,0),
-       glm::vec3(-3,8,0)
+       glm::vec3(0.2,8,0),
+       glm::vec3(-0.2,8,0)
 };
 
 static const GLfloat g_vertex_buffer_data[] = {
@@ -32,27 +32,25 @@ static const GLfloat g_texCoord_buffer_data[] = {
 };
 
 
-SpotLight::SpotLight() {
+SpotLight::SpotLight(GLfloat startAngle , bool direction) {
     worldMatrix = glm::translate( glm::mat4(1.0f) , glm::vec3(0,8,0));
-
-
-
     modelMatrix = glm::translate( glm::mat4(1.0f) , glm::vec3(0,-8,0));//glm::mat4(1.0f);
     glm::vec3 axis = glm::vec3(0,0,1);
-    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), -PI * 0.1f, axis);
+    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), startAngle, axis);
     modelMatrix = rotMatrix * modelMatrix;
 
     setBuffer();
-    texture = new Texture();
-    texture->LoadTexture("Resources/spotlight.png");
+    lightColor = glm::vec4(0.1,0.3,1,0.3);
 
-    lightDir = glm::vec2 ();
-//    texture->BindTexture();
+
+    if ( direction == false ){
+        swingSpeed *= -1;
+    }
 }
 
 SpotLight::~SpotLight() {
     glDeleteBuffers(sizeof(g_vertex_buffer_data), &vertexBuffer);
-    glDeleteBuffers(sizeof(g_texCoord_buffer_data), &texCoordBuffer);
+//    glDeleteBuffers(sizeof(g_texCoord_buffer_data), &texCoordBuffer);
     delete shader;
 }
 
@@ -86,12 +84,14 @@ void SpotLight::setBuffer() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
 
-    glGenBuffers(1, &texCoordBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_texCoord_buffer_data), g_texCoord_buffer_data, GL_STATIC_DRAW);
+//    glGenBuffers(1, &texCoordBuffer);
+//    glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(g_texCoord_buffer_data), g_texCoord_buffer_data, GL_STATIC_DRAW);
 
     GLuint vertexPosition = glGetAttribLocation(shaderProgram, "vertexPosition");
-    GLuint texCoord = glGetAttribLocation(shaderProgram, "aTexCoord");
+//    GLuint texCoord = glGetAttribLocation(shaderProgram, "aTexCoord");
+
+
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer); //버퍼를 GL_ARRAY_BUFFER 에 바인드
     glVertexAttribPointer(
             vertexPosition, // attribute. Vertex 속성의 위치
@@ -103,28 +103,33 @@ void SpotLight::setBuffer() {
     );
     glEnableVertexAttribArray(vertexPosition); //버텍스 버퍼를 활성화
 
-    glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-    glVertexAttribPointer(
-            texCoord,
-            2,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void *) nullptr);
-    glEnableVertexAttribArray(texCoord);
+//    glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
+//    glVertexAttribPointer(
+//            texCoord,
+//            2,
+//            GL_FLOAT,
+//            GL_FALSE,
+//            0,
+//            (void *) nullptr);
+//    glEnableVertexAttribArray(texCoord);
 
     glBindVertexArray(0);
 }
 
+
+void SpotLight::SetPosition( glm::vec3 position ){
+    worldMatrix = glm::translate( glm::mat4(1.0f) , position);
+}
+
+
 void SpotLight::Render() {
     Node::Render();
 
-    if ( texture == nullptr ) return;
-    texture->BindTexture();
-
-
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_ONE, GL_ONE);
+//    glBlendFuncSeparate(GL_ONE, GL_ONE,GL_ONE, GL_ONE);
+//    glBlendEquation(GL_FUNC_ADD);
+
 
 
     glUseProgram(shaderProgram);
@@ -139,13 +144,16 @@ void SpotLight::Render() {
     GLint VPID = glGetUniformLocation(shaderProgram, "VP");
     glUniformMatrix4fv(VPID, 1, GL_FALSE, (GLfloat *) &VP);
 
-    glm::vec4 color = glm::vec4(1,1,1,0.3);
     GLint ColorId = glGetUniformLocation(shaderProgram, "LightColor");
-    glUniform4fv(ColorId, 1, (GLfloat *) &color);
+    glUniform4fv(ColorId, 1, (GLfloat *) &lightColor);
 
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 
 //    std::cout << "Spotlight Render" << std::endl;
+}
+
+void SpotLight::SetColor(glm::vec4 color) {
+    lightColor = color;
 }

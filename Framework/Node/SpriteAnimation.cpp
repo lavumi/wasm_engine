@@ -141,8 +141,9 @@ namespace VumiEngine {
         texture->BindTexture();
 
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glBlendFuncSeparate(GL_DST_COLOR , GL_ONE_MINUS_SRC_ALPHA , GL_ONE, GL_ONE);
+
 
 
         glUseProgram(shaderProgram);

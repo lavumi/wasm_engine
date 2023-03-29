@@ -14,11 +14,12 @@ public:
 
 
 private:
-    VumiEngine::ThreeCube* cube;
-    VumiEngine::Sprite* sprite;
-    VumiEngine::Sprite* sprite2;
+//    VumiEngine::ThreeCube* cube;
+//    VumiEngine::Sprite* sprite;
+//    VumiEngine::Sprite* sprite2;
     VumiEngine::SpriteAnimation* spriteAni;
     VumiEngine::SpotLight* light;
+    VumiEngine::SpotLight* light2;
 };
 
 #endif //WASM_TESTSCENE_H

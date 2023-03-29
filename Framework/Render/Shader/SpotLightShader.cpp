@@ -11,10 +11,7 @@ SpotLightShader::SpotLightShader() {
         #version 100
         // Input vertex data, different for all executions of this shaderProgram.
         attribute vec3 vertexPosition;
-        attribute vec2 aTexCoord;
-
         // Output data ; will be interpolated for each fragment.
-        varying mediump vec2 texCoord;
 
         // Values that stay constant for the whole mesh.
         uniform mat4 Model;
@@ -25,21 +22,16 @@ SpotLightShader::SpotLightShader() {
 
             // Output position of the vertex, in clip space : MVP * position
             gl_Position =  VP * Model * vec4(vertexPosition,1);
-
-            texCoord = aTexCoord;
         }
         )glsl";
     fragmentSource = R"glsl(
         #version 100
         // Interpolated values from the vertex shaders
-        varying mediump vec2 texCoord;
         uniform mediump vec4 LightColor;
-        uniform sampler2D Texture;
 
 
         void main(){
-            mediump vec4 sampled = texture2D(Texture, texCoord);
-            gl_FragColor = vec4(LightColor.rgb * (1.0-sampled.r) , sampled.r +LightColor.a );
+            gl_FragColor = LightColor;
         }
         )glsl";
 }
