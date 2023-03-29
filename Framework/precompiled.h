@@ -11,7 +11,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#define PI 3.14159265
+#define PI 3.14159265f
 
 #define GLEW_STATIC
 

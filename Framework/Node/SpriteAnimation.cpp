@@ -140,6 +140,11 @@ namespace VumiEngine {
         if ( texture == nullptr ) return;
         texture->BindTexture();
 
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
         glUseProgram(shaderProgram);
         glBindVertexArray(_vao);
 

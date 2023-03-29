@@ -39,7 +39,7 @@ SpotLightShader::SpotLightShader() {
 
         void main(){
             mediump vec4 sampled = texture2D(Texture, texCoord);
-            gl_FragColor = LightColor * (1.0-sampled.r);
+            gl_FragColor = vec4(LightColor.rgb * (1.0-sampled.r) , sampled.r +LightColor.a );
         }
         )glsl";
 }

@@ -61,8 +61,7 @@ void Renderer::Init() {
     // Cull triangles which normal is not towards the camera
     glEnable(GL_CULL_FACE);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
     const GLubyte *version;
     version = glGetString(GL_VERSION);

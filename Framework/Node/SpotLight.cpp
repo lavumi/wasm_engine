@@ -34,10 +34,13 @@ static const GLfloat g_texCoord_buffer_data[] = {
 
 SpotLight::SpotLight() {
     worldMatrix = glm::translate( glm::mat4(1.0f) , glm::vec3(0,8,0));
+
+
+
     modelMatrix = glm::translate( glm::mat4(1.0f) , glm::vec3(0,-8,0));//glm::mat4(1.0f);
-
-
-
+    glm::vec3 axis = glm::vec3(0,0,1);
+    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), -PI * 0.1f, axis);
+    modelMatrix = rotMatrix * modelMatrix;
 
     setBuffer();
     texture = new Texture();
@@ -64,7 +67,7 @@ void SpotLight::Update(float deltaTime) {
     }
 
     glm::vec3 axis = glm::vec3(0,0,1);
-    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), swingSpeed * 0.03f, axis);
+    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), swingSpeed * deltaTime, axis);
     modelMatrix = rotMatrix * modelMatrix;
 }
 
@@ -118,6 +121,11 @@ void SpotLight::Render() {
 
     if ( texture == nullptr ) return;
     texture->BindTexture();
+
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
     glUseProgram(shaderProgram);
     glBindVertexArray(_vao);
