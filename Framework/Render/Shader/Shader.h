@@ -1,10 +1,6 @@
 #pragma once
 
-#include "../../precompiled.h"
-
 namespace VumiEngine {
-    class Camera;
-
     class Shader {
     private:
         /* data */
@@ -21,7 +17,6 @@ namespace VumiEngine {
 
         void MakeShader();
 
-        void SetUniformMatrix4fv(const std::string &name, GLfloat *value) const;
     };
 }
 

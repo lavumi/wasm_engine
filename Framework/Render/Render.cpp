@@ -54,12 +54,15 @@ void Renderer::Init() {
     glewInit();
 
     // Enable depth test
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_DEPTH_TEST);
     // Accept fragment if it closer to the camera than the former one
     glDepthFunc(GL_LESS);
 
     // Cull triangles which normal is not towards the camera
     glEnable(GL_CULL_FACE);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     const GLubyte *version;
     version = glGetString(GL_VERSION);
@@ -71,7 +74,8 @@ void Renderer::Init() {
 
 void Renderer::Update(float deltaTime) {
     glm::mat4 VP = camera->GetVP();
-    shader->SetUniformMatrix4fv("VP", (GLfloat *) &VP);
+//    GLint MatrixID = glGetUniformLocation(shader->shader_program, "VP");
+//    glUniformMatrix4fv(4, 1, GL_FALSE, (GLfloat *) &VP);
 }
 
 void Renderer::SetCamera(Camera *pCamera) {
@@ -100,7 +104,4 @@ void Renderer::FinishRender() {
     SDL_GL_SwapWindow(window);
 }
 
-GLuint Renderer::GetShader() {
-    return shader->shader_program;
-}
 

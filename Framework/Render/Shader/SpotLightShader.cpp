@@ -2,12 +2,11 @@
 // Created by Lavumi on 2023/03/28.
 //
 #include "../../precompiled.h"
-#include "AnimationShader.h"
-
+#include "SpotLightShader.h"
 
 using namespace VumiEngine;
 
-AnimationShader::AnimationShader() {
+SpotLightShader::SpotLightShader() {
     vertexSource = R"glsl(
         #version 100
         // Input vertex data, different for all executions of this shaderProgram.
@@ -18,10 +17,8 @@ AnimationShader::AnimationShader() {
         varying mediump vec2 texCoord;
 
         // Values that stay constant for the whole mesh.
-
         uniform mat4 Model;
         uniform mat4 VP;
-        uniform vec2 uvTarget;
 
 
         void main(){
@@ -29,28 +26,30 @@ AnimationShader::AnimationShader() {
             // Output position of the vertex, in clip space : MVP * position
             gl_Position =  VP * Model * vec4(vertexPosition,1);
 
-            texCoord = aTexCoord + uvTarget;
+            texCoord = aTexCoord;
         }
         )glsl";
     fragmentSource = R"glsl(
         #version 100
         // Interpolated values from the vertex shaders
         varying mediump vec2 texCoord;
+        uniform mediump vec4 LightColor;
         uniform sampler2D Texture;
+
 
         void main(){
             mediump vec4 sampled = texture2D(Texture, texCoord);
-            gl_FragColor =  sampled;
-
+            gl_FragColor = LightColor * (1.0-sampled.r);
         }
         )glsl";
 }
 
-AnimationShader::~AnimationShader() {
+SpotLightShader::~SpotLightShader() {
     glDeleteShader(shader_program);
 }
 
-void AnimationShader::MakeShader() {
+void SpotLightShader::MakeShader() {
+//    std::cout << "Make Shader Called" << std::endl;
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex_shader, 1, &vertexSource, nullptr);
     glCompileShader(vertex_shader);
@@ -59,7 +58,7 @@ void AnimationShader::MakeShader() {
 
     char vertexLogBuffer[512];
     glGetShaderInfoLog(vertex_shader, 512, nullptr, vertexLogBuffer);
-//    std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
+    std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
 
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment_shader, 1, &fragmentSource, nullptr);
@@ -69,14 +68,13 @@ void AnimationShader::MakeShader() {
 
     char fragmentLogBuffer[512];
     glGetShaderInfoLog(fragment_shader, 512, nullptr, fragmentLogBuffer);
-//    std::cout << "fragment_shader_status: " << fragment_shader_status << " " << fragmentLogBuffer << std::endl;
+    std::cout << "fragment_shader_status: " << fragment_shader_status << " " << fragmentLogBuffer << std::endl;
 
     shader_program = glCreateProgram();
     glAttachShader(shader_program, vertex_shader);
     glAttachShader(shader_program, fragment_shader);
 
     glLinkProgram(shader_program);
-
 
     GLint Result = GL_FALSE;
     int InfoLogLength;
@@ -89,11 +87,9 @@ void AnimationShader::MakeShader() {
         printf("%s\n", &ProgramErrorMessage[0]);
     }
 
-
     glDetachShader(shader_program, vertex_shader);
     glDetachShader(shader_program, fragment_shader);
 
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
 }
-

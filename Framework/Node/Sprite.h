@@ -11,7 +11,9 @@ namespace VumiEngine{
         glm::mat4 worldMatrix{};
         glm::mat4 modelMatrix{};
 
-        GLuint shader{};
+
+        Shader* shader;
+        GLuint shaderProgram{};
         GLuint _vao{};
         GLuint vertexBuffer{};
         GLuint colorBuffer{};
@@ -26,7 +28,7 @@ namespace VumiEngine{
         ~Sprite();
 
         void Update(float deltaTime);
-        void setBuffer(GLuint shaderProgram);
+        void setBuffer();
         void Render();
     };
 }

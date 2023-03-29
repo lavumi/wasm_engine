@@ -104,7 +104,7 @@ void Director::AddScene(Scene *scene) {
     this->currentScene = scene;
 }
 
-GLuint Director::GetShaderProgram() {
-    return this->renderer->GetShader();
+glm::mat4 Director::GetCameraVP() {
+    return this->camera->GetVP();
 }
 

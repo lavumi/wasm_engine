@@ -16,7 +16,9 @@ public:
 private:
     VumiEngine::ThreeCube* cube;
     VumiEngine::Sprite* sprite;
+    VumiEngine::Sprite* sprite2;
     VumiEngine::SpriteAnimation* spriteAni;
+    VumiEngine::SpotLight* light;
 };
 
 #endif //WASM_TESTSCENE_H

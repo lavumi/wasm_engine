@@ -6,7 +6,6 @@
 #define WASM_SPOTLIGHTSHADER_H
 
 namespace VumiEngine {
-
     class SpotLightShader {
     private:
         /* data */
@@ -22,8 +21,6 @@ namespace VumiEngine {
         ~SpotLightShader();
 
         void MakeShader();
-
-        void SetUniformMatrix4fv(const std::string &name, GLfloat *value) const;
     };
 
 } // VumiEngine

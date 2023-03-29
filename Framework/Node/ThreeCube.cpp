@@ -220,24 +220,24 @@ ThreeCube::ThreeCube(/* args */) {
     worldMatrix = glm::mat4(1.0f);
     texture = new Texture();
     //이거 너무 구린데...
-    setBuffer(Director::GetDirector().GetShaderProgram());
+    setBuffer();
 }
 
 
 ThreeCube::~ThreeCube() {
     glDeleteBuffers(sizeof(g_vertex_buffer_data), &vertexBuffer);
-//    glDeleteBuffers(sizeof(g_color_buffer_data), &colorBuffer);
     glDeleteBuffers(sizeof(g_texCoord_buffer_data), &texCoordBuffer);
 }
 
 
-void ThreeCube::setBuffer(GLuint shaderProgram) {
+void ThreeCube::setBuffer() {
 
-    shader = shaderProgram;
+    shader = new Shader();
+    shader->MakeShader();
+    shaderProgram = shader->shader_program;
 
-    GLuint vertexPosition = glGetAttribLocation(shader, "vertexPosition");
-    GLuint vertexColor = glGetAttribLocation(shader, "vertexColor");
-    GLuint texCoord = glGetAttribLocation(shader, "aTexCoord");
+    GLuint vertexPosition = glGetAttribLocation(shaderProgram, "vertexPosition");
+    GLuint texCoord = glGetAttribLocation(shaderProgram, "aTexCoord");
 
 
     glGenVertexArrays(1, &_vao);
@@ -246,11 +246,6 @@ void ThreeCube::setBuffer(GLuint shaderProgram) {
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-//    glGenBuffers(1, &colorBuffer);
-//    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-
 
     glGenBuffers(1, &texCoordBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
@@ -267,17 +262,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram) {
             (void *) nullptr                   // 시작 위치
     );
     glEnableVertexAttribArray(vertexPosition); //버텍스 버퍼를 활성화
-    // 2nd attribute buffer : colors
 
-//    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-//    glVertexAttribPointer(
-//            vertexColor,
-//            3,
-//            GL_FLOAT,
-//            GL_FALSE,
-//            0,
-//            (void *) nullptr);
-//    glEnableVertexAttribArray(vertexColor);
 
     glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
     glVertexAttribPointer(
@@ -292,8 +277,7 @@ void ThreeCube::setBuffer(GLuint shaderProgram) {
 
     texture->LoadTexture("Resources/atlas.png");
     texture->BindTexture();
-    // glActiveTexture(GL_TEXTURE0); // activate the texture unit first before binding texture
-    // glBindTexture(GL_TEXTURE_2D, *texture);
+
     glBindVertexArray(0);
 }
 
@@ -435,9 +419,9 @@ void ThreeCube::SetRotate(float amount, glm::vec3 axis) {
 
 void ThreeCube::Render() {
     Node::Render();
-    glUseProgram(shader);
+    glUseProgram(shaderProgram);
     glBindVertexArray(_vao);
-    GLint modelID = glGetUniformLocation(shader, "Model");
+    GLint modelID = glGetUniformLocation(shaderProgram, "Model");
 
     //todo drawcall 27짜리 쓰레기 코드
     for (int i = 0; i < 27; i++) {

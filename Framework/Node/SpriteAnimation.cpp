@@ -3,7 +3,8 @@
 //
 #include "../precompiled.h"
 #include "SpriteAnimation.h"
-#include "../Render/Shader/AnimationShader.h"
+#include <cstdlib>
+
 
 using namespace VumiEngine;
 
@@ -60,7 +61,7 @@ namespace VumiEngine {
 
         texture = new Texture();
         texture->LoadTexture(imgPath);
-        texture->BindTexture();
+
         maxFrameIndex = pMaxFrameIndex;
         interval = pInterval;
     }
@@ -70,7 +71,6 @@ namespace VumiEngine {
         glDeleteBuffers(sizeof(g_texCoord_buffer_data), &texCoordBuffer);
     }
 
-
     void SpriteAnimation::Update(float deltaTime) {
 
         timeStamp += deltaTime;
@@ -79,6 +79,9 @@ namespace VumiEngine {
             animationStep++;
             if ( animationStep >= maxFrameIndex ){
                 animationStep = 0;
+                if ( rand()%5 == 0){
+                    characterType = rand() % 9;
+                }
             }
         }
 
@@ -90,10 +93,6 @@ namespace VumiEngine {
 
         shaderProgram = animationShader->shader_program;
 
-        GLuint vertexPosition = glGetAttribLocation(shaderProgram, "vertexPosition");
-        GLuint texCoord = glGetAttribLocation(shaderProgram, "aTexCoord");
-
-
         glGenVertexArrays(1, &_vao);
         glBindVertexArray(_vao);
 
@@ -104,6 +103,11 @@ namespace VumiEngine {
         glGenBuffers(1, &texCoordBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(g_texCoord_buffer_data), g_texCoord_buffer_data, GL_STATIC_DRAW);
+
+
+        GLuint vertexPosition = glGetAttribLocation(shaderProgram, "vertexPosition");
+        GLuint texCoord = glGetAttribLocation(shaderProgram, "aTexCoord");
+
 
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer); //버퍼를 GL_ARRAY_BUFFER 에 바인드
         glVertexAttribPointer(
@@ -127,12 +131,14 @@ namespace VumiEngine {
                 (void *) nullptr);
         glEnableVertexAttribArray(texCoord);
 
-
         glBindVertexArray(0);
     }
 
     void SpriteAnimation::Render() {
         Node::Render();
+
+        if ( texture == nullptr ) return;
+        texture->BindTexture();
 
         glUseProgram(shaderProgram);
         glBindVertexArray(_vao);
@@ -142,14 +148,16 @@ namespace VumiEngine {
         glm::mat4 finalMat = worldMatrix *  modelMatrix;
         glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *) &finalMat);
 
-
+        glm::mat4 VP = Director::GetDirector().GetCameraVP();
+        GLint VPID = glGetUniformLocation(shaderProgram, "VP");
+        glUniformMatrix4fv(VPID, 1, GL_FALSE, (GLfloat *) &VP);
 
         GLint uvTargetID = glGetUniformLocation(shaderProgram, "uvTarget");
-        glm::vec2 uvTarget = glm::vec2(0.083333333f * (float)animationStep , 0.0f);
+        glm::vec2 uvTarget = glm::vec2(0.083333333f * (float)animationStep , 0.11111111f * (float)characterType);
         glUniform2fv(uvTargetID, 1, (GLfloat *) &uvTarget);
 
-        glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
-
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+//
         glBindVertexArray(0);
     }
 } // VumiEngine

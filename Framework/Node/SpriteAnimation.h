@@ -19,15 +19,12 @@ namespace VumiEngine {
 
         GLuint _vao{};
         GLuint vertexBuffer{};
-        GLuint colorBuffer{};
-
         GLuint texCoordBuffer{};
-
         VumiEngine::Texture *texture{};
-
         GLfloat g_texCoord_buffer_data[12];
 
         int animationStep = 0;
+        int characterType = 0;
         int maxFrameIndex;
         float interval;
         float timeStamp;

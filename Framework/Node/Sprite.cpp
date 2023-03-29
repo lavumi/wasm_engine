@@ -28,7 +28,7 @@ Sprite::Sprite(std::string imgPath) {
     modelMatrix = glm::mat4(1.0f);
 
 
-    setBuffer(Director::GetDirector().GetShaderProgram());
+    setBuffer();
     texture = new Texture();
     texture->LoadTexture(imgPath);
     texture->BindTexture();
@@ -43,12 +43,15 @@ void Sprite::Update(float deltaTime) {
 
 }
 
-void Sprite::setBuffer(GLuint shaderProgram) {
+void Sprite::setBuffer() {
 
-    shader = shaderProgram;
+    shader = new Shader();
+    shader->MakeShader();
 
-    GLuint vertexPosition = glGetAttribLocation(shader, "vertexPosition");
-    GLuint texCoord = glGetAttribLocation(shader, "aTexCoord");
+    shaderProgram = shader->shader_program;
+
+    GLuint vertexPosition = glGetAttribLocation(shaderProgram, "vertexPosition");
+    GLuint texCoord = glGetAttribLocation(shaderProgram, "aTexCoord");
 
 
     glGenVertexArrays(1, &_vao);
@@ -95,14 +98,19 @@ void Sprite::setBuffer(GLuint shaderProgram) {
 void Sprite::Render() {
     Node::Render();
 
-    glUseProgram(shader);
+    glUseProgram(shaderProgram);
     glBindVertexArray(_vao);
-    GLint modelID = glGetUniformLocation(shader, "Model");
 
+    GLint modelID = glGetUniformLocation(shaderProgram, "Model");
     glm::mat4 finalMat = worldMatrix *  modelMatrix;
     glUniformMatrix4fv(modelID, 1, GL_FALSE, (GLfloat *) &finalMat);
-    glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
 
+    glm::mat4 VP = Director::GetDirector().GetCameraVP();
+    GLint VPID = glGetUniformLocation(shaderProgram, "VP");
+    glUniformMatrix4fv(VPID, 1, GL_FALSE, (GLfloat *) &VP);
+
+
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
     glBindVertexArray(0);
 }

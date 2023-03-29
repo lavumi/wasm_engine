@@ -11,7 +11,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-
+#define PI 3.14159265
 
 #define GLEW_STATIC
 
@@ -30,6 +30,7 @@
 
 #include "Render/Shader/AnimationShader.h"
 #include "Render/Shader/Shader.h"
+#include "Render/Shader/SpotLightShader.h"
 #include "Render/Camera.h"
 #include "Render/Renderer.h"
 #include "Render/Texture.h"
@@ -41,6 +42,7 @@
 #include "Node/ThreeCube.h"
 #include "Node/Sprite.h"
 #include "Node/SpriteAnimation.h"
+#include "Node/SpotLight.h"
 
 
 #define SCREEN_WIDTH 800

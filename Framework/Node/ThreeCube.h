@@ -10,10 +10,12 @@ namespace VumiEngine{
         glm::mat4 worldMatrix{};
         glm::mat4 modelMatrix[27]{};
 
-        GLuint shader{};
+
+        Shader* shader;
+
+        GLuint shaderProgram{};
         GLuint _vao{};
         GLuint vertexBuffer{};
-//    GLuint colorBuffer{};
 
         GLuint texCoordBuffer{};
 
@@ -34,7 +36,7 @@ namespace VumiEngine{
 
         void RunCube(int index, float angle);
 
-        void setBuffer(GLuint shaderProgram);
+        void setBuffer();
 
         void ToggleRotate(bool isRotate);
 

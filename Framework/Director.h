@@ -36,12 +36,7 @@ namespace VumiEngine {
 
         void AddScene(Scene *scene);
 
-//        ThreeCube *testCube;
-
-
-
-
-        GLuint GetShaderProgram();
+        glm::mat4 GetCameraVP();
     };
 }
 

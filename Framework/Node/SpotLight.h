@@ -6,8 +6,36 @@
 #define WASM_SPOTLIGHT_H
 
 namespace VumiEngine{
-    class SpotLight {
+    class SpotLight : public VumiEngine::Node{
 
+        glm::mat4 worldMatrix{};
+        glm::mat4 modelMatrix{};
+
+
+
+        SpotLightShader* shader{};
+        GLuint shaderProgram{};
+
+
+        GLuint _vao{};
+        GLuint vertexBuffer{};
+        GLuint texCoordBuffer{};
+        VumiEngine::Texture *texture{};
+
+
+
+        float swingAngle = PI  * 0.2;
+        float swingDelta = 0.0f;
+        float swingSpeed = 0.3f;
+    public:
+        glm::vec2 lightDir{};
+
+        SpotLight();
+        ~SpotLight();
+
+        void Update(float deltaTime);
+        void setBuffer();
+        void Render();
     };
 }
 
