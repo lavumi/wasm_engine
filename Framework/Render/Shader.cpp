@@ -28,7 +28,7 @@ void Shader::MakeShader(std::string shaderName) {
         VertexShaderCode = sstr.str();
         VertexShaderStream.close();
     }else{
-        printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n" , (SDL_GetBasePath() + vertPath).c_str());
+        printf("Impossible to open %s Are you in the right directory ? Don't forget to read the FAQ !\n" , (SDL_GetBasePath() + vertPath).c_str());
         return;
     }
 
