@@ -233,7 +233,7 @@ ThreeCube::~ThreeCube() {
 void ThreeCube::setBuffer() {
 
     shader = new Shader();
-    shader->MakeShader();
+    shader->MakeShader("texture");
     shaderProgram = shader->shader_program;
 
     GLuint vertexPosition = glGetAttribLocation(shaderProgram, "vertexPosition");

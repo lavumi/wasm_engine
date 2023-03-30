@@ -46,7 +46,7 @@ void Sprite::Update(float deltaTime) {
 void Sprite::setBuffer() {
 
     shader = new Shader();
-    shader->MakeShader();
+    shader->MakeShader("texture");
 
     shaderProgram = shader->shader_program;
 

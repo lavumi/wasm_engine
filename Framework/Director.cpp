@@ -10,8 +10,6 @@ Director::Director(/* args */) {
     renderer = new Renderer();
     camera = new Camera();
 
-//    testCube = new ThreeCube();
-    renderer->SetCamera(camera);
     renderer->Init();
 
     //left

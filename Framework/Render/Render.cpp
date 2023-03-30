@@ -9,9 +9,7 @@ using namespace VumiEngine;
 
 Renderer::Renderer(/* args */) {
 
-    shader = new Shader();
 
-    // testCube = new TestCube();
 }
 
 Renderer::~Renderer() {
@@ -67,19 +65,14 @@ void Renderer::Init() {
     version = glGetString(GL_VERSION);
     std::cout << "version: " << version << std::endl;
 
-    shader->MakeShader();
+
 
 }
 
 void Renderer::Update(float deltaTime) {
-    glm::mat4 VP = camera->GetVP();
-//    GLint MatrixID = glGetUniformLocation(shader->shader_program, "VP");
-//    glUniformMatrix4fv(4, 1, GL_FALSE, (GLfloat *) &VP);
+
 }
 
-void Renderer::SetCamera(Camera *pCamera) {
-    this->camera = pCamera;
-}
 
 
 void Renderer::toggleFullscreen() {

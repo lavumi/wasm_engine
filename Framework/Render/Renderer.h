@@ -14,8 +14,6 @@ namespace VumiEngine {
         SDL_Window *window = NULL;
         SDL_GLContext context;
 
-        Shader *shader;
-        Camera *camera;
 
     public:
         Renderer(/* args */);
@@ -30,9 +28,6 @@ namespace VumiEngine {
 
         void FinishRender();
 
-        void SetCamera(Camera *camera);
-
-        GLuint GetShader();
 
         GLfloat rotation_angle;
         GLuint length_of_attributes;

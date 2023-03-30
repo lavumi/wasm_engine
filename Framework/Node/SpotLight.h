@@ -13,7 +13,7 @@ namespace VumiEngine{
 
 
 
-        SpotLightShader* shader{};
+        Shader* shader{};
         GLuint shaderProgram{};
 
 

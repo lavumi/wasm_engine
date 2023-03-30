@@ -13,7 +13,7 @@ namespace VumiEngine {
         glm::mat4 modelMatrix{};
 
 
-        AnimationShader* animationShader;
+        Shader* animationShader;
         GLuint shaderProgram{};
 
 

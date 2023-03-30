@@ -3,10 +3,7 @@
 namespace VumiEngine {
     class Shader {
     private:
-        /* data */
 
-        const char *vertexSource;
-        const char *fragmentSource;
 
     public:
         GLuint shader_program;
@@ -15,7 +12,7 @@ namespace VumiEngine {
 
         ~Shader();
 
-        void MakeShader();
+        void MakeShader(std::string shaderName);
 
     };
 }

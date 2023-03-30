@@ -71,8 +71,8 @@ void SpotLight::Update(float deltaTime) {
 
 void SpotLight::setBuffer() {
 
-    shader = new SpotLightShader();
-    shader->MakeShader();
+    shader = new Shader();
+    shader->MakeShader("spotlight");
     shaderProgram = shader->shader_program;
 
 

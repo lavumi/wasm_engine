@@ -1,57 +1,51 @@
-//
-// Created by Lavumi on 2023/03/28.
-//
-#include "../../precompiled.h"
-#include "AnimationShader.h"
+#include <fstream>
+#include <sstream>
 
+#include "../precompiled.h"
+#include "Shader.h"
 
 using namespace VumiEngine;
 
-AnimationShader::AnimationShader() {
-    vertexSource = R"glsl(
-        #version 100
-        // Input vertex data, different for all executions of this shaderProgram.
-        attribute vec3 vertexPosition;
-        attribute vec2 aTexCoord;
+Shader::Shader() {
 
-        // Output data ; will be interpolated for each fragment.
-        varying mediump vec2 texCoord;
-
-        // Values that stay constant for the whole mesh.
-
-        uniform mat4 Model;
-        uniform mat4 VP;
-        uniform vec2 uvTarget;
-
-
-        void main(){
-
-            // Output position of the vertex, in clip space : MVP * position
-            gl_Position =  VP * Model * vec4(vertexPosition,1);
-
-            texCoord = aTexCoord + uvTarget;
-        }
-        )glsl";
-    fragmentSource = R"glsl(
-        #version 100
-        // Interpolated values from the vertex shaders
-        varying mediump vec2 texCoord;
-        uniform sampler2D Texture;
-
-        void main(){
-            mediump vec4 sampled = texture2D(Texture, texCoord);
-            gl_FragColor =  sampled;
-
-        }
-        )glsl";
 }
 
-AnimationShader::~AnimationShader() {
+Shader::~Shader() {
     glDeleteShader(shader_program);
 }
 
-void AnimationShader::MakeShader() {
+
+void Shader::MakeShader(std::string shaderName) {
+
+    std::string vertPath = "Resources/Shader/" + shaderName + ".vert";
+    std::string fragPath = "Resources/Shader/" + shaderName + ".frag";
+
+    std::string VertexShaderCode;
+    std::ifstream VertexShaderStream(SDL_GetBasePath() + vertPath, std::ios::in);
+    if(VertexShaderStream.is_open()){
+        std::stringstream sstr;
+        sstr << VertexShaderStream.rdbuf();
+        VertexShaderCode = sstr.str();
+        VertexShaderStream.close();
+    }else{
+        printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n" , (SDL_GetBasePath() + vertPath).c_str());
+        return;
+    }
+
+    // Read the Fragment Shader code from the file
+    std::string FragmentShaderCode;
+    std::ifstream FragmentShaderStream(SDL_GetBasePath() + fragPath, std::ios::in);
+    if(FragmentShaderStream.is_open()){
+        std::stringstream sstr;
+        sstr << FragmentShaderStream.rdbuf();
+        FragmentShaderCode = sstr.str();
+        FragmentShaderStream.close();
+    }
+
+
+//    std::cout << "Make Shader Called" << std::endl;
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+    char const * vertexSource = VertexShaderCode.c_str();
     glShaderSource(vertex_shader, 1, &vertexSource, nullptr);
     glCompileShader(vertex_shader);
     GLint vertex_shader_status;
@@ -62,6 +56,7 @@ void AnimationShader::MakeShader() {
 //    std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
 
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    char const * fragmentSource = FragmentShaderCode.c_str();
     glShaderSource(fragment_shader, 1, &fragmentSource, nullptr);
     glCompileShader(fragment_shader);
     GLint fragment_shader_status;
@@ -77,7 +72,6 @@ void AnimationShader::MakeShader() {
 
     glLinkProgram(shader_program);
 
-
     GLint Result = GL_FALSE;
     int InfoLogLength;
 
@@ -89,11 +83,10 @@ void AnimationShader::MakeShader() {
         printf("%s\n", &ProgramErrorMessage[0]);
     }
 
-
     glDetachShader(shader_program, vertex_shader);
     glDetachShader(shader_program, fragment_shader);
 
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
-}
 
+}

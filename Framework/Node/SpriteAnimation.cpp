@@ -88,8 +88,8 @@ namespace VumiEngine {
     }
 
     void SpriteAnimation::setBuffer() {
-        animationShader = new AnimationShader();
-        animationShader->MakeShader();
+        animationShader = new Shader();
+        animationShader->MakeShader("texture");
 
         shaderProgram = animationShader->shader_program;
 
