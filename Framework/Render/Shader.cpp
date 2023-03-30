@@ -77,7 +77,7 @@ void Shader::MakeShader(std::string shaderName) {
 
     glGetProgramiv(shader_program, GL_LINK_STATUS, &Result);
     glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    if ( InfoLogLength > 0 ){
+    if ( InfoLogLength > 0 && Result != GL_TRUE){
         std::vector<char> ProgramErrorMessage(InfoLogLength+1);
         glGetProgramInfoLog(shader_program, InfoLogLength, NULL, &ProgramErrorMessage[0]);
         printf("%s\n", &ProgramErrorMessage[0]);
