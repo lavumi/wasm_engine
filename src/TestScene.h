@@ -29,7 +29,7 @@ private:
     void action0(float deltaTime);
     void action1(float deltaTime);
 
-    glm::vec4 lightColor = glm::vec4(0.9f,0,0,0.5f);
+//    glm::vec4 lightColor = glm::vec4(0.9f,0,0,0.5f);
     GLfloat lightPower = 1.0f;
     void action2(float deltaTime);
 

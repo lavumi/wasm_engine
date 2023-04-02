@@ -14,14 +14,14 @@ void TestScene::Init() {
     light = new VumiEngine::SpotLight();
     light->SetAngle(-PI * 0.108f);
     light->SetPosition(glm::vec3(4,8,0));
-    light->SetColor(lightColor);
+    light->SetColor(glm::vec4(0.9f,0,0,0.5f));
     this->AddChild(light,1);
 
 
     light2 = new VumiEngine::SpotLight();
     light2->SetAngle(PI * 0.108f);
     light2->SetPosition(glm::vec3(-4,8,0));
-    light2->SetColor(glm::vec4(0.9f) - lightColor);
+    light2->SetColor(glm::vec4(0.9f) - glm::vec4(0.9f,0,0,0.5f));
     this->AddChild(light2,1);
 
 
@@ -33,11 +33,8 @@ void TestScene::Init() {
 
 }
 void TestScene::action0(float deltaTime) {
-    timeSpent += deltaTime;
-
     if ( timeSpent > 3.0f){
-        currentAction = RANDOM(0,4);
-        timeSpent = 0.0f;
+        currentAction = RANDOM(0,6);
     }
 }
 
@@ -54,7 +51,7 @@ void TestScene::action1(float deltaTime) {
             light->SetAngle(PI * 0.0f);
             light2->SetAngle(-PI * 0.0f);
             int rnd = RANDOM(0,9);
-            spriteAni->ChangeCharacter(rnd%9);
+            spriteAni->ChangeCharacter(rnd);
             actionFlag = true;
         }
     }
@@ -76,23 +73,21 @@ void TestScene::action1(float deltaTime) {
 
 void TestScene::action2(float deltaTime) {
     if ( actionFlag == false ){
-        if ( lightPower > 0.0f){
-            lightPower -= deltaTime * 0.5f;
-            light->SetColor( lightColor * lightPower);
-            light2->SetColor( (glm::vec4(0.9f) - lightColor) * lightPower);
-        }
-        else {
-            light->SetColor( lightColor * lightPower);
-            light2->SetColor( (glm::vec4(0.9f) - lightColor) * lightPower);
 
+        lightPower -= deltaTime * 0.5f;
+        light->SetBright(lightPower);
+        light2->SetBright(lightPower);
+
+        if ( lightPower <= 0.0f){
 
             float r = RANDOM(0.0f, .9f);
             float g = RANDOM(0.0f, .9f);
             float b = RANDOM(0.0f, .9f);
+            auto lightColor = glm::vec4(r, g, b, 1.0f);
 
-//            std::cout<< r << " " << g << " " << b << std::endl;
+            light->SetColor( lightColor );
+            light2->SetColor( (glm::vec4(0.9f) - lightColor));
 
-            lightColor = glm::vec4(r, g, b, 1.0f);
 
             int rnd = RANDOM(0,9);
             spriteAni->ChangeCharacter(rnd%9);
@@ -100,14 +95,11 @@ void TestScene::action2(float deltaTime) {
         }
     }
     else {
-        if ( lightPower < 1.0f){
-            lightPower += deltaTime * 0.2f;
-            light->SetColor( lightColor * lightPower);
-            light2->SetColor( (glm::vec4(0.9f) - lightColor) * lightPower);
-        }
-        else {
-            light->SetColor( lightColor * lightPower);
-            light2->SetColor( (glm::vec4(0.9f) - lightColor) * lightPower);
+
+        lightPower += deltaTime * 0.2f;
+        light->SetBright(lightPower);
+        light2->SetBright(lightPower);
+        if ( lightPower >= 1.0f){
             currentAction = 0;
             actionFlag = false;
         }
@@ -119,6 +111,32 @@ void TestScene::action2(float deltaTime) {
 
 void TestScene::action3(float deltaTime) {
 
+    if ( timeSpent > 3.0f){
+        currentAction = 0;
+    }
+    else if (timeSpent > 1.5f){
+        light2->SetBright( 1.0f);
+    }
+    else if ( timeSpent > 1.0f){
+        light->SetBright(  1.0f);
+    }
+    else if ( timeSpent > 0.5f){
+        light2->SetBright(0.0f);
+
+        float r = RANDOM(0.0f, .9f);
+        float g = RANDOM(0.0f, .9f);
+        float b = RANDOM(0.0f, .9f);
+
+        auto lightColor = glm::vec4(r, g, b, 1.0f);
+        light->SetColor( lightColor );
+        light2->SetColor( (glm::vec4(0.9f) - lightColor));
+
+        int rnd = RANDOM(0,9);
+        spriteAni->ChangeCharacter(rnd%9);
+    }
+    else {
+        light->SetBright(0.0f);
+    }
 }
 
 void TestScene::action4(float deltaTime) {
@@ -132,17 +150,23 @@ void TestScene::Render() {
 
 void TestScene::Update(float deltaTime) {
     Node::Update(deltaTime);
-
+    timeSpent += deltaTime;
     switch (currentAction) {
-
         case 1:
             action1(deltaTime);
             break;
         case 2:
             action2(deltaTime);
             break;
+        case 3:
+            action3(deltaTime);
+            break;
         default:
             action0(deltaTime);
             break;
+    }
+
+    if ( timeSpent > 3.0f){
+        timeSpent = 0.0f;
     }
 }

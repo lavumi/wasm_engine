@@ -22,6 +22,7 @@ namespace VumiEngine{
 
 
         glm::vec4 lightColor;
+        GLfloat bright = 1.0f;
         GLfloat direction = 0;
     public:
 
@@ -39,6 +40,9 @@ namespace VumiEngine{
 
         void SetColor(glm::vec4 color);
         glm::vec4 GetColor();
+
+        void SetBright(GLfloat bright);
+        GLfloat GetBright();
     };
 }
 

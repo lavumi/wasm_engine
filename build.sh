@@ -15,7 +15,7 @@ if [ "$input" -eq 2 ]; then
     rm -rf wasm
     mkdir wasm
     make clean
-    make emcc
+    make emscripten
     scp -r build/wasm_helltaker lavu.me:Works/WebPage/public
 fi
 

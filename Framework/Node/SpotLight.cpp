@@ -137,7 +137,9 @@ void SpotLight::Render() {
     glUniformMatrix4fv(VPID, 1, GL_FALSE, (GLfloat *) &VP);
 
     GLint ColorId = glGetUniformLocation(shaderProgram, "LightColor");
-    glUniform4fv(ColorId, 1, (GLfloat *) &lightColor);
+
+    glm::vec4 color = lightColor * bright;
+    glUniform4fv(ColorId, 1, (GLfloat *) &color);
 
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -167,4 +169,12 @@ void SpotLight::SetAngle(GLfloat angle) {
 
 GLfloat SpotLight::GetAngle() {
     return direction;
+}
+
+void SpotLight::SetBright(GLfloat bright) {
+    this->bright = bright;
+}
+
+GLfloat SpotLight::GetBright() {
+    return bright;
 }
