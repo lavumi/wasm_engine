@@ -33,9 +33,7 @@ void TestScene::Init() {
 
 }
 void TestScene::action0(float deltaTime) {
-    if ( timeSpent > 3.0f){
-        currentAction = RANDOM(0,6);
-    }
+    currentAction = 0;
 }
 
 
@@ -63,8 +61,8 @@ void TestScene::action1(float deltaTime) {
         else {
             light2->SetAngle(PI * 0.108f);
             light->SetAngle(-PI * 0.108f);
-            currentAction = 0;
             actionFlag = false;
+            currentAction = 0;
         }
     }
 
@@ -100,27 +98,22 @@ void TestScene::action2(float deltaTime) {
         light->SetBright(lightPower);
         light2->SetBright(lightPower);
         if ( lightPower >= 1.0f){
-            currentAction = 0;
             actionFlag = false;
+            currentAction = 0;
         }
     }
-
-
 }
 
 
 void TestScene::action3(float deltaTime) {
-
-    if ( timeSpent > 3.0f){
+    if (timeSpent > 1.854f){
+        light2->SetBright( 1.0f);
         currentAction = 0;
     }
-    else if (timeSpent > 1.5f){
-        light2->SetBright( 1.0f);
-    }
-    else if ( timeSpent > 1.0f){
+    else if ( timeSpent > 1.236f){
         light->SetBright(  1.0f);
     }
-    else if ( timeSpent > 0.5f){
+    else if ( timeSpent > .618f){
         light2->SetBright(0.0f);
 
         float r = RANDOM(0.0f, .9f);
@@ -166,7 +159,12 @@ void TestScene::Update(float deltaTime) {
             break;
     }
 
-    if ( timeSpent > 3.0f){
+    if ( timeSpent > 6.18f){
         timeSpent = 0.0f;
+        if ( currentAction == 0 ){
+            currentAction = RANDOM(1,3);
+            std::cout << currentAction << std::endl;
+        }
+
     }
 }
