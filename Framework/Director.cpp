@@ -1,7 +1,6 @@
 #include "precompiled.h"
 #include "Render/Camera.h"
 #include "Director.h"
-#include "Node/ThreeCube.h"
 
 using namespace VumiEngine;
 
@@ -81,6 +80,8 @@ Director::~Director() {
     delete renderer;
 }
 
+
+
 void Director::Update(float deltaTime) const {
     renderer->Update(deltaTime);
     if (currentScene != nullptr)
@@ -104,5 +105,44 @@ void Director::AddScene(Scene *scene) {
 
 glm::mat4 Director::GetCameraVP() {
     return this->camera->GetVP();
+}
+
+
+GLuint previous_ticks = 0;
+GLuint max_fps = 16;
+GLfloat lag = 0;
+
+void loop() {
+    GLuint ticks = SDL_GetTicks();
+    lag = ticks - previous_ticks;
+    previous_ticks = ticks;
+
+
+     Director::GetDirector();
+    //  while (lag > max_fps)
+    // {
+    Director::GetDirector().Update(lag / 1000);
+//        lag = 0;
+
+    //  }
+    Director::GetDirector().Render();
+}
+
+void Director::Run() {
+#if __EMSCRIPTEN__
+    emscripten_set_main_loop(loop, -1, 1);
+#else
+    SDL_Event e;
+    while (true)
+    {
+        if (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+                break;
+            InputHandler::GetInputHandler().HandleEvent(e);
+        }
+        loop();
+    }
+#endif
 }
 

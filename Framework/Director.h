@@ -24,18 +24,18 @@ namespace VumiEngine {
 
         Scene *currentScene{};
 
-        Director();
 
+
+
+        Director();
         ~Director();
 
+
     public:
-
+        void Run();
         void Update(float deltaTime) const;
-
         void Render() const;
-
         void AddScene(Scene *scene);
-
         glm::mat4 GetCameraVP();
     };
 }
