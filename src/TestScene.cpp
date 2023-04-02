@@ -163,7 +163,6 @@ void TestScene::Update(float deltaTime) {
         timeSpent = 0.0f;
         if ( currentAction == 0 ){
             currentAction = RANDOM(1,3);
-            std::cout << currentAction << std::endl;
         }
 
     }
