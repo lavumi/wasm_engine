@@ -38,6 +38,7 @@ namespace VumiEngine{
         GLfloat GetAngle();
 
         void SetColor(glm::vec4 color);
+        glm::vec4 GetColor();
     };
 }
 

@@ -9,13 +9,13 @@
 using namespace VumiEngine;
 
 static const GLfloat g_vertex_buffer_data[] = {
-        1.0f, 1.0f, 0.0f, // triangle 2 : begin
-        -1.0f, -1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f,  // triangle 2 : end
+        1.0f, -1.0f, 0.0f, // triangle 2 : begin
+        -1.0f, -3.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f,  // triangle 2 : end
 
-        1.0f, 1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f,
+        1.0f, -3.0f, 0.0f,
+        -1.0f, -3.0f, 0.0f,
 };
 //
 //static const GLfloat g_texCoord_buffer_data_temp[] = {

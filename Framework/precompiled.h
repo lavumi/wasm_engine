@@ -42,6 +42,12 @@
 #include "Node/SpriteAnimation.h"
 #include "Node/SpotLight.h"
 
+#include "Util/Random.h"
+
+
+#define RANDOM VumiEngine::Random::GenRands
+
+
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600

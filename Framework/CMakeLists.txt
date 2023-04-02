@@ -2,6 +2,7 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Render/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Node/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Util/*.cpp
         )
 
 add_library(opengl_engine STATIC

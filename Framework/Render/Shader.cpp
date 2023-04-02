@@ -53,7 +53,7 @@ void Shader::MakeShader(std::string shaderName) {
 
     char vertexLogBuffer[512];
     glGetShaderInfoLog(vertex_shader, 512, nullptr, vertexLogBuffer);
-    std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
+//    std::cout << "vertex_shader_status: " << vertex_shader_status << " " << vertexLogBuffer << std::endl;
 
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     char const * fragmentSource = FragmentShaderCode.c_str();
@@ -64,7 +64,7 @@ void Shader::MakeShader(std::string shaderName) {
 
     char fragmentLogBuffer[512];
     glGetShaderInfoLog(fragment_shader, 512, nullptr, fragmentLogBuffer);
-    std::cout << "fragment_shader_status: " << fragment_shader_status << " " << fragmentLogBuffer << std::endl;
+//    std::cout << "fragment_shader_status: " << fragment_shader_status << " " << fragmentLogBuffer << std::endl;
 
     shader_program = glCreateProgram();
     glAttachShader(shader_program, vertex_shader);

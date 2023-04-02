@@ -150,6 +150,10 @@ void SpotLight::SetColor(glm::vec4 color) {
     lightColor = color;
 }
 
+glm::vec4 SpotLight::GetColor() {
+    return lightColor;
+}
+
 void SpotLight::SetPosition( glm::vec3 position ){
     worldMatrix = glm::translate( glm::mat4(1.0f) , position);
 }

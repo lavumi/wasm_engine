@@ -4,7 +4,7 @@ varying mediump float zclip;
 
 
 void main(){
-    if ( zclip < -2.0 ){
+    if ( zclip < -7.0 ){
         discard;
     }
 //    LightColor.a = zclip >= 0.0 ? LightColor.a : 0.0;
