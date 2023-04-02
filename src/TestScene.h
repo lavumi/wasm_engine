@@ -14,12 +14,17 @@ public:
 
 
 private:
-//    VumiEngine::ThreeCube* cube;
-//    VumiEngine::Sprite* sprite;
-//    VumiEngine::Sprite* sprite2;
     VumiEngine::SpriteAnimation* spriteAni;
     VumiEngine::SpotLight* light;
     VumiEngine::SpotLight* light2;
+
+
+    int currentAction;
+
+    float timeSpent = 0.0f;
+    void action0(float deltaTime);
+    void action1(float deltaTime);
+    void action2(float deltaTime);
 };
 
 #endif //WASM_TESTSCENE_H

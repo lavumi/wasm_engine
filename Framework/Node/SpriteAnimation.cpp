@@ -79,9 +79,6 @@ namespace VumiEngine {
             animationStep++;
             if ( animationStep >= maxFrameIndex ){
                 animationStep = 0;
-                if ( rand()%5 == 0){
-                    characterType = rand() % 9;
-                }
             }
         }
 
@@ -165,5 +162,9 @@ namespace VumiEngine {
         glDrawArrays(GL_TRIANGLES, 0, 6);
 //
         glBindVertexArray(0);
+    }
+
+    void SpriteAnimation::ChangeCharacter(int index) {
+        characterType = index;
     }
 } // VumiEngine

@@ -29,6 +29,7 @@ namespace VumiEngine {
         float interval;
         float timeStamp;
 
+
     public:
         SpriteAnimation(const std::string& imgPath,int maxFrameIndex, float interval);
         ~SpriteAnimation();
@@ -36,6 +37,8 @@ namespace VumiEngine {
         void Update(float deltaTime);
         void setBuffer();
         void Render();
+
+        void ChangeCharacter(int index);
     };
 
 } // VumiEngine

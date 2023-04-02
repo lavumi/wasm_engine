@@ -32,20 +32,13 @@ static const GLfloat g_texCoord_buffer_data[] = {
 };
 
 
-SpotLight::SpotLight(GLfloat startAngle , bool direction) {
+SpotLight::SpotLight() {
     worldMatrix = glm::translate( glm::mat4(1.0f) , glm::vec3(0,8,0));
     modelMatrix = glm::translate( glm::mat4(1.0f) , glm::vec3(0,-8,0));//glm::mat4(1.0f);
-    glm::vec3 axis = glm::vec3(0,0,1);
-    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), startAngle, axis);
-    modelMatrix = rotMatrix * modelMatrix;
 
     setBuffer();
     lightColor = glm::vec4(0.1,0.3,1,0.3);
 
-
-    if ( direction == false ){
-        swingSpeed *= -1;
-    }
 }
 
 SpotLight::~SpotLight() {
@@ -58,15 +51,15 @@ SpotLight::~SpotLight() {
 
 void SpotLight::Update(float deltaTime) {
 
-    swingDelta += deltaTime * swingSpeed;
-    if (abs(swingDelta) > swingAngle ){
-        swingSpeed *= -1;
-        swingDelta = 0;
-    }
-
-    glm::vec3 axis = glm::vec3(0,0,1);
-    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), swingSpeed * deltaTime, axis);
-    modelMatrix = rotMatrix * modelMatrix;
+//    swingDelta += deltaTime * swingSpeed;
+//    if (abs(swingDelta) > swingAngle ){
+//        swingSpeed *= -1;
+//        swingDelta = 0;
+//    }
+//
+//    glm::vec3 axis = glm::vec3(0,0,1);
+//    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), swingSpeed * deltaTime, axis);
+//    modelMatrix = rotMatrix * modelMatrix;
 }
 
 void SpotLight::setBuffer() {
@@ -117,17 +110,16 @@ void SpotLight::setBuffer() {
 }
 
 
-void SpotLight::SetPosition( glm::vec3 position ){
-    worldMatrix = glm::translate( glm::mat4(1.0f) , position);
-}
+
 
 
 void SpotLight::Render() {
     Node::Render();
 
-    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    glBlendFuncSeparate(GL_ONE, GL_ONE,GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBlendFunc(GL_ONE, GL_ONE);
-//    glBlendFuncSeparate(GL_ONE, GL_ONE,GL_ONE, GL_ONE);
+//    glBlendFuncSeparate(GL_ONE, GL_,GL_ONE, GL_ZERO);
 //    glBlendEquation(GL_FUNC_ADD);
 
 
@@ -156,4 +148,19 @@ void SpotLight::Render() {
 
 void SpotLight::SetColor(glm::vec4 color) {
     lightColor = color;
+}
+
+void SpotLight::SetPosition( glm::vec3 position ){
+    worldMatrix = glm::translate( glm::mat4(1.0f) , position);
+}
+
+void SpotLight::SetAngle(GLfloat angle) {
+    glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), angle , glm::vec3(0,0,1));
+    modelMatrix = rotMatrix * glm::translate( glm::mat4(1.0f) , glm::vec3(0,-8,0));
+    direction = angle;
+}
+
+
+GLfloat SpotLight::GetAngle() {
+    return direction;
 }

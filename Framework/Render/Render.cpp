@@ -58,7 +58,7 @@ void Renderer::Init() {
 
     // Cull triangles which normal is not towards the camera
     glEnable(GL_CULL_FACE);
-
+    glEnable(GL_BLEND);
 
 
     const GLubyte *version;
@@ -85,7 +85,7 @@ void Renderer::toggleFullscreen() {
 void Renderer::InitRender() const {
     // Clear the screen
     if (background_is_black)
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     else
         glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
 
