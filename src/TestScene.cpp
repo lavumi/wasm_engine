@@ -34,9 +34,10 @@ void TestScene::action0(float deltaTime) {
 
     if ( timeSpent > 3.0f){
         int rnd = std::rand();
-        if ( rnd % 5 >= 4 ){
+        if ( rnd % 3 >= 2 ){
             currentAction = 1;
         }
+        timeSpent = 0.0f;
     }
 }
 
@@ -44,13 +45,13 @@ void TestScene::action0(float deltaTime) {
 void TestScene::action1(float deltaTime) {
     auto lightAngle = light->GetAngle();
 //    std::cout << "angle : " << lightAngle <<std::endl;
-    if ( lightAngle < PI * 0.13f){
+    if ( lightAngle < PI * 0.0f){
         light->SetAngle( lightAngle + deltaTime * PI  * 0.2f);
         light2->SetAngle( -lightAngle - deltaTime * PI  * 0.2f);
     }
     else {
-        light->SetAngle(PI * 0.13f);
-        light2->SetAngle(-PI * 0.13f);
+        light->SetAngle(PI * 0.0f);
+        light2->SetAngle(-PI * 0.0f);
         int rnd = std::rand();
         spriteAni->ChangeCharacter(rnd%9);
         currentAction = 2;
@@ -68,7 +69,7 @@ void TestScene::action2(float deltaTime) {
     else {
         light2->SetAngle(PI * 0.13f);
         light->SetAngle(-PI * 0.13f);
-        currentAction = -1;
+        currentAction = 0;
     }
 }
 
