@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+
+<style>
+    @font-face {
+        font-family: 'Helltaker';
+        src: url('assets/font/ThereBart.ttf');
+    }
+</style>
+<body style="background-color: black">
+
+
+<div style="font-family:Helltaker; color:antiquewhite; font-size: 100px;text-align: center;">HELLTAKER</div>
+    <canvas id="canvas" oncontextmenu="event.preventDefault()"
+            style  = "padding: 0; margin: auto; display: block; width: 1024px">
+    </canvas>
+
+
+<script type='text/javascript'>
+    var canv = document.getElementById('canvas');
+    var Module = {
+        canvas: canv
+    };
+    Module['locateFile'] = function(path, prefix) {
+        if (path.endsWith(".data")) return "assets/wasm/" + path;
+
+        return prefix + path;
+    }
+</script>
+<script src="assets/wasm/wasm.js">
+
+
+</script>
+<script type='text/javascript'>
+    canv.addEventListener('mousedown', __mouseLeftDown, false);
+    canv.addEventListener('mouseup', __mouseLeftUp, false);
+
+    canv.addEventListener('touchend', __mouseLeftUp, false);
+    window.addEventListener('keydown', function (e) {
+
+        __keyboardDown( e.keyCode );
+    });
+
+    window.addEventListener('keyup', function (e) {
+        if( e.key === 'f'){
+            return canv.webkitRequestFullScreen();
+        }
+        __keyboardUp(e.keyCode );
+    });
+
+    canv.addEventListener('mousemove', function(e){
+        __mouseMove(e.movementX, e.movementY);
+    })
+</script>
+
+</body>
+<footer style="zoom: 1; position: fixed; left: 0; bottom: 0; width: 100%;  text-align: center;">
+    <audio controls>
+        <source src="assets/bgm/helltaker.mp3" type="audio/mpeg" />
+    </audio>
+</footer>
+</html>
