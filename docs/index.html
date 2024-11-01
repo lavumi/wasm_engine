@@ -12,15 +12,60 @@
         font-family: 'Helltaker';
         src: url('assets/font/ThereBart.ttf');
     }
+
+    .github-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        background-color: #4a0000;
+        color: antiquewhite;
+        border: 2px solid #ff0000;
+        padding: 10px 20px;
+        font-family: 'Helltaker', sans-serif;
+        font-size: 20px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .github-button:hover {
+        background-color: #ff0000;
+        transform: scale(1.05);
+    }
+
+    .description {
+        font-family: Arial, sans-serif;
+        color: antiquewhite;
+        text-align: center;
+        max-width: 800px;
+        margin: 20px auto;
+        font-size: 18px;
+        line-height: 1.5;
+        padding: 0 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .title {
+        font-family: Helltaker;
+        color: antiquewhite;
+        font-size: 100px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
 </style>
 <body style="background-color: black">
 
+<div class="title">HELLTAKER</div>
 
-<div style="font-family:Helltaker; color:antiquewhite; font-size: 100px;text-align: center;">HELLTAKER</div>
-    <canvas id="canvas" oncontextmenu="event.preventDefault()"
-            style  = "padding: 0; margin: auto; display: block; width: 1024px">
-    </canvas>
 
+<canvas id="canvas" oncontextmenu="event.preventDefault()"
+        style="padding: 0; margin: auto; display: block; width: 1024px">
+</canvas>
+<div class="description">
+    Watch Helltaker characters dance in the spotlight while enjoying the iconic soundtrack.
+</div>
+<a href="https://github.com/lavumi/wasm_engine" target="_blank" class="github-button">GitHub</a>
 
 <script type='text/javascript'>
     var canv = document.getElementById('canvas');
